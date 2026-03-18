@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows.Media.Imaging;
 
 namespace D2RPriceChecker.Services
 {
@@ -17,36 +18,52 @@ namespace D2RPriceChecker.Services
         private static readonly Color TargetBorderColor = Color.FromArgb(65, 65, 64);
         private const int BorderTolerance = 8;
 
-        private string screenshotDirectory = string.Empty;
+        private string applicationName = "D2RPriceChecker";
+        private string screenshotDirName = "screenshots";
+        private string tooltipDirName = "tooltips";
+
+        private string applicationDataPath = string.Empty;
+        private string screenshotsPath = string.Empty;
+        private string tooltipsPath = string.Empty;
+
+        //private bool shouldSaveScreenshot = true;
+        //private bool shouldSaveTooltip = true;
 
         public ScreenshotService()
         {
-            string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            screenshotDirectory = Path.Combine(localAppData, "D2RPriceTool");
+            string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData); 
 
-            if (!Directory.Exists(screenshotDirectory))
-            {
-                Directory.CreateDirectory(screenshotDirectory);
-            }
+            applicationDataPath = Path.Combine(localAppData, applicationName);
+            screenshotsPath = Path.Combine(applicationDataPath, screenshotDirName);
+            tooltipsPath = Path.Combine(applicationDataPath, tooltipDirName);
+
+            if (!Directory.Exists(applicationDataPath))         
+                Directory.CreateDirectory(applicationDataPath);           
+
+            if (!Directory.Exists(screenshotsPath))        
+                Directory.CreateDirectory(screenshotsPath);     
+
+            if (!Directory.Exists(tooltipsPath))      
+                Directory.CreateDirectory(tooltipsPath); 
         }
 
-        public Bitmap CaptureTooltipRegion()
+        public Bitmap? CaptureItemTooltip()
         {
-            var screenshot = CapturePrimaryScreen();            
-
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-fff");
             string filename = $"{timestamp}.png";
-            string filePath = Path.Combine(screenshotDirectory, filename);
 
-            screenshot.Save(filePath, ImageFormat.Png);
+            var screenshot = CapturePrimaryScreen();
+
+            //if (shouldSaveScreenshot)
+            //    screenshot.Save(Path.Combine(screenshotsPath, filename), ImageFormat.Png);
 
             var tooltip = DetectTooltip(screenshot);
 
-            tooltip?.Save(Path.Combine(screenshotDirectory, $"{timestamp}_tooltip.png"), ImageFormat.Png);
+            //if(tooltip != null && shouldSaveTooltip)
+            //    tooltip.Save(Path.Combine(tooltipsPath, filename), ImageFormat.Png);
 
             return tooltip;
         }
-
 
         public Bitmap CapturePrimaryScreen()
         {
@@ -63,7 +80,47 @@ namespace D2RPriceChecker.Services
             return bitmap;
         }
 
-        private Bitmap? DetectTooltip(Bitmap img)
+        internal BitmapImage LoadScreenshotImage(string path)
+        {
+            var img = new BitmapImage();        
+            img.BeginInit();
+            img.UriSource = new Uri(path);
+            img.CacheOption = BitmapCacheOption.OnLoad;
+            img.EndInit();
+
+            return img;
+        }
+
+
+
+        public Bitmap BitmapFromBitmapImage(BitmapImage bitmapImage)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+                encoder.Save(ms);
+                return new Bitmap(ms);
+            }
+        }
+
+        public BitmapImage BitmapImageFromBitmap(Bitmap bitmap)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, ImageFormat.Png);
+                ms.Position = 0;
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = ms;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+                return bitmapImage;
+            }
+        }
+
+        public Bitmap? DetectTooltip(Bitmap img)
         {
             var width = img.Width;
             var height = img.Height;
@@ -382,6 +439,7 @@ namespace D2RPriceChecker.Services
 
         [DllImport("user32.dll")]
         private static extern int GetSystemMetrics(int nIndex);
+   
 
         private sealed class Component
         {
