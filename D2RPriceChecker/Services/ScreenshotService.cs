@@ -10,45 +10,36 @@ public class ScreenshotService
     private const int SM_CXSCREEN = 0;
     private const int SM_CYSCREEN = 1;
 
-    private readonly string applicationDataPath;
-    private readonly string screenshotsPath;
-    private readonly string tooltipsPath;
-
-    private readonly TooltipPipeline _detector = new();
-
-    //private bool shouldSaveScreenshot = true;
-    //private bool shouldSaveTooltip = true;
-
     public ScreenshotService()
     {
-        string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        //string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-        applicationDataPath = Path.Combine(localAppData, "D2RPriceChecker");
-        screenshotsPath = Path.Combine(applicationDataPath, "screenshots");
-        tooltipsPath = Path.Combine(applicationDataPath, "tooltips");
+        //applicationDataPath = Path.Combine(localAppData, "D2RPriceChecker");
+        //screenshotsPath = Path.Combine(applicationDataPath, "screenshots");
+        //tooltipsPath = Path.Combine(applicationDataPath, "tooltips");
 
-        Directory.CreateDirectory(applicationDataPath);
-        Directory.CreateDirectory(screenshotsPath);
-        Directory.CreateDirectory(tooltipsPath);
+        //Directory.CreateDirectory(applicationDataPath);
+        //Directory.CreateDirectory(screenshotsPath);
+        //Directory.CreateDirectory(tooltipsPath);
     }
 
-    public Bitmap? CaptureItemTooltip()
-    {
-        string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-fff");
-        string filename = $"{timestamp}.png";
+    //public Bitmap? CaptureItemTooltip()
+    //{
+    //    string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-fff");
+    //    string filename = $"{timestamp}.png";
 
-        var screenshot = CapturePrimaryScreen();
+    //    var screenshot = CapturePrimaryScreen();
 
-        //if (shouldSaveScreenshot)
-        //    screenshot.Save(Path.Combine(screenshotsPath, filename), ImageFormat.Png);
+    //    if (shouldSaveScreenshot)
+    //        screenshot.Save(Path.Combine(screenshotsPath, filename), ImageFormat.Png);
 
-        var result = _detector.Run(screenshot);
+    //    var result = _detector.Run(screenshot);
 
-        //if(result.Tooltip != null && shouldSaveTooltip)
-        //    result.Tooltip.Save(Path.Combine(tooltipsPath, filename), ImageFormat.Png);
+    //    if (shouldSaveTooltip && result.Tooltip is not null)
+    //        result.Tooltip.Save(Path.Combine(tooltipsPath, filename), ImageFormat.Png);
 
-        return result.Tooltip;
-    }
+    //    return result.Tooltip;
+    //}
 
     public Bitmap CapturePrimaryScreen()
     {

@@ -54,26 +54,89 @@ public partial class MainWindow : Window
 
         var handle = new WindowInteropHelper(this).Handle;
 
-        _hotkeys = new HotkeyManager(handle); 
-  
-        _hotkeys.Register(Key.D, ModifierKeys.Control, async () =>
-        {
-            var tooltipImage = _screenshots!.CaptureItemTooltip();
+        _hotkeys = new HotkeyManager(handle);  
 
-            if (tooltipImage != null)
-            {
-                System.Media.SystemSounds.Asterisk.Play();
-
-                //var text = await ocrService.ReadAsync(tooltipImage);
-                //Dispatcher.Invoke(() => webView.ShowWithData(text));
-            }
-        });
+        _hotkeys.Register(Key.D, ModifierKeys.Control, HandlePipelineHotkey);
     }
-
+  
     protected override void OnClosed(EventArgs e)
     {
         _hotkeys?.Dispose();
         base.OnClosed(e);
+    }
+
+
+
+    private async void HandlePipelineHotkey()
+    {
+        try
+        {
+            StartProcessing();
+            ClearImageFields();
+
+            var screenshot = _screenshots.CapturePrimaryScreen();
+            var result = _detection.Run(screenshot);
+         
+            PopulateImageFields(result);
+        }
+        finally
+        {
+            StopProcessing();
+        }
+
+     
+        //mb do timestamp here
+        // mb do is processing
+        //mb save the inner element
+
+
+
+        //if (result.IsTooltipFound)
+        //{
+
+            //var text = await ocrService.ReadAsync(tooltipImage);
+            //Dispatcher.Invoke(() => webView.ShowWithData(text));
+        //}
+
+        // Save the captured screenshot and results for debugging to disk
+    }
+
+    private void ClearImageFields()
+    {
+        if (Application.Current.MainWindow?.IsVisible == false)
+            return;
+
+        Stage1Image.Source = null;
+        Stage2Image.Source = null;
+        Stage3Image.Source = null;
+        Stage4Image.Source = null;
+        TooltipImageControl.Source = null;
+    }   
+
+    private void PopulateImageFields(TooltipPipelineResult result, bool includeScreenshotField = true)
+    {
+        if (Application.Current.MainWindow?.IsVisible == false)
+            return;
+
+        // Stage 1: Original screenshot
+        if(includeScreenshotField)
+            Stage1Image.Source = BitmapConverter.BitmapImageFromBitmap(result.Screenshot);
+
+        // Stage 2: Border mask — white = gray-matching pixels, black = everything else
+        if (result.BorderMask != null)
+            Stage2Image.Source = BitmapConverter.BitmapImageFromBitmap(result.BorderMask);
+
+        // Stage 3: Connected components — each blob gets a distinct color
+        if (result.Components != null)
+            Stage3Image.Source = BitmapConverter.BitmapImageFromBitmap(result.Components);
+
+        // Stage 4: Rectangular border detection — red rectangle overlay on original
+        if (result.BorderOverlay != null)
+            Stage4Image.Source = BitmapConverter.BitmapImageFromBitmap(result.BorderOverlay);
+
+        // Final result: cropped tooltip
+        if (result.Tooltip != null)
+            TooltipImageControl.Source = BitmapConverter.BitmapImageFromBitmap(result.Tooltip);
     }
 
     private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -188,36 +251,41 @@ public partial class MainWindow : Window
 
     private async void ProcessButton_Click(object sender, RoutedEventArgs? e)
     {
-        if (_loadedBitmap is null || _isProcessing)
+        if (_loadedBitmap is null)
             return;
-
-        _isProcessing = true;
 
         try
         {
-            LoadingSpinner.Visibility = Visibility.Visible;
+            StartProcessing();
 
             // Run the full pipeline once
             var result = await Task.Run(() => _detection.Run(_loadedBitmap));
 
-            // Stage 2: Border mask — white = gray-matching pixels, black = everything else
-            Stage2Image.Source = BitmapConverter.BitmapImageFromBitmap(result.BorderMask);
-
-            // Stage 3: Connected components — each blob gets a distinct color
-            Stage3Image.Source = BitmapConverter.BitmapImageFromBitmap(result.Components);
-
-            // Stage 4: Rectangular border detection — red rectangle overlay on original
-            Stage4Image.Source = BitmapConverter.BitmapImageFromBitmap(result.BorderOverlay);
-
-            // Final result: cropped tooltip
-            TooltipImageControl.Source = result.Tooltip != null
-                ? BitmapConverter.BitmapImageFromBitmap(result.Tooltip)
-                : null;
+            PopulateImageFields(result);
         }
         finally
+        {
+            StopProcessing();
+        }
+    }
+
+    private void StartProcessing()
+    {
+        if (_isProcessing)
+            return;
+
+        _isProcessing = true;
+        LoadingSpinner.Visibility = Visibility.Visible;
+    }
+
+    private void StopProcessing()
+    {
+        if (_isProcessing)
         {
             _isProcessing = false;
             LoadingSpinner.Visibility = Visibility.Collapsed;
         }
     }
+
+
 }
