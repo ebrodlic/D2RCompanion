@@ -1,10 +1,11 @@
-﻿using System.Windows;
+﻿using D2RPriceChecker.Services;
+using Microsoft.Win32;
+using System.Drawing;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using System.Drawing;
-using Microsoft.Win32;
-using D2RPriceChecker.Services;
+using WpfAnimatedGif;
 
 namespace D2RPriceChecker;
 
@@ -25,6 +26,11 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         this.PreviewKeyDown += MainWindow_PreviewKeyDown;
+
+        // Load the spinner GIF once
+        var spinnerUri = new Uri("pack://application:,,,/Resources/spinner.gif");
+        var spinnerImage = new BitmapImage(spinnerUri);
+        ImageBehavior.SetAnimatedSource(LoadingSpinner, spinnerImage);
     }
 
     private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -91,8 +97,6 @@ public partial class MainWindow : Window
             LoadCurrentImage();
           
         }
-
-        this.Focus(); // window gets focus
     }
 
     private void LoadCurrentImage()
@@ -126,18 +130,29 @@ public partial class MainWindow : Window
             LoadCurrentImage();
         }
     }
-    private void ProcessButton_Click(object sender, RoutedEventArgs e)
+    private async void ProcessButton_Click(object sender, RoutedEventArgs e)
     {
         if (_loadedImage is null)
             return;
 
-        _loadedBitmap = _screenshots.BitmapFromBitmapImage(_loadedImage);
-
-        var tooltip = _screenshots.DetectTooltip(_loadedBitmap);
-
-        if (tooltip != null)
+        try
         {
-            TooltipImageControl.Source = _screenshots.BitmapImageFromBitmap(tooltip);
+            LoadingSpinner.Visibility = Visibility.Visible;
+
+            _loadedBitmap = await Task.Run(() => _screenshots.BitmapFromBitmapImage(_loadedImage));
+            var tooltip = await Task.Run(() => _screenshots.DetectTooltip(_loadedBitmap));  
+
+            if (tooltip != null)
+            {
+                TooltipImageControl.Source = _screenshots.BitmapImageFromBitmap(tooltip);
+            }
         }
+        finally
+        {
+            // Hide spinner
+            LoadingSpinner.Visibility = Visibility.Collapsed;
+        }
+
+
     }
 }

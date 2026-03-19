@@ -19,13 +19,19 @@
             <!-- Label -->
             <TextBlock Text="Screenshot" FontWeight="Bold" Margin="0,0,0,5"/>
 
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Height="32">
                 <TextBlock Text="Image Path:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <TextBox Name="ImagePathTextBox" Width="650" Margin="0,0,5,0"/>
+                <TextBox Name="ImagePathTextBox" Width="600" Margin="0,0,5,0"  />
                 <Button Content="Browse" Click="BrowseImages_Click" Width="80" Margin="0,0,5,0"/>
                 <Button Content="←" Click="LeftButton_Click" Width="30" Margin="0,0,5,0"/>
                 <Button Content="→" Click="RightButton_Click" Width="30" Margin="0,0,5,0"/>
                 <Button Content="Process" Click="ProcessButton_Click" Width="80" Margin="0,0,5,0"/>
+                <Image x:Name="LoadingSpinner"
+                        Width="32" Height="32"                   
+                        Visibility="Collapsed"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                
             </StackPanel>
 
 
