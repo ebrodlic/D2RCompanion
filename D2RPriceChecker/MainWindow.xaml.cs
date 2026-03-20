@@ -92,10 +92,6 @@ public partial class MainWindow : Window
             StopProcessing();
         }
 
-     
-        //mb do timestamp here
-
-
 
 
 
