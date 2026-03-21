@@ -3,6 +3,7 @@ using D2RPriceChecker.Services;
 using D2RPriceChecker.Util;
 using Microsoft.Win32;
 using System.Drawing;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -85,7 +86,8 @@ public partial class MainWindow : Window
 
             if (detectionResult.IsTooltipFound)
             {
-                var segmentationResult = _segmentation.Run(detectionResult.Tooltip);
+                //TODO - fix this - no need for new settings object here at all
+                var segmentationResult = _segmentation.Run(detectionResult.Tooltip, new TooltipLineSegmentationPipelineSettings());
 
                 DebugLogTextBox.Text = segmentationResult.TooltipLines.Count.ToString();
 
@@ -294,7 +296,8 @@ public partial class MainWindow : Window
 
             PopulateImageFields(detectionResult);
 
-            var segmentationResult = _segmentation.Run(detectionResult.Tooltip);
+            var segmentationSettings = GetSettingsFromUI();
+            var segmentationResult = _segmentation.Run(detectionResult.Tooltip, segmentationSettings);
 
             DebugLogTextBox.Text = segmentationResult.TooltipLines.Count.ToString();
 
@@ -322,6 +325,44 @@ public partial class MainWindow : Window
             _isProcessing = false;
             LoadingSpinner.Visibility = Visibility.Collapsed;
         }
+    }
+
+    //// TODO - GENERATED - inspect later
+    private TooltipLineSegmentationPipelineSettings GetSettingsFromUI()
+    {
+        var settings = new TooltipLineSegmentationPipelineSettings();
+
+        if (int.TryParse(ContentCutoffValueTextBox.Text, out int cutoff))
+            settings.ContentCutoffValue = cutoff;
+
+        if (int.TryParse(DistanceThresholdTextBox.Text, out int distance))
+            settings.DistanceThreshold = distance;
+
+        if (int.TryParse(BrightnessThresholdTextBox.Text, out int brightness))
+            settings.BrightnessThreshold = brightness;
+
+        if (int.TryParse(MaxChannelThresholdTextBox.Text, out int maxChannel))
+            settings.MaxChannelThreshold = maxChannel;
+
+        if (int.TryParse(CapitalizationOffsetTextBox.Text, out int capOffset))
+            settings.CapitalizationOffset = capOffset;
+
+        if (int.TryParse(FloorOffsetTextBox.Text, out int floorOffset))
+            settings.FloorOffset = floorOffset;
+
+        if (int.TryParse(PaddingTopTextBox.Text, out int paddingTop))
+            settings.PaddingTop = paddingTop;
+
+        if (int.TryParse(PaddingBottomTextBox.Text, out int paddingBottom))
+            settings.PaddingBottom = paddingBottom;
+
+        if (int.TryParse(PaddingLeftTextBox.Text, out int paddingLeft))
+            settings.PaddingLeft = paddingLeft;
+
+        if (int.TryParse(PaddingRightTextBox.Text, out int paddingRight))
+            settings.PaddingRight = paddingRight;
+
+        return settings;
     }
 
 
