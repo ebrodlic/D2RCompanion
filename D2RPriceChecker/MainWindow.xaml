@@ -6,255 +6,292 @@
         xmlns:local="clr-namespace:D2RPriceChecker"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1600" WindowState="Maximized">
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*" />    <!-- Left side: Image display and controls -->
-            <ColumnDefinition Width="2" />     <!-- Separator: Vertical line -->
-            <ColumnDefinition Width="2*" />    <!-- Right side: Text OCR and Debug log -->
-        </Grid.ColumnDefinitions>
 
-        <!-- Left side: Image display and controls -->
-        <StackPanel Grid.Column="0" Margin="10">
-
-            <!-- Label -->
-            <TextBlock Text="Screenshot" FontWeight="Bold" Margin="0,0,0,5"/>
-
-            <!-- Controls: Image path, Browse button, Navigation buttons, Process button, Auto-process checkbox -->
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Height="24">
-                <TextBlock Text="Image Path:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <TextBox Name="ImagePathTextBox" Width="600" Margin="0,0,5,0" VerticalContentAlignment="Center"  />
-                <Button Content="Browse" Click="BrowseImages_Click" Width="80" Margin="0,0,5,0"/>
-                <Button Content="←" Click="LeftButton_Click" Width="30" Margin="0,0,5,0"/>
-                <Button Content="→" Click="RightButton_Click" Width="30" Margin="0,0,5,0"/>
-                <Button Content="Process" Click="ProcessButton_Click" Width="80" Margin="0,0,5,0"/>
-                <CheckBox x:Name="AutoProcessCheckBox" Content="Auto-process" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="True"/>
-                <Image x:Name="LoadingSpinner"
-                        Width="32" Height="32"                   
-                        Visibility="Collapsed"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-            </StackPanel>
-
-            <!-- 2x2 grid for pipeline stage images -->
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <!-- Top Left -->
-                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5">
-                    <ScrollViewer Style="{StaticResource StageScrollViewerStyle}" 
-                                  PreviewMouseLeftButtonDown="Scroll_MouseDown"
-                                  PreviewMouseMove="Scroll_MouseMove"
-                                  PreviewMouseLeftButtonUp="Scroll_MouseUp">
-                        <Image x:Name="Stage1Image" Stretch="None"/>
-                    </ScrollViewer>
-                </Border>
-                <!-- Top Right -->
-                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5">
-                    <ScrollViewer Style="{StaticResource StageScrollViewerStyle}" 
-                                  PreviewMouseLeftButtonDown="Scroll_MouseDown"
-                                  PreviewMouseMove="Scroll_MouseMove"
-                                  PreviewMouseLeftButtonUp="Scroll_MouseUp">
-                        <Image x:Name="Stage2Image" Stretch="None"/>
-                    </ScrollViewer>
-                </Border>
-                <!-- Bottom Left -->
-                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5">
-                    <ScrollViewer Style="{StaticResource StageScrollViewerStyle}" 
-                                  PreviewMouseLeftButtonDown="Scroll_MouseDown"
-                                  PreviewMouseMove="Scroll_MouseMove"
-                                  PreviewMouseLeftButtonUp="Scroll_MouseUp">
-                        <Image x:Name="Stage3Image" Stretch="None"/>
-                    </ScrollViewer>
-                </Border>
-                <!-- Bottom Right -->
-                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5">
-                    <ScrollViewer Style="{StaticResource StageScrollViewerStyle}" 
-                                  PreviewMouseLeftButtonDown="Scroll_MouseDown"
-                                  PreviewMouseMove="Scroll_MouseMove"
-                                  PreviewMouseLeftButtonUp="Scroll_MouseUp">
-                        <Image x:Name="Stage4Image" Stretch="None"/>
-                    </ScrollViewer>
-                </Border>
-            </Grid>
-
-            <!-- Tooltip image and lines section-->
-            <Grid Margin="0,10,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <!-- Tooltip -->
-                    <ColumnDefinition Width="5" />
-                    <!-- Separator -->
-                    <ColumnDefinition Width="1*" />
-                    <!-- Lines -->
-                </Grid.ColumnDefinitions>
-
-                <!-- Left side: Tooltip image -->
-                <StackPanel Grid.Column="0" Orientation="Vertical">
-                    <TextBlock Text="Tooltip" FontWeight="Bold" Margin="0,0,0,5"/>
-
-                    <ScrollViewer Style="{StaticResource TooltipScrollViewerStyle}" 
-                                  PreviewMouseLeftButtonDown="Scroll_MouseDown"
-                                  PreviewMouseMove="Scroll_MouseMove"
-                                  PreviewMouseLeftButtonUp="Scroll_MouseUp"> 
-                        <Image Name="TooltipImageControl" Stretch="None"/>
-                    </ScrollViewer>
-                </StackPanel>
-
+    <Grid x:Name="RootGrid">        
+        <Grid x:Name="LayoutGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <!-- Left side: Image display and controls -->
+                <ColumnDefinition Width="2" />
                 <!-- Separator: Vertical line -->
-                <Border Grid.Column="1"
-                        Background="Gray"
-                        Width="1"
-                        HorizontalAlignment="Center" />
+                <ColumnDefinition Width="2*" />
+                <!-- Right side: Text OCR and Debug log -->
+            </Grid.ColumnDefinitions>
 
-                <!-- Right side: Lines section-->
-                <StackPanel  Grid.Column="2" Orientation="Vertical">
-                    <TextBlock Text="Lines" FontWeight="Bold" Margin="0,0,0,5"/>
-                    <ScrollViewer Style="{StaticResource TooltipScrollViewerStyle}" 
-                                  PreviewMouseLeftButtonDown="Scroll_MouseDown"
-                                  PreviewMouseMove="Scroll_MouseMove"
-                                  PreviewMouseLeftButtonUp="Scroll_MouseUp">
-                        <StackPanel Name="LinesStackPanel" Orientation="Vertical"/>
-                    </ScrollViewer>
-                    
-                 
+            <!-- Left side: Image display and controls -->
+            <StackPanel Grid.Column="0" Margin="10">
+
+                <!-- Label -->
+                <TextBlock Text="Screenshot" FontWeight="Bold" Margin="0,0,0,5"/>
+
+                <!-- Controls: Image path, Browse button, Navigation buttons, Process button, Auto-process checkbox -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Height="24">
+                    <TextBlock Text="Image Path:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBox Name="ImagePathTextBox" Width="600" Margin="0,0,5,0" VerticalContentAlignment="Center"  />
+                    <Button Content="Browse" Click="BrowseImages_Click" Width="80" Margin="0,0,5,0"/>
+                    <Button Content="←" Click="LeftButton_Click" Width="30" Margin="0,0,5,0"/>
+                    <Button Content="→" Click="RightButton_Click" Width="30" Margin="0,0,5,0"/>
+                    <Button Content="Process" Click="ProcessButton_Click" Width="80" Margin="0,0,5,0"/>
+                    <CheckBox x:Name="AutoProcessCheckBox" Content="Auto-process" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="True"/>
+                    <Image x:Name="LoadingSpinner"
+                            Width="32" Height="32"                   
+                            Visibility="Collapsed"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
                 </StackPanel>
 
-            </Grid>
-
-        </StackPanel>
-
-        <!-- Separator: Vertical line -->
-        <Border Grid.Column="1"
-            Background="Gray"
-            Width="1"
-            HorizontalAlignment="Center" />
-
-        <!-- Right side: Text OCR and Debug log -->
-        <Grid Grid.Column="2" Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" /> <!-- Settings -->
-                <RowDefinition Height="5" />  <!-- Separator -->
-                <RowDefinition Height="1*" /> <!-- Metadata -->
-                <RowDefinition Height="5" />  <!-- Separator -->
-                <RowDefinition Height="1*" /> <!-- OCR -->
-                <RowDefinition Height="5" /> <!-- Separator -->
-                <RowDefinition Height="1*" /> <!-- Debug -->
-            </Grid.RowDefinitions>
-
-            <StackPanel Grid.Row="0">
-                <TextBlock Text="Settings" FontWeight="Bold" Margin="0,0,0,5"/>
-                <Grid Margin="0,0,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="15" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="80" />
-                    </Grid.ColumnDefinitions>
+                <!-- 2x2 grid for pipeline stage images -->
+                <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <!-- Row 0 -->
-                    <TextBlock Text="Content Cutoff Value:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="0" Grid.Column="0"/>
-                    <TextBox x:Name="ContentCutoffValueTextBox" Text="8" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="0" Grid.Column="1"/>
-                    <TextBlock Text="Distance Threshold:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="0" Grid.Column="3"/>
-                    <TextBox x:Name="DistanceThresholdTextBox" Text="40" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="0" Grid.Column="4"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                    <!-- Row 1 -->
-                    <TextBlock Text="Brightness Threshold:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="1" Grid.Column="0"/>
-                    <TextBox x:Name="BrightnessThresholdTextBox" Text="80" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="1" Grid.Column="1"/>
-                    <TextBlock Text="Max Channel Threshold:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="1" Grid.Column="3"/>
-                    <TextBox x:Name="MaxChannelThresholdTextBox" Text="140" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="1" Grid.Column="4"/>
-
-                    <!-- Row 2 -->
-                    <TextBlock Text="Capitalization Offset:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="2" Grid.Column="0"/>
-                    <TextBox x:Name="CapitalizationOffsetTextBox" Text="6" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="2" Grid.Column="1"/>
-                    <TextBlock Text="Floor Offset:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="2" Grid.Column="3"/>
-                    <TextBox x:Name="FloorOffsetTextBox" Text="3" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="2" Grid.Column="4"/>
-
-                    <!-- Row 3 -->
-                    <TextBlock Text="Padding Top:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="3" Grid.Column="0"/>
-                    <TextBox x:Name="PaddingTopTextBox" Text="3" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="3" Grid.Column="1"/>
-                    <TextBlock Text="Padding Bottom:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="3" Grid.Column="3"/>
-                    <TextBox x:Name="PaddingBottomTextBox" Text="3" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="3" Grid.Column="4"/>
-
-                    <!-- Row 4 -->
-                    <TextBlock Text="Padding Left:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="4" Grid.Column="0"/>
-                    <TextBox x:Name="PaddingLeftTextBox" Text="24" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="4" Grid.Column="1"/>
-                    <TextBlock Text="Padding Right:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="4" Grid.Column="3"/>
-                    <TextBox x:Name="PaddingRightTextBox" Text="24" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="4" Grid.Column="4"/>
+                    <!-- Top Left -->
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5">
+                        <ScrollViewer Style="{StaticResource StageScrollViewerStyle}" 
+                                      PreviewMouseLeftButtonDown="Scroll_MouseDown"
+                                      PreviewMouseMove="Scroll_MouseMove"
+                                      PreviewMouseLeftButtonUp="Scroll_MouseUp">
+                            <Image x:Name="Stage1Image" Stretch="None" MouseRightButtonDown="Image_MouseRightButtonDown"/>
+                        </ScrollViewer>
+                    </Border>
+                    <!-- Top Right -->
+                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5">
+                        <ScrollViewer Style="{StaticResource StageScrollViewerStyle}" 
+                                      PreviewMouseLeftButtonDown="Scroll_MouseDown"
+                                      PreviewMouseMove="Scroll_MouseMove"
+                                      PreviewMouseLeftButtonUp="Scroll_MouseUp">
+                            <Image x:Name="Stage2Image" Stretch="None" MouseRightButtonDown="Image_MouseRightButtonDown"/>
+                        </ScrollViewer>
+                    </Border>
+                    <!-- Bottom Left -->
+                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5">
+                        <ScrollViewer Style="{StaticResource StageScrollViewerStyle}" 
+                                      PreviewMouseLeftButtonDown="Scroll_MouseDown"
+                                      PreviewMouseMove="Scroll_MouseMove"
+                                      PreviewMouseLeftButtonUp="Scroll_MouseUp">
+                            <Image x:Name="Stage3Image" Stretch="None" MouseRightButtonDown="Image_MouseRightButtonDown"/>
+                        </ScrollViewer>
+                    </Border>
+                    <!-- Bottom Right -->
+                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5">
+                        <ScrollViewer Style="{StaticResource StageScrollViewerStyle}" 
+                                      PreviewMouseLeftButtonDown="Scroll_MouseDown"
+                                      PreviewMouseMove="Scroll_MouseMove"
+                                      PreviewMouseLeftButtonUp="Scroll_MouseUp">
+                            <Image x:Name="Stage4Image" Stretch="None" MouseRightButtonDown="Image_MouseRightButtonDown"/>
+                        </ScrollViewer>
+                    </Border>
                 </Grid>
+         
+                <!-- Tooltip image and lines section-->
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <!-- Tooltip -->
+                        <ColumnDefinition Width="5" />
+                        <!-- Separator -->
+                        <ColumnDefinition Width="1*" />
+                        <!-- Lines -->
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left side: Tooltip image -->
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <TextBlock Text="Tooltip" FontWeight="Bold" Margin="0,0,0,5"/>
+
+                        <ScrollViewer Style="{StaticResource TooltipScrollViewerStyle}" 
+                                      PreviewMouseLeftButtonDown="Scroll_MouseDown"
+                                      PreviewMouseMove="Scroll_MouseMove"
+                                      PreviewMouseLeftButtonUp="Scroll_MouseUp">
+                            <Image Name="TooltipImageControl" Stretch="None" />
+                        </ScrollViewer>
+                    </StackPanel>
+
+                    <!-- Separator: Vertical line -->
+                    <Border Grid.Column="1"
+                            Background="Gray"
+                            Width="1"
+                            HorizontalAlignment="Center" />
+
+                    <!-- Right side: Lines section-->
+                    <StackPanel  Grid.Column="2" Orientation="Vertical">
+                        <TextBlock Text="Lines" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <ScrollViewer Style="{StaticResource TooltipScrollViewerStyle}" 
+                                      PreviewMouseLeftButtonDown="Scroll_MouseDown"
+                                      PreviewMouseMove="Scroll_MouseMove"
+                                      PreviewMouseLeftButtonUp="Scroll_MouseUp">
+                            <StackPanel Name="LinesStackPanel" Orientation="Vertical"/>
+                        </ScrollViewer>
+
+
+                    </StackPanel>
+
+                </Grid>
+
             </StackPanel>
 
-            <!-- Separator -->
-            <Border Grid.Row="1"
-                 Background="Gray"
-                 Height="1"
-                 VerticalAlignment="Center" />
+            <!-- Separator: Vertical line -->
+            <Border Grid.Column="1"
+                Background="Gray"
+                Width="1"
+                HorizontalAlignment="Center" />
 
-            <!-- Tooltip image -->
-            <StackPanel Grid.Row="2">
-                <TextBlock Text="Metadata" FontWeight="Bold" Margin="0,0,0,5"/>
-                <TextBox Name="MetadataTextBox"
-                      TextWrapping="Wrap"
-                      AcceptsReturn="True"
-                      VerticalScrollBarVisibility="Auto"
-                      Height="200"
-                      IsReadOnly="True"/>
+            <!-- Right side: Text OCR and Debug log -->
+            <Grid Grid.Column="2" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <!-- Settings -->
+                    <RowDefinition Height="5" />
+                    <!-- Separator -->
+                    <RowDefinition Height="1*" />
+                    <!-- Metadata -->
+                    <RowDefinition Height="5" />
+                    <!-- Separator -->
+                    <RowDefinition Height="1*" />
+                    <!-- OCR -->
+                    <RowDefinition Height="5" />
+                    <!-- Separator -->
+                    <RowDefinition Height="1*" />
+                    <!-- Debug -->
+                </Grid.RowDefinitions>
 
-            </StackPanel>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Settings" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="15" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="80" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-            <!-- Separator -->
-            <Border Grid.Row="3"
+                        <!-- Row 0 -->
+                        <TextBlock Text="Content Cutoff Value:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="0" Grid.Column="0"/>
+                        <TextBox x:Name="ContentCutoffValueTextBox" Text="5" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="0" Grid.Column="1"/>
+                        <TextBlock Text="Distance Threshold:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="0" Grid.Column="3"/>
+                        <TextBox x:Name="DistanceThresholdTextBox" Text="40" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="0" Grid.Column="4"/>
+
+                        <!-- Row 1 -->
+                        <TextBlock Text="Max Rows Blob Sequence Length:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="1" Grid.Column="0"/>
+                        <TextBox x:Name="MaxRowsBlobSequenceLengthTextBox" Text="11" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="1" Grid.Column="1"/>
+                        <TextBlock Text="Placeholder Prop:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="1" Grid.Column="3"/>
+                        <TextBox x:Name="PlaceholderPropTextBox" Text="10" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="1" Grid.Column="4"/>
+
+                        <!-- Row 2 -->
+                        <TextBlock Text="Brightness Threshold:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="2" Grid.Column="0"/>
+                        <TextBox x:Name="BrightnessThresholdTextBox" Text="80" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="2" Grid.Column="1"/>
+                        <TextBlock Text="Max Channel Threshold:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="2" Grid.Column="3"/>
+                        <TextBox x:Name="MaxChannelThresholdTextBox" Text="140" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="2" Grid.Column="4"/>
+
+                        <!-- Row 3 -->
+                        <TextBlock Text="Capitalization Offset:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="3" Grid.Column="0"/>
+                        <TextBox x:Name="CapitalizationOffsetTextBox" Text="6" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="3" Grid.Column="1"/>
+                        <TextBlock Text="Floor Offset:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="3" Grid.Column="3"/>
+                        <TextBox x:Name="FloorOffsetTextBox" Text="3" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="3" Grid.Column="4"/>
+
+                        <!-- Row 4 -->
+                        <TextBlock Text="Padding Top:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="4" Grid.Column="0"/>
+                        <TextBox x:Name="PaddingTopTextBox" Text="5" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="4" Grid.Column="1"/>
+                        <TextBlock Text="Padding Bottom:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="4" Grid.Column="3"/>
+                        <TextBox x:Name="PaddingBottomTextBox" Text="3" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="4" Grid.Column="4"/>
+
+                        <!-- Row 5 -->
+                        <TextBlock Text="Padding Left:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="5" Grid.Column="0"/>
+                        <TextBox x:Name="PaddingLeftTextBox" Text="24" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="5" Grid.Column="1"/>
+                        <TextBlock Text="Padding Right:" VerticalAlignment="Center" Margin="0,0,5,5" Grid.Row="5" Grid.Column="3"/>
+                        <TextBox x:Name="PaddingRightTextBox" Text="24" VerticalContentAlignment="Center" Margin="0,0,0,5" Grid.Row="5" Grid.Column="4"/>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Separator -->
+                <Border Grid.Row="1"
+                     Background="Gray"
+                     Height="1"
+                     VerticalAlignment="Center" />
+
+                <!-- Tooltip image -->
+                <StackPanel Grid.Row="2">
+                    <TextBlock Text="Metadata" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBox Name="MetadataTextBox"
+                          TextWrapping="Wrap"
+                          AcceptsReturn="True"
+                          VerticalScrollBarVisibility="Auto"
+                          Height="200"
+                          IsReadOnly="True"/>
+
+                </StackPanel>
+
+                <!-- Separator -->
+                <Border Grid.Row="3"
+                        Background="Gray"
+                        Height="1"
+                        VerticalAlignment="Center" />
+
+                <!-- Tooltip image -->
+                <StackPanel Grid.Row="4">
+                    <TextBlock Text="OCR Result" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBox Name="OcrResultTextBox"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto"
+                             Height="200"
+                             IsReadOnly="True"/>
+
+                    <!--</Border>-->
+                </StackPanel>
+
+                <!-- Separator -->
+                <Border Grid.Row="5"
                     Background="Gray"
                     Height="1"
                     VerticalAlignment="Center" />
 
-            <!-- Tooltip image -->
-            <StackPanel Grid.Row="4">
-                <TextBlock Text="OCR Result" FontWeight="Bold" Margin="0,0,0,5"/>
-                <TextBox Name="OcrResultTextBox"
+                <!-- Debug Log result -->
+                <StackPanel Grid.Row="6" Margin="0,10,0,0">
+                    <TextBlock Text="Debug Log" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBox Name="DebugLogTextBox"
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
                          VerticalScrollBarVisibility="Auto"
                          Height="200"
                          IsReadOnly="True"/>
+                </StackPanel>
 
-                <!--</Border>-->
-            </StackPanel>
+            </Grid>
+        </Grid>
+       
+        <!-- 🔥 OVERLAY GOES HERE (LAST) -->
+        <Grid x:Name="Overlay"
+          Background="#CC000000"
+          Visibility="Collapsed"
+          Panel.ZIndex="999"
+          MouseRightButtonDown="Overlay_Close">
 
-            <!-- Separator -->
-            <Border Grid.Row="5"
-                Background="Gray"
-                Height="1"
-                VerticalAlignment="Center" />
-
-            <!-- Debug Log result -->
-            <StackPanel Grid.Row="6" Margin="0,10,0,0">
-                <TextBlock Text="Debug Log" FontWeight="Bold" Margin="0,0,0,5"/>
-                <TextBox Name="DebugLogTextBox"
-                     TextWrapping="Wrap"
-                     AcceptsReturn="True"
-                     VerticalScrollBarVisibility="Auto"
-                     Height="200"
-                     IsReadOnly="True"/>
-            </StackPanel>
-
+            <Image x:Name="OverlayImage"
+               Stretch="Uniform"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
         </Grid>
     </Grid>
 </Window>

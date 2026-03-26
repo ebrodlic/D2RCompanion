@@ -4,6 +4,7 @@ using D2RPriceChecker.Util;
 using Microsoft.Win32;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,6 +21,7 @@ public partial class MainWindow : Window
 {
     // State
     private List<string> _imagePaths = new();
+    private string _currentImagePath = string.Empty;
     private int _currentImageIndex = -1;
     private Bitmap? _loadedBitmap;
 
@@ -61,14 +63,12 @@ public partial class MainWindow : Window
 
         _hotkeys.Register(Key.D, ModifierKeys.Control, HandlePipelineHotkey);
     }
-  
+
     protected override void OnClosed(EventArgs e)
     {
         _hotkeys?.Dispose();
         base.OnClosed(e);
     }
-
-
 
     private async void HandlePipelineHotkey()
     {
@@ -77,7 +77,7 @@ public partial class MainWindow : Window
             StartProcessing();
             ClearImageFields();
 
-            var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-fff");
+            var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             var screenshot = _screenshots.CapturePrimaryScreen();
             var detectionResult = _detection.Run(screenshot);
          
@@ -92,6 +92,7 @@ public partial class MainWindow : Window
                 DebugLogTextBox.Text = segmentationResult.TooltipLines.Count.ToString();
 
                 PopulateSegmentationImageFields(segmentationResult);
+                SavePipelineResultData(timestamp, segmentationResult);
 
                 //var text = await ocrService.ReadAsync(tooltipImage);
                 //Dispatcher.Invoke(() => webView.ShowWithData(text));
@@ -111,6 +112,9 @@ public partial class MainWindow : Window
 
     private void PopulateSegmentationImageFields(TooltipLineSegmetnationPipelineResult segmentationResult)
     {
+        if (Application.Current.MainWindow?.IsVisible == false)
+            return;
+
         LinesStackPanel.Children.Clear();
 
         foreach (var bitmap in segmentationResult.TooltipLines)
@@ -128,6 +132,12 @@ public partial class MainWindow : Window
     }
 
     private void SavePipelineResultData(string timestamp, TooltipDetectionPipelineResult result)
+    {
+        var datasetManager = ((App)Application.Current).DatasetManager;
+
+        datasetManager.Save(timestamp, result);
+    }
+    private void SavePipelineResultData(string timestamp, TooltipLineSegmetnationPipelineResult result)
     {
         var datasetManager = ((App)Application.Current).DatasetManager;
 
@@ -191,6 +201,24 @@ public partial class MainWindow : Window
         }
     }
 
+    private void Image_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is System.Windows.Controls.Image img)
+        {
+            if(img != null)
+            {
+                OverlayImage.Source = img.Source;
+                Overlay.Visibility = Visibility.Visible;
+            }
+        }
+
+    }
+
+    private void Overlay_Close(object sender, MouseButtonEventArgs e)
+    {
+        Overlay.Visibility = Visibility.Collapsed;
+    }
+
     private void BrowseImages_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new OpenFileDialog
@@ -207,6 +235,23 @@ public partial class MainWindow : Window
 
             LoadCurrentImage();
         }
+    }
+
+    private void LoadCurrentImage()
+    {
+        if (_currentImageIndex < 0 || _currentImageIndex >= _imagePaths.Count)
+            return;
+
+        _currentImagePath = _imagePaths[_currentImageIndex];
+
+        ImagePathTextBox.Text = _currentImagePath;
+
+        _loadedBitmap = _screenshots.LoadBitmapSafe(_currentImagePath);
+
+        Stage1Image.Source = BitmapConverter.BitmapImageFromBitmap(_loadedBitmap);
+
+        if (AutoProcessCheckBox.IsChecked == true)
+            ProcessButton_Click(this, null);
     }
 
     private void Scroll_MouseDown(object sender, MouseButtonEventArgs e)
@@ -247,22 +292,7 @@ public partial class MainWindow : Window
         scrollViewer.ReleaseMouseCapture();
     }
 
-    private void LoadCurrentImage()
-    {
-        if (_currentImageIndex < 0 || _currentImageIndex >= _imagePaths.Count)
-            return;
 
-        var path = _imagePaths[_currentImageIndex];
-
-        ImagePathTextBox.Text = path;
-
-        _loadedBitmap = _screenshots.LoadBitmapSafe(path);
-
-        Stage1Image.Source = BitmapConverter.BitmapImageFromBitmap(_loadedBitmap);
-
-        if (AutoProcessCheckBox.IsChecked == true)
-            ProcessButton_Click(this, null);
-    }
 
     private void LeftButton_Click(object sender, RoutedEventArgs? e)
     {
@@ -291,10 +321,12 @@ public partial class MainWindow : Window
         {
             StartProcessing();
 
-            // Run the full pipeline once
+            //var timestamp = Path.GetFileNameWithoutExtension(_currentImagePath);
+            
             var detectionResult = await Task.Run(() => _detection.Run(_loadedBitmap));
 
-            PopulateImageFields(detectionResult);
+            PopulateImageFields(detectionResult);            
+            //SavePipelineResultData(timestamp, detectionResult);
 
             var segmentationSettings = GetSettingsFromUI();
             var segmentationResult = _segmentation.Run(detectionResult.Tooltip, segmentationSettings);
@@ -302,6 +334,7 @@ public partial class MainWindow : Window
             DebugLogTextBox.Text = segmentationResult.TooltipLines.Count.ToString();
 
             PopulateSegmentationImageFields(segmentationResult);
+            //SavePipelineResultData(timestamp, segmentationResult);
         }
         finally
         {
@@ -337,6 +370,12 @@ public partial class MainWindow : Window
 
         if (int.TryParse(DistanceThresholdTextBox.Text, out int distance))
             settings.DistanceThreshold = distance;
+
+        if (int.TryParse(MaxRowsBlobSequenceLengthTextBox.Text, out int maxRows))
+            settings.MaxRowsBlobSequenceLength = maxRows;
+
+        if (int.TryParse(PlaceholderPropTextBox.Text, out int placeholder))
+            settings.PlaceholderProp = placeholder;
 
         if (int.TryParse(BrightnessThresholdTextBox.Text, out int brightness))
             settings.BrightnessThreshold = brightness;

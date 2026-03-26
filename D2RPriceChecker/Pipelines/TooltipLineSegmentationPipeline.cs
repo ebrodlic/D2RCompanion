@@ -30,32 +30,6 @@ namespace D2RPriceChecker.Pipelines
             return result;
         }
 
-        private List<Bitmap> GetLinesFromBlobDetections(Bitmap tooltip, List<ContentBlobDetection> blobs)
-        {
-            var lines = new List<Bitmap>();
-
-            foreach (var blob in blobs)
-            {
-                // Add capitalization effect to line start
-                int yCapitalizationStart = blob.StartY - Settings.CapitalizationOffset;
-                int yfloorOffset = blob.EndY + Settings.FloorOffset;
-
-                // Add padding to the line boundaries
-                int paddedStartY = Math.Max(0, yCapitalizationStart - Settings.PaddingTop);
-                int paddedEndY = Math.Min(tooltip.Height - 1, yfloorOffset + Settings.PaddingBottom);
-                int paddedLineHeight = paddedEndY - paddedStartY + 1;
-
-                int paddedStartX = Math.Max(0, blob.StartX - 25); // TODO - add padding left/right settings if needed DOCUMENT: padding left needs to be higher for runeword and capitalization width
-                int paddedEndX = Math.Min(tooltip.Width - 1, blob.EndX + 25);
-                int paddedLineWidth = paddedEndX - paddedStartX + 1;
-
-                // Extract the line bitmap with padding
-                Bitmap lineBitmap = tooltip.Clone(new Rectangle(paddedStartX, paddedStartY, Math.Max(paddedLineWidth, 1), Math.Max(paddedLineHeight, 1)), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                lines.Add(lineBitmap);
-            }
-            return lines;
-        }
-
         // Scan tooltip rows to detect areas of text body (10-11 min px height mid section)
         private List<ContentBlobDetection> FindTextBlobs(Bitmap tooltip)
         {
@@ -66,56 +40,56 @@ namespace D2RPriceChecker.Pipelines
             var sequenceStartY = -1;
             var sequenceEndY = -1;
 
+            var sequenceMinX = tooltip.Width;
+            var sequenceMaxX = 0;
+
             int mid = tooltip.Width / 2;
 
             // Scan the rows from top to bottom
             for (int y = 0; y < tooltip.Height; y++)
             {
-                var scanResult = ScanRowLeft(tooltip, y);
+                var rowScanResult = ScanRowLeft(tooltip, y);
 
-                if(scanResult.ContentPixelCount > Settings.ContentCutoffValue)
-                {
-                    scanResult.HasContent = true;
-                    //scanResult.MaxX = mid + (mid - scanResult.MinX);
-                }
-                else
-                {
-                    scanResult = ScanRowRight(tooltip, y, scanResult.ContentPixelCount);
+                //TODO - may need to fix x min max detection due to inflation value
+                if (!rowScanResult.HasContent)
+                    rowScanResult = ScanRowRight(tooltip, y, rowScanResult.ContentPixelCount);
 
-                    if (scanResult.ContentPixelCount > Settings.ContentCutoffValue)
-                    {
-                        scanResult.HasContent = true;
-                        //scanResult.MinX = mid - (scanResult.MaxX - mid);
-                    }
-                }
-
-                if (scanResult.HasContent)
+                if (rowScanResult.HasContent)
                 {
                     if (sequenceStartY == -1)
                         sequenceStartY = y; // mark the start of a sequence
 
                     sequenceCounter++;
+
+                    sequenceMinX = Math.Min(sequenceMinX, rowScanResult.MinX);
+                    sequenceMaxX = Math.Max(sequenceMaxX, rowScanResult.MaxX);
                 }
-                else
+                else // if empty row
                 {
                     if (sequenceCounter > 0)
                     {
-                        if (sequenceCounter >= 10)
+                        if (sequenceCounter >= Settings.MaxRowsBlobSequenceLength) // valid sequence
                         {
+                            if (sequenceCounter > Settings.MaxRowsBlobSequenceLength) //if sequence larger than 11, trim top part (likely topside of capitalized letters)
+                                sequenceStartY += sequenceCounter - Settings.MaxRowsBlobSequenceLength;
+
                             sequenceEndY = y - 1; // end of the sequence is the last true index
 
                             result.Add(new ContentBlobDetection
                             {
                                 StartY = sequenceStartY,
                                 EndY = sequenceEndY,
-                                StartX = 0,
-                                EndX = tooltip.Width
+                                StartX = sequenceMinX,
+                                EndX = sequenceMaxX
                             });
                         }
 
                         sequenceCounter = 0;
                         sequenceStartY = -1;
                         sequenceEndY = -1;
+
+                        sequenceMinX = tooltip.Width;
+                        sequenceMaxX = 0;
                     }
                 }
             }
@@ -152,6 +126,12 @@ namespace D2RPriceChecker.Pipelines
                 }
             }
 
+            if (result.ContentPixelCount > Settings.ContentCutoffValue)
+            {
+                result.HasContent = true;
+                result.MaxX = mid + (mid - result.MinX);
+            }
+
             return result;
         }
 
@@ -160,7 +140,7 @@ namespace D2RPriceChecker.Pipelines
             var result = new RowScanResult();
 
             // For letters like spirit, with very low density, we want to include findings from the left side
-            if(inflateCount > 0)
+            if (inflateCount > 0)
                 result.ContentPixelCount = inflateCount;
 
             int mid = tooltip.Width / 2;
@@ -188,97 +168,40 @@ namespace D2RPriceChecker.Pipelines
                 }
             }
 
+            if (result.ContentPixelCount > Settings.ContentCutoffValue)
+            {
+                result.HasContent = true;
+                result.MinX = mid - (result.MaxX - mid);
+            }
+
             return result;
         }
 
+        private List<Bitmap> GetLinesFromBlobDetections(Bitmap tooltip, List<ContentBlobDetection> blobs)
+        {
+            var lines = new List<Bitmap>();
 
-        //private RowScanResult[] GetRowsMask(Bitmap tooltip, bool smootheResults = true)
-        //{
-        //    var rowsMask = new RowScanResult[tooltip.Height];
+            foreach (var blob in blobs)
+            {
+                // Add capitalization effect to line start
+                int yCapitalizationStart = blob.StartY - Settings.CapitalizationOffset;
+                int yfloorOffset = blob.EndY + Settings.FloorOffset;
 
-        //    int mid = tooltip.Width / 2;
+                // Add padding to the line boundaries
+                int paddedStartY = Math.Max(0, yCapitalizationStart - Settings.PaddingTop);
+                int paddedEndY = Math.Min(tooltip.Height - 1, yfloorOffset + Settings.PaddingBottom);
+                int paddedLineHeight = paddedEndY - paddedStartY + 1;
 
-        //    for (int y = 0; y < tooltip.Height; y++)
-        //    {
-        //        rowsMask[y] = new RowScanResult();
+                int paddedStartX = Math.Max(0, blob.StartX - Settings.PaddingLeft); // TODO - add padding left/right settings if needed DOCUMENT: padding left needs to be higher for runeword and capitalization width
+                int paddedEndX = Math.Min(tooltip.Width - 1, blob.EndX + Settings.PaddingRight);
+                int paddedLineWidth = paddedEndX - paddedStartX + 1;
 
-        //        var countDistance = 0;
-
-        //        for (int x = mid; x > 0; x--)
-        //        {
-        //            if (countDistance >= Settings.DistanceThreshold)
-        //            {
-        //                break; // stop scanning this row if we have reached the distance threshold without matches
-        //            }
-
-
-        //            Color pixel = tooltip.GetPixel(x, y);
-
-        //            if (IsPixelContent(pixel))
-        //            {
-        //                rowsMask[y].ContentPixelCount++;
-        //                rowsMask[y].MinX = x;
-
-        //                countDistance = 0; // reset distance counter on match
-        //            }
-        //            else
-        //            {
-        //                countDistance++;
-        //            }
-        //        }
-
-        //        if (rowsMask[y].ContentPixelCount > Settings.ContentCutoffValue)
-        //        {
-        //            rowsMask[y].HasContent = true;
-        //            rowsMask[y].MaxX = mid + (mid - rowsMask[y].MinX);
-
-        //            //TODO if we need more check of detection ratio
-        //            //if (rowsMask[y].ContentPixelCount / rowsMask[y].PixelsChecked > 0.001)
-        //            //{
-
-        //            //}
-        //        }
-
-        //        //if we found enough pixels for total checked threshold, mark the row as content, update the max value for x
-        //    }
-
-        //    if (smootheResults)
-        //        FillShortGaps(rowsMask, Settings.LeadingThreshold);
-
-        //    return rowsMask;
-        //}
-
-        // Since actual tooltip text content is split into lines, we know we cannot have a gap smaller than the 2 paddings we use. 
-        // Fills short gaps of false values in the rowsMask with true, based on the specified minimum gap size.
-        // Smoothes out the result increasing confidence that we are not missing any lines due to small gaps in the content rows.
-        //private void FillShortGaps(RowScanResult[] rowsMask, int minGapSize)
-        //{
-        //    int startIdx = -1;  // start of a zero sequence
-
-        //    for (int i = 0; i < rowsMask.Length; i++)
-        //    {
-        //        if (!rowsMask[i].HasContent)
-        //        {
-        //            if (startIdx == -1)
-        //                startIdx = i;  // mark the start of a zero sequence
-        //        }
-        //        else
-        //        {
-        //            if (startIdx != -1)
-        //            {
-        //                int gapSize = i - startIdx;
-        //                if (gapSize < minGapSize)
-        //                {
-        //                    // Fill the gap with true values
-        //                    for (int j = startIdx; j < i; j++)
-        //                        rowsMask[j].HasContent = true;
-        //                }
-        //                startIdx = -1;  // reset for the next sequence
-        //            }
-        //        }
-        //    }
-        //    //handle trailing zeroes at the end?
-        //}
+                // Extract the line bitmap with padding
+                Bitmap lineBitmap = tooltip.Clone(new Rectangle(paddedStartX, paddedStartY, Math.Max(paddedLineWidth, 1), Math.Max(paddedLineHeight, 1)), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                lines.Add(lineBitmap);
+            }
+            return lines;
+        }
 
         private bool IsPixelContent(Color pixel)
         {
@@ -300,72 +223,6 @@ namespace D2RPriceChecker.Pipelines
         //    bool isBlue = hue >= 180 && hue <= 250 && saturation > 0.4;
         //    bool isGreen = hue >= 80 && hue <= 160 && saturation > 0.4;
         //}
-
-        private List<Bitmap> GetLinesSimple(Bitmap tooltip, RowScanResult[] rowsMask)
-        {
-            var lines = new List<Bitmap>();
-
-            var yIndexStart = -1;
-            var yIndexEnd = -1;
-            var xIndexStart = -1;
-            var xIndexEnd = -1;
-
-            for (int y = 0; y < rowsMask.Length; y++)
-            {
-                // Found content row, find y block and boundaries for x min and max
-                if (rowsMask[y].HasContent)
-                {
-                    if (yIndexStart == -1)
-                    {
-                        yIndexStart = y;  // mark the start of a line sequence  
-
-                        xIndexStart = rowsMask[y].MinX;
-                        xIndexEnd = rowsMask[y].MaxX;
-                    }
-                    else
-                    {
-                        xIndexStart = Math.Min(xIndexStart, rowsMask[y].MinX);
-                        xIndexEnd = Math.Max(xIndexEnd, rowsMask[y].MaxX);
-                    }
-                }
-                else
-                {
-                    // End of a y block, extract the line bitmap if we had a valid start
-                    if (yIndexStart != -1)
-                    {
-                        yIndexEnd = y - 1;  // end of the line is the last true index                    
-
-                        // Add capitalization effect to line start
-                        int yCapitalizationStart = yIndexStart - Settings.CapitalizationOffset;
-                        int yfloorOffset = yIndexEnd + Settings.FloorOffset;
-
-                        // Add padding to the line boundaries
-                        int paddedStartY = Math.Max(0, yCapitalizationStart - Settings.PaddingTop);
-                        int paddedEndY = Math.Min(tooltip.Height - 1, yfloorOffset + Settings.PaddingBottom);
-                        int paddedLineHeight = paddedEndY - paddedStartY + 1;
-
-                        int paddedStartX = Math.Max(0, xIndexStart - 25); // TODO - add padding left/right settings if needed DOCUMENT: padding left needs to be higher for runeword and capitalization width
-                        int paddedEndX = Math.Min(tooltip.Width - 1, xIndexEnd + 25);
-                        int paddedLineWidth = paddedEndX - paddedStartX + 1;
-
-                        // Extract the line bitmap with padding
-                        Bitmap lineBitmap = tooltip.Clone(new Rectangle(paddedStartX, paddedStartY, Math.Max(paddedLineWidth, 1), Math.Max(paddedLineHeight, 1)), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                        lines.Add(lineBitmap);
-
-                        // reset for the next line
-
-                        yIndexStart = -1;
-                        yIndexEnd = -1;
-                        xIndexStart = -1;
-                        xIndexEnd = -1;
-
-                        y = paddedEndY;  // Skip to the end of this line to avoid overlapping
-                    }
-                }
-            }
-
-            return lines;
-        }
     }
 
     public class RowScanResult
