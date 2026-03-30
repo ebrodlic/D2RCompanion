@@ -52,7 +52,7 @@ namespace D2RPriceChecker.Services
                 for (int c = 0; c < C; c++)
                     logits[t, 0, c] = onnxOutput[t * C + c];
 
-            var decodedIndices = CtcGreedyDecode(logits);
+            var decodedIndices = CtcBeamSearchDecode(logits);
 
             StringBuilder decodedText = new StringBuilder();
             int prevIdx = 0;
@@ -107,7 +107,7 @@ namespace D2RPriceChecker.Services
             return tensor;
         }
 
-        private List<int> CtcGreedyDecode(float[,,] logits, int blank = 0)
+        private List<int> CtcGreedyDecode(float[,,] logits, int blank = 0, float minConfidence = 0.5f)
         {
             int T = logits.GetLength(0);
             int C = logits.GetLength(2);
@@ -116,6 +116,7 @@ namespace D2RPriceChecker.Services
 
             for (int t = 0; t < T; t++)
             {
+                // argmax over classes
                 int maxIdx = 0;
                 float maxVal = logits[t, 0, 0];
                 for (int c = 1; c < C; c++)
@@ -127,13 +128,64 @@ namespace D2RPriceChecker.Services
                     }
                 }
 
-                if (maxIdx != blank && maxIdx != prev)
-                    output.Add(maxIdx);
+                float confidence = Softmax(logits, t, 0, maxIdx);
+
+                if (maxIdx != blank)
+                {
+                    if (prev == null || prev == blank || prev != maxIdx || confidence > minConfidence)
+                        output.Add(maxIdx);
+                }
 
                 prev = maxIdx;
             }
 
             return output;
         }
+
+        private float Softmax(float[,,] logits, int t, int batch, int idx)
+        {
+            int C = logits.GetLength(2);
+            float sumExp = 0f;
+            for (int c = 0; c < C; c++)
+                sumExp += MathF.Exp(logits[t, batch, c]);
+            return MathF.Exp(logits[t, batch, idx]) / sumExp;
+        }
+        private List<int> CtcBeamSearchDecode(float[,,] logits, int beamWidth = 5, int blank = 0)
+        {
+            int T = logits.GetLength(0); // sequence length
+            int C = logits.GetLength(2); // num_classes
+            var Beam = new List<(List<int> seq, float score)> { (new List<int>(), 0f) };
+
+            for (int t = 0; t < T; t++)
+            {
+                var nextBeam = new List<(List<int> seq, float score)>();
+
+                foreach (var (seq, score) in Beam)
+                {
+                    for (int c = 0; c < C; c++)
+                    {
+                        float logProb = logits[t, 0, c]; // raw logits, or you can take softmax and log
+                        float newScore = score + logProb;
+
+                        var newSeq = new List<int>(seq);
+
+                        if (c != blank || (seq.Count > 0 && seq.Last() != c))
+                            newSeq.Add(c);
+
+                        nextBeam.Add((newSeq, newScore));
+                    }
+                }
+
+                // Keep top beamWidth sequences
+                Beam = nextBeam
+                    .OrderByDescending(b => b.score)
+                    .Take(beamWidth)
+                    .ToList();
+            }
+
+            // Return the best sequence
+            return Beam[0].seq;
+        }
     }
 }
+
