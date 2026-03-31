@@ -9,7 +9,6 @@
         Height="400" Width="320"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Topmost="True"
         WindowStartupLocation="CenterScreen">
     <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown" Background="Transparent">
         <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" Width="24" Height="24" 

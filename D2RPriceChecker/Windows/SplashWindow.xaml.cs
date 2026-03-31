@@ -1,32 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using D2RPriceChecker.Pipelines;
+using D2RPriceChecker.Services;
 using System.Drawing;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.IO;
+using System.Windows.Interop;
 
 
 namespace D2RPriceChecker.Windows
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class SplashWindow : Window
     {
         private NotifyIcon _trayIcon = null!;
+        private HotkeyManager _hotkeys = null!;
+
+        // Services
+        private readonly ScreenshotService _screenshots = new();
+        private readonly OcrService _ocrService = new OcrService("Models/d2r_tooltip_crnn_best.onnx");
+
+        // Flags
+        private bool _isProcessing;
 
         public SplashWindow()
         {
             InitializeComponent();
-            SetupTray();
+            SetupTray(); 
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            SetupHotkeys();
+        }
+
+        private void SetupHotkeys()
+        {
+            var handle = new WindowInteropHelper(this).Handle;
+
+            _hotkeys = new HotkeyManager(handle);
+
+            _hotkeys.Register(Key.D, ModifierKeys.Control, HandlePipelineHotkey);
         }
 
         private void SetupTray()
@@ -42,6 +55,94 @@ namespace D2RPriceChecker.Windows
             _trayIcon.ContextMenuStrip = menu;
 
             _trayIcon.DoubleClick += (s, e) => { this.Show(); };
+        }
+
+        private async void HandlePipelineHotkey()
+        {
+            var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+
+            try
+            {
+                StartProcessing();
+
+                var detectionResult = RunDetectionPipeline(timestamp);
+                SavePipelineResultData(timestamp, detectionResult);
+
+                if(!detectionResult.IsTooltipFound)
+                    return;
+
+                //TODO - fix this - no need for new settings object here at all
+                var segmentationResult = RunSegmentationPipeline(detectionResult.Tooltip!);
+                SavePipelineResultData(timestamp, segmentationResult);
+
+                var ocrText = await RunOcrPipelineAsync(segmentationResult);
+             
+                System.Windows.MessageBox.Show(
+                    string.Join("\n", ocrText),
+                    "D2R OCR",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
+                
+            }
+            finally
+            { 
+                StopProcessing();
+            }
+        }
+
+        private async Task<List<string>> RunOcrPipelineAsync(TooltipLineSegmetnationPipelineResult segmentationResult)
+        {
+            return await Task.Run(() =>
+            {
+                return _ocrService.PredictTextBatch(segmentationResult.TooltipLines);
+            });
+        }
+
+        private TooltipDetectionPipelineResult RunDetectionPipeline(string timestamp)
+        {
+            var screenshot = _screenshots.CapturePrimaryScreen();
+            var detectionResult = new TooltipDetectionPipeline().Run(screenshot);
+
+            return detectionResult;
+        }
+
+        private TooltipLineSegmetnationPipelineResult RunSegmentationPipeline(Bitmap tooltip)
+        {
+            var settings = new TooltipLineSegmentationPipelineSettings();
+            var segmentationResult = new TooltipLineSegmentationPipeline().Run(tooltip, settings);
+
+            return segmentationResult;
+        }
+
+
+        private void StartProcessing()
+        {
+            if (_isProcessing)
+                return;
+
+            _isProcessing = true;
+        }
+
+        private void StopProcessing()
+        {
+            if (_isProcessing)
+            {
+                _isProcessing = false;
+            }
+        }
+
+        private void SavePipelineResultData(string timestamp, TooltipDetectionPipelineResult result)
+        {
+            var datasetManager = ((App)System.Windows.Application.Current).Cache;
+
+            datasetManager.Save(timestamp, result);
+        }
+        private void SavePipelineResultData(string timestamp, TooltipLineSegmetnationPipelineResult result)
+        {
+            var datasetManager = ((App)System.Windows.Application.Current).Cache;
+
+            datasetManager.Save(timestamp, result);
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
