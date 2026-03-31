@@ -1,6 +1,9 @@
 ﻿using D2RPriceChecker.Services;
+using D2RPriceChecker.Windows;
 using System.Configuration;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Windows;
 
 namespace D2RPriceChecker;
@@ -20,13 +23,18 @@ public partial class App : Application
 
         // 2. Initialize logging into Logs/
         LoggingService.Initialize(Cache.RootDir);
-      
-        var main = new MainWindow();
-        MainWindow = main;
 
-        main.Show();
+        // 3. Show main window (splash)
+        MainWindow = new SplashWindow();
+        MainWindow.Show();
 
         LoggingService.Info("Application started");
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        base.OnExit(e);
+        LoggingService.Info("Application exited");
     }
 }
 

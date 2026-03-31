@@ -19,7 +19,7 @@ namespace D2RPriceChecker;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class DebugWindow : Window
 {
     // State
     private List<string> _imagePaths = new();
@@ -42,7 +42,7 @@ public partial class MainWindow : Window
     // Flags
     private bool _isProcessing;
 
-    public MainWindow()
+    public DebugWindow()
     {
         InitializeComponent();
 
