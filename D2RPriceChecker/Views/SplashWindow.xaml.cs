@@ -1,6 +1,7 @@
 ﻿using D2RPriceChecker.Pipelines;
 using D2RPriceChecker.Services;
 using D2RPriceChecker.Util;
+using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Windows;
@@ -79,14 +80,9 @@ namespace D2RPriceChecker.Windows
 
             _traderie = new TraderieWindow();
             _traderie.Visibility = Visibility.Hidden;
-            _traderie.ShowInTaskbar = false;
+            _traderie.ShowInTaskbar = false;        
 
-
-
-            //_traderie.Left = -10000;
-            //_traderie.Top = -10000;
-
-            _traderie.Show();
+            _traderie.Show();  // Show the window to initialize WebView2, then hide it immediately
             //_traderie.Owner = this;
             _traderie.Hide();
 
@@ -119,42 +115,6 @@ namespace D2RPriceChecker.Windows
             _ocrService = await Task.Run(() => new OcrService("Models/d2r_tooltip_crnn_best.onnx"));
         }
 
-        private async Task InitializeTraderieAsync()
-        {
-            //_traderie.Left = -10000;
-            //_traderie.Top = -10000;
-           // _traderie.Show(); // gives WebView2 a real HWND
-           // _traderie.Hide();
-            await _traderie.InitializeAsync();
-        }
-
-        //private async Task SetupTraderieAsync()
-        //{
-        //    try
-        //    {
-        //        await _traderie.InitializeAsync();
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //    }
-
-
-
-
-        //    //_traderieWindow = new TraderieWindow();
-        //    //_traderieWindow.Show();  // Show the window to initialize WebView2, then hide it immediately
-        //    //_traderieWindow.Hide();
-        //}
-
-        private void SetupTraderie()
-        {
-            _traderie = new TraderieWindow();
-            _traderie.Show();  // Show the window to initialize WebView2, then hide it immediately
-            _traderie.Hide();
-        }
-
         private void SetupHotkeys()
         {
             var handle = new WindowInteropHelper(this).Handle;
@@ -164,7 +124,6 @@ namespace D2RPriceChecker.Windows
             _hotkeys.Register(Key.D, ModifierKeys.Control, HandlePipelineHotkey);
             _hotkeys.Register(Key.O, ModifierKeys.Control, HandleOverlayToggleHotkey);
         }
-
 
      
 
@@ -176,13 +135,25 @@ namespace D2RPriceChecker.Windows
             {
                 StartProcessing();
 
+                Stopwatch stopwatch = new Stopwatch();
+
+                // Start measuring time
+                stopwatch.Start();
+
                 var detectionResult = RunDetectionPipeline(timestamp);
+
+                // Stop measuring time
+                stopwatch.Stop();
+
+                // Print the elapsed time in milliseconds
+                Console.WriteLine($"Tooltip detection took {stopwatch.ElapsedMilliseconds} ms");
+
                 SavePipelineResultData(timestamp, detectionResult);
 
+                // TODO - add fallback using yolo detection
                 if(!detectionResult.IsTooltipFound())
                     return;
 
-                //TODO - fix this - no need for new settings object here at all
                 var segmentationResult = RunSegmentationPipeline(detectionResult.Tooltip!);
                 SavePipelineResultData(timestamp, segmentationResult);
 
@@ -199,8 +170,6 @@ namespace D2RPriceChecker.Windows
                 var trades = OffersParser.ParseOffers(completedOffers);
 
                 _overlay.UpdateValues(trades);
-
-
             }
             finally
             { 

@@ -11,6 +11,7 @@
   <PropertyGroup>
     <!-- Optional: for NuGet or MSBuild metadata -->
     <Version>0.1.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <!-- Velopack / auto-update uses this numeric version, auto-generated it if missing -->
     <!--<AssemblyVersion>0.1.0.0</AssemblyVersion>--> 
