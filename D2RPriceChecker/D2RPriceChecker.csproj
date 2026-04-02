@@ -8,6 +8,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Optional: for NuGet or MSBuild metadata -->
+    <Version>0.1.0</Version>
+
+    <!-- Velopack / auto-update uses this numeric version, auto-generated it if missing -->
+    <!--<AssemblyVersion>0.1.0.0</AssemblyVersion>--> 
+  </PropertyGroup>
+
   <ItemGroup>
     <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
   </ItemGroup>

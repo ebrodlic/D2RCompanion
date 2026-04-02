@@ -11,28 +11,38 @@ namespace D2RPriceChecker.Windows
     /// </summary>
     public partial class TraderieWindow : Window
     {
+        private readonly string _homeUrl = "https://traderie.com/diablo2resurrected";
+        private readonly string _userDataFolder = null!;
+
+        private string _jtwToken = string.Empty;
+        private string _userId = string.Empty;
+
         private readonly Dictionary<string, TaskCompletionSource<string>> _pendingFetches = new();
 
         public TraderieWindow()
         {
             InitializeComponent();
-            InitializeWebView();
+            InitializeUserDir();
         }
-
-        private async void InitializeWebView()
+        private void InitializeUserDir()
         {
-            // Set persistent user data folder
-            var userDataFolder = System.IO.Path.Combine(
+            var _userDataFolder = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "D2RPriceChecker",
                 "Traderie");
 
-            if (!Directory.Exists(userDataFolder))
-                Directory.CreateDirectory(userDataFolder);
+            if (!Directory.Exists(_userDataFolder))
+                Directory.CreateDirectory(_userDataFolder);
+        }
+
+        public bool IsLoggedIn => !string.IsNullOrEmpty(_jtwToken) && !string.IsNullOrEmpty(_userId);
+
+        public async Task InitializeAsync()
+        {
 
             var env = await CoreWebView2Environment.CreateAsync(
                  null,                // browser executable folder (null = default)
-                 userDataFolder,      // persistent storage path
+                 _userDataFolder,      // persistent storage path
                  null);               // additional options
 
             // Make sure CoreWebView2 is initialized
@@ -65,10 +75,8 @@ namespace D2RPriceChecker.Windows
             TraderieWebView.WebMessageReceived += WebView_WebMessageReceived;
 
             // Navigate to Traderie login page
-            TraderieWebView.CoreWebView2.Navigate("https://traderie.com/diablo2resurrected");
+            TraderieWebView.CoreWebView2.Navigate(_homeUrl);
         }
-
-        public CoreWebView2 CoreWebView2Instance => TraderieWebView.CoreWebView2;
 
         private void WebView_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs e)
         {
@@ -119,7 +127,7 @@ namespace D2RPriceChecker.Windows
                     var encoded = Uri.EscapeDataString(itemName);
                     var searchUrl = $"https://traderie.com/api/diablo2resurrected/items?variants=&search={encoded}&tags=true";
 
-                    var searchJson = await FetchAsync(searchUrl);
+                    var searchJson = await FetchAsyncWithToken(searchUrl);
 
 
                     using var searchDoc = JsonDocument.Parse(searchJson);
@@ -131,22 +139,24 @@ namespace D2RPriceChecker.Windows
                     var itemId = items[0].GetProperty("id").GetString();
                     var itemSlug = items[0].GetProperty("slug").GetString();
 
-                 //   string productPageUrl = $"https://traderie.com/diablo2resurrected/product/{itemSlug}?prop_Ladder=true&prop_Game%20version=reign%20of%20the%20warlock";
+                    //   string productPageUrl = $"https://traderie.com/diablo2resurrected/product/{itemSlug}?prop_Ladder=true&prop_Game%20version=reign%20of%20the%20warlock";
 
-               //     await ExecuteScriptAsync($@"window.location.href = '{productPageUrl}';");
+                    //     await ExecuteScriptAsync($@"window.location.href = '{productPageUrl}';");
 
                     // Wait for some time to let the page JS load
-                 //   await Task.Delay(5000); // 2 seconds, adjust as needed
+                    //   await Task.Delay(5000); // 2 seconds, adjust as needed
 
-                   // string recentUrl = $"https://traderie.com/diablo2resurrected/product/maras-kaleidoscope/recent?prop_Ladder=true&prop_Game%20version=reign%20of%20the%20warlock";
+                    // string recentUrl = $"https://traderie.com/diablo2resurrected/product/maras-kaleidoscope/recent?prop_Ladder=true&prop_Game%20version=reign%20of%20the%20warlock";
 
                     //await ExecuteScriptAsync($@"window.location.href = '{recentUrl}';");
 
                     //await Task.Delay(5000); // 2 seconds, adjust as needed
 
 
+
+
                     // Step 2: Get completed offers
-                    var offersUrl = $"https://traderie.com/api/diablo2resurrected/offers?accepted=true&currBuyer=1149841100&properties=true&completed=true&item={itemId}&prop_Ladder=true&prop_Game%20version=reign%20of%20the%20warlock";
+                    var offersUrl = $"https://traderie.com/api/diablo2resurrected/offers?accepted=true&currBuyer={_userId}&properties=true&completed=true&item={itemId}&prop_Ladder=true&prop_Game%20version=reign%20of%20the%20warlock";
                     var offersJson = await FetchAsyncWithToken(offersUrl);
 
                     //using var pricesDoc = JsonDocument.Parse(offersJson);
@@ -157,7 +167,7 @@ namespace D2RPriceChecker.Windows
                     //if(offers.GetArrayLength() == 0)
                     //    return null;
 
-         
+
 
                     return offersJson;
 
@@ -166,11 +176,11 @@ namespace D2RPriceChecker.Windows
                 {
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Error in GetPriceData: " + ex.Message);
 
-            }           
+            }
 
             return result;
         }
@@ -187,6 +197,7 @@ namespace D2RPriceChecker.Windows
                 (async () => {{
                     try {{
                         const token = localStorage.getItem('jwt');
+
                         if (!token) throw new Error('JWT token not found');
 
                         const res = await fetch('{url}', {{
@@ -270,6 +281,69 @@ namespace D2RPriceChecker.Windows
 
             // Just hide instead
             this.Hide();
+        }
+
+        public class TraderieSession
+        {
+            public string Jwt { get; set; }
+            public string UserId { get; set; }
+        }
+
+        public async Task TryLoadSessionAsync()
+        {
+            try
+            {
+                if (TraderieWebView.CoreWebView2 == null)
+                    throw new InvalidOperationException("WebView not initialized yet");
+
+                // Read JWT and user JSON from localStorage
+                var script = @"
+                    (function() {
+                        const jwt = localStorage.getItem('jwt');
+                        const userJson = localStorage.getItem('user');
+                        return JSON.stringify({ jwt: jwt, user: userJson });
+                    })();
+                ";
+
+                var result = await TraderieWebView.CoreWebView2.ExecuteScriptAsync(script);
+
+                if (string.IsNullOrWhiteSpace(result))
+                    return;
+
+                // Step 1: Unwrap the JSON literal
+                string jsonLiteral = JsonSerializer.Deserialize<string>(result);
+
+                if (string.IsNullOrWhiteSpace(jsonLiteral))
+                    return;
+
+                // Step 2: Deserialize the object
+                var outer = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonLiteral);
+                if (outer == null)
+                    return;
+
+                _jtwToken = outer.ContainsKey("jwt") ? outer["jwt"] : string.Empty;
+
+                // Parse the user JSON to extract id
+                if (!string.IsNullOrWhiteSpace(outer.GetValueOrDefault("user")))
+                {
+                    try
+                    {
+                        var userObj = JsonSerializer.Deserialize<Dictionary<string, object>>(outer["user"]);
+                        if (userObj != null && userObj.ContainsKey("id"))
+                            _userId = userObj["id"].ToString();
+                    }
+                    catch
+                    {
+                        // ignore parse errors
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error loading session: " + ex.Message);
+
+
+            }
         }
     }
 }

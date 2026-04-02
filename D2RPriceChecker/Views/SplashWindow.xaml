@@ -20,7 +20,7 @@
                 Click="CloseButton_Click"/>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="D2R Price Checker" FontSize="18" FontWeight="Bold" TextAlignment="Center"/>
-            <TextBlock Text="v1.0.0" FontSize="12" TextAlignment="Center" Margin="0,5,0,0"/>
+            <TextBlock Name="VersionText" Text="v0.0.0" FontSize="12" TextAlignment="Center" Margin="0,5,0,0"/>
             <TextBlock Text="Press Ctrl+D to check price" FontSize="14" TextAlignment="Center" Margin="0,25,0,0"/>
         </StackPanel>
     </Grid>

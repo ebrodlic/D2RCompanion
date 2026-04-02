@@ -1,5 +1,8 @@
-﻿using System;
+﻿using D2RPriceChecker.Util;
+using D2RPriceChecker.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,10 +20,18 @@ namespace D2RPriceChecker.Windows
     /// </summary>
     public partial class OverlayWindow : Window
     {
+        public OverlayViewModel ViewModel { get; set; } = new();
+
         public OverlayWindow()
         {
             InitializeComponent();
+            SetHandlers();
 
+            DataContext = ViewModel;
+        }
+
+        private void SetHandlers()
+        {
             // Set full screen on load
             Loaded += OnWindowLoaded;
 
@@ -51,12 +62,6 @@ namespace D2RPriceChecker.Windows
             HideOverlay();
         }
 
-        private void ClearFields()
-        {
-            OcrText.Text = string.Empty;
-            PriceText.Text = string.Empty;
-        }
-
         private bool IsClickInsideContent(MouseButtonEventArgs e)
         {
             var source = e.OriginalSource as DependencyObject;
@@ -71,28 +76,71 @@ namespace D2RPriceChecker.Windows
 
             return false;
         }
-        public void DisplayText(string text)
-        {
-            OcrText.Text = text;
 
-            Visibility = Visibility.Visible;
-            Activate(); // bring on top of game
+        // Call this from your main window after OCR + trade parsing
+        public void UpdateValues(List<string> ocrLines, List<Trade> trades)
+        {
+            ViewModel.OcrLines.Clear();
+            foreach (var line in ocrLines)
+                ViewModel.OcrLines.Add(line);
+
+            ViewModel.Trades.Clear();
+            foreach (var trade in trades)
+                ViewModel.Trades.Add(trade);
+        }
+
+        public void UpdateValues(List<string> ocrLines)
+        {
+            ViewModel.OcrLines.Clear();
+            foreach (var line in ocrLines)
+                ViewModel.OcrLines.Add(line);
+        }
+
+        public void UpdateValues(List<Trade> trades)
+        {
+            ViewModel.Trades.Clear();
+            foreach (var trade in trades)
+                ViewModel.Trades.Add(trade);
         }
 
 
-        // TODO - not sure about this for now
-        public void DisplayPrices(List<string> prices)
+        private void ClearFields()
         {
-            PriceText.Text = string.Join("\n", prices);
-        
-            Visibility = Visibility.Visible;
-            Activate(); // bring on top of game
+            //OcrText.Text = string.Empty;
+            //PriceText.Text = string.Empty;
         }
 
+        public void ShowOverlay()
+        {
+            if (!IsVisible)
+                Show();
+
+            // Bring to front of game
+            Topmost = true;
+            Activate();
+        }
         public void HideOverlay()
         {
             Visibility = Visibility.Hidden;
-        } 
+        }
+
+        public void DisplayText(string text)
+        {
+            //OcrText.Text = text;
+
+            //Visibility = Visibility.Visible;
+            //Activate(); // bring on top of game
+        }
+
+        // TODO - not sure about this for now
+        public void DisplayPrices(List<Trade> trades)
+        {
+            //PriceText.Text = string.Join("\n", prices);
+        
+            //Visibility = Visibility.Visible;
+            //Activate(); // bring on top of game
+        }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.Key == Key.Escape)

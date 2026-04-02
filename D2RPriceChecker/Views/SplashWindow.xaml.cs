@@ -2,6 +2,7 @@
 using D2RPriceChecker.Services;
 using D2RPriceChecker.Util;
 using System.Drawing;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -12,17 +13,19 @@ namespace D2RPriceChecker.Windows
 {
     public partial class SplashWindow : Window
     {
-
+        // Icons and Tray
         private NotifyIcon _trayIcon = null!;
-        private OverlayWindow _overlay = null!;
-        private TraderieWindow _traderieWindow = null!;
 
+        // Windows
+        private OverlayWindow _overlay = null!;
+        private TraderieWindow _traderie = null!;
+
+        //Managers
         private HotkeyManager _hotkeys = null!;
       
         // Services
         private readonly ScreenshotService _screenshots = new();
-        //private readonly TraderieService _traderie = new();
-        private readonly OcrService _ocrService = new OcrService("Models/d2r_tooltip_crnn_best.onnx");
+        private OcrService _ocrService = null!;
 
         // Flags
         private bool _isProcessing;
@@ -30,15 +33,100 @@ namespace D2RPriceChecker.Windows
         public SplashWindow()
         {
             InitializeComponent();
+            SetVersion();
             SetupTray();
-            SetupOverlay();
-            SetupTraderie();
+            SetupWindows();
+
+            Loaded += OnWindowLoaded;
+        }   
+
+        private void SetVersion()
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+
+            VersionText.Text = $"v{version}";
+        }
+        private void SetupTray()
+        {
+            _trayIcon = new NotifyIcon();
+            _trayIcon.Icon = new Icon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "icon-16x16.ico"));
+            _trayIcon.Visible = true;
+            _trayIcon.Text = "D2R Price Checker";
+
+            var menu = new ContextMenuStrip();
+            menu.Items.Add("Open", null, (s, e) => { 
+                this.Show();
+                //WindowState = WindowState.Normal;
+                //Topmost = true;
+                //this.Activate();
+            });
+            menu.Items.Add("Show Browser", null, (s, e) => { _traderie.Show(); });
+            menu.Items.Add("Exit", null, (s, e) => { System.Windows.Application.Current.Shutdown(); });
+
+            _trayIcon.ContextMenuStrip = menu;
+            _trayIcon.DoubleClick += (s, e) => { this.Show(); };
+        }
+        private void SetupWindows()
+        {
+            _overlay = new OverlayWindow();
+
+            _overlay.Visibility = Visibility.Hidden;
+            _overlay.ShowInTaskbar = false;
+
+            //_overlay.Show();
+            //_overlay.Owner = this;
+            //_overlay.Hide();
+
+            _traderie = new TraderieWindow();
+            _traderie.Visibility = Visibility.Hidden;
+            _traderie.ShowInTaskbar = false;
+
+
+
+            //_traderie.Left = -10000;
+            //_traderie.Top = -10000;
+
+            _traderie.Show();
+            //_traderie.Owner = this;
+            _traderie.Hide();
 
         }
-        //private async void SplashWindow_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    await SetupTraderieAsync();
-        //}
+
+        private async void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            // 1. Initialize OCR model async
+            var ocrTask = InitializeOcrAsync();
+
+            // 2. Initialize Traderie WebView async
+            var traderieTask = _traderie.InitializeAsync();
+
+            // 3. Wait for both
+            await Task.WhenAll(ocrTask, traderieTask);
+
+            // 4. Try to obtain session info for future use
+            await _traderie.TryLoadSessionAsync();
+
+            // 5. If no session info, show the traderie window so user can log in for session data
+            if (!_traderie.IsLoggedIn)
+                _traderie.Show(); 
+
+            // 4. Now all resources are ready, safe to setup hotkeys
+            SetupHotkeys();
+        }
+
+        private async Task InitializeOcrAsync() 
+        {
+            _ocrService = await Task.Run(() => new OcrService("Models/d2r_tooltip_crnn_best.onnx"));
+        }
+
+        private async Task InitializeTraderieAsync()
+        {
+            //_traderie.Left = -10000;
+            //_traderie.Top = -10000;
+           // _traderie.Show(); // gives WebView2 a real HWND
+           // _traderie.Hide();
+            await _traderie.InitializeAsync();
+        }
 
         //private async Task SetupTraderieAsync()
         //{
@@ -51,7 +139,7 @@ namespace D2RPriceChecker.Windows
         //    {
 
         //    }
-              
+
 
 
 
@@ -62,15 +150,9 @@ namespace D2RPriceChecker.Windows
 
         private void SetupTraderie()
         {
-            _traderieWindow = new TraderieWindow();
-            _traderieWindow.Show();  // Show the window to initialize WebView2, then hide it immediately
-            _traderieWindow.Hide();
-        }
-
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
-            SetupHotkeys();
+            _traderie = new TraderieWindow();
+            _traderie.Show();  // Show the window to initialize WebView2, then hide it immediately
+            _traderie.Hide();
         }
 
         private void SetupHotkeys()
@@ -83,34 +165,8 @@ namespace D2RPriceChecker.Windows
             _hotkeys.Register(Key.O, ModifierKeys.Control, HandleOverlayToggleHotkey);
         }
 
-        private void SetupTray()
-        {
-            _trayIcon = new NotifyIcon();
-            _trayIcon.Icon = new Icon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "icon-16x16.ico"));
-            _trayIcon.Visible = true;
-            _trayIcon.Text = "D2R Price Checker";
 
-            var menu = new ContextMenuStrip();
-            menu.Items.Add("Open", null, (s, e) => { this.Show(); });
-            menu.Items.Add("Show Browser", null, (s, e) => { _traderieWindow.Show(); });
-            menu.Items.Add("Exit", null, (s, e) => { System.Windows.Application.Current.Shutdown(); });
-            _trayIcon.ContextMenuStrip = menu;
-
-            _trayIcon.DoubleClick += (s, e) => { this.Show(); };
-        }
-
-        private void SetupOverlay()
-        {
-            _overlay = new OverlayWindow();
-           
-            _overlay.Visibility = Visibility.Hidden;
-            _overlay.ShowInTaskbar = false;
-
-            //_overlay.Show();
-            //_overlay.Owner = this;
-            //_overlay.Hide();
-
-        }
+     
 
         private async void HandlePipelineHotkey()
         {
@@ -133,15 +189,15 @@ namespace D2RPriceChecker.Windows
                 var itemMetadata = new ItemDetectionPipeline().Run(segmentationResult.TooltipLines[0]);
                 var itemText = await RunOcrPipelineAsync(segmentationResult);
 
-                _overlay.DisplayText(string.Join("\n", itemText));             
-
+                _overlay.Show();
+                _overlay.UpdateValues(itemText);
 
                 //TODO - not a fan of traderie window being called to do compute stuff
-                var prices = await _traderieWindow.GetPriceData(itemMetadata, itemText);
+                var completedOffers = await _traderie.GetPriceData(itemMetadata, itemText);
 
-                var pricesText = OfferParser.ExtractOfferPrices(prices);
+                var trades = OffersParser.ParseOffers(completedOffers);
 
-                _overlay.DisplayPrices(pricesText);
+                _overlay.UpdateValues(trades);
 
 
             }
