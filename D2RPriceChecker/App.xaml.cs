@@ -1,5 +1,5 @@
 ﻿using D2RPriceChecker.Services;
-using D2RPriceChecker.Windows;
+using D2RPriceChecker.Views;
 using System.Configuration;
 using System.Data;
 using System.Drawing;
@@ -19,14 +19,15 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        // 1. Create root and cache dirs
+        // 1. Create root and cache dirs into Cache/
         Cache = new CacheService();
 
-        // 2. Load settings
-        Settings = new SettingsService(Cache.RootDir);
-
-        // 3. Initialize logging into Logs/
+        // 2. Initialize logging into Logs/
         LoggingService.Initialize(Cache.RootDir);
+
+        // 3. Load settings
+        Settings = new SettingsService(Cache.RootDir);
+        Settings.Initialize();
 
         // 4. Show main window (splash)
         MainWindow = new SplashWindow();

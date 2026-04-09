@@ -1,6 +1,8 @@
 ﻿using D2RPriceChecker.Pipelines;
 using D2RPriceChecker.Services;
 using D2RPriceChecker.Util;
+using D2RPriceChecker.ViewModels;
+using D2RPriceChecker.Views;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
@@ -10,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 
 
-namespace D2RPriceChecker.Windows
+namespace D2RPriceChecker.Views
 {
     public partial class SplashWindow : Window
     {
@@ -20,6 +22,7 @@ namespace D2RPriceChecker.Windows
         // Windows
         private OverlayWindow _overlay = null!;
         private TraderieWindow _traderie = null!;
+        private SettingsWindow _settings = null!;
 
         //Managers
         private HotkeyManager _hotkeys = null!;
@@ -76,7 +79,12 @@ namespace D2RPriceChecker.Windows
 
         private void OpenSettings()
         {
-            throw new NotImplementedException();
+            var app = (App)System.Windows.Application.Current;
+
+            var vm = new SettingsViewModel(app.Settings);
+
+            _settings = new SettingsWindow(vm);
+            _settings.ShowDialog();
         }
 
         private void SetupWindows()

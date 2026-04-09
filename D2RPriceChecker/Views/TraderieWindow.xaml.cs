@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Windows;
 
-namespace D2RPriceChecker.Windows
+namespace D2RPriceChecker.Views
 {
     /// <summary>
     /// Interaction logic for TraderieWindow.xaml
@@ -26,7 +26,7 @@ namespace D2RPriceChecker.Windows
         }
         private void InitializeUserDir()
         {
-            var _userDataFolder = System.IO.Path.Combine(
+            var _userDataFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "D2RPriceChecker",
                 "Traderie");
