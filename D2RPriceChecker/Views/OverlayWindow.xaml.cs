@@ -142,6 +142,15 @@ namespace D2RPriceChecker.Views
             Visibility = Visibility.Hidden;
         }
 
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var scrollViewer = sender as ScrollViewer;
+            if (scrollViewer == null) return;
+
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
+            e.Handled = true;
+        }
+
         public void DisplayText(string text)
         {
             //OcrText.Text = text;

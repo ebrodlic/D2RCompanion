@@ -16,7 +16,14 @@ namespace D2RPriceChecker.Features.Traderie
             _window = window;
         }
 
-        public async Task<string> GetPriceDataAsync(ItemMetadata metadata, List<string> text)
+        public async Task<List<Trade>> GetTradesDataAsync(ItemMetadata metadata, List<string> text)
+        {
+            var offersJson = await GetOffersDataAsync(metadata, text);
+
+            return OffersParser.ParseOffers(offersJson);
+        }
+
+        private async Task<string> GetOffersDataAsync(ItemMetadata metadata, List<string> text)
         {
             var userId = _window.Session.UserId;
 

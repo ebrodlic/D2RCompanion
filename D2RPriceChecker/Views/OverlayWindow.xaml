@@ -8,6 +8,8 @@
         Title="OverlayWindow"
         Height="600" Width="800" WindowStyle="None" AllowsTransparency="True" Background="Transparent" 
         Topmost="True" WindowState= "Maximized" ShowInTaskbar="False" ResizeMode="NoResize">
+
+    <!-- Fullscreen Dark Overlay -->
     <Grid x:Name="Root" Background="#80000000">
         <!-- Click outside handler -->
         <Grid.InputBindings>
@@ -22,87 +24,91 @@
             Background="#131415"
             CornerRadius="8"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
+            VerticalAlignment="Stretch"
             MouseDown="ContentPanel_MouseDown">
-            <Grid>
+            <Grid>                
                 <!-- Main Content: OCR, prices, trades -->
-                <DockPanel>
-                <!-- Top: OCR text -->
-                <ItemsControl ItemsSource="{Binding OcrLines}" DockPanel.Dock="Top">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}" Foreground="White" FontSize="12" Margin="0,0,0,2"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="4*"></RowDefinition>  <!-- OCR -->
+                        <RowDefinition Height="1*"></RowDefinition>  <!-- Price -->
+                        <RowDefinition Height="5*"></RowDefinition>  <!-- Trades -->
+                    </Grid.RowDefinitions>
 
-                <Separator DockPanel.Dock="Top" Margin="0,5" />
+                    <StackPanel Grid.Row="0">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <!-- Top: OCR text -->
+                            <ItemsControl ItemsSource="{Binding OcrLines}" Grid.Row="0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" Foreground="White" FontSize="12" Margin="0,0,0,2"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                        <Separator Margin="0,5" />
+                    </StackPanel>
 
-                <StackPanel Orientation="Vertical" DockPanel.Dock="Top" Margin="0,0,0,5">
-                    <TextBlock Text="Min Price" Foreground="LightGreen" FontSize="16" FontWeight="Bold"/>
-                    <TextBlock Text="Max Price" Foreground="LightGreen" FontSize="16" FontWeight="Bold"/>
-                    <TextBlock Text="Estimate Price" Foreground="LightGreen" FontSize="16" FontWeight="Bold"/>
-                    <TextBlock Text="HR Value" Foreground="LightGreen" FontSize="16" FontWeight="Bold"/>
-                </StackPanel>
+                    <StackPanel Grid.Row="1">
+                        <!-- PRICE SUMMARY -->
+                        <StackPanel Orientation="Vertical"  Margin="0,0,0,5">
+                            <TextBlock Text="Min Price" Foreground="LightGreen" FontSize="16" FontWeight="Bold"/>
+                            <TextBlock Text="Max Price" Foreground="LightGreen" FontSize="16" FontWeight="Bold"/>
+                            <TextBlock Text="Estimate Price" Foreground="LightGreen" FontSize="16" FontWeight="Bold"/>
+                            <TextBlock Text="HR Value" Foreground="LightGreen" FontSize="16" FontWeight="Bold"/>
+                        </StackPanel>
+                        <Separator Margin="0,5" />
+                    </StackPanel>
 
-                <Separator DockPanel.Dock="Top" Margin="0,5" />
 
-                <!-- Bottom: Trades -->
-                <ScrollViewer x:Name="TradesScrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
-                    <ItemsControl ItemsSource="{Binding Trades}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderThickness="1" BorderBrush="Gray" Margin="0,2" Padding="4">
-                                    <StackPanel Background="#202224">
-                                        <TextBlock Text="Trade:" FontWeight="Bold" Foreground="White"/>
-                                        <ItemsControl ItemsSource="{Binding Prices}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="{Binding Quantity}" Foreground="White" Width="30"/>
-                                                        <TextBlock Text="x " Foreground="White"/>
-                                                        <TextBlock Text="{Binding Name}" Foreground="White"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-            </DockPanel>
+                    <StackPanel Grid.Row="2">
+                        <!-- Bottom: Trades -->
+                        <ScrollViewer x:Name="TradesScrollViewer"  PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" PanningMode="VerticalOnly" PanningDeceleration="0.001" IsDeferredScrollingEnabled="True">
+                            <ItemsControl ItemsSource="{Binding Trades}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderThickness="1" BorderBrush="Gray" Margin="0,2" Padding="4">
+                                            <StackPanel Background="#202224">
+                                                <TextBlock Text="Trade:" FontWeight="Bold" Foreground="White"/>
+                                                <ItemsControl ItemsSource="{Binding Prices}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding Quantity}" Foreground="White" Width="30"/>
+                                                                <TextBlock Text="x " Foreground="White"/>
+                                                                <TextBlock Text="{Binding Name}" Foreground="White"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                    </StackPanel>
+
+
+                </Grid>
+
                 <!-- Buttons Overlay -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,4,0">
-
                     <Button Content="?" 
                         Width="20" Height="20"
                         Click="HelpButton_Click"
-                        Background="#800000"
+                        Background="#8B0000"
                         Foreground="White"
                         FontWeight="Bold"
                         BorderThickness="0"
                         Margin="0,0,4,0"
                         ToolTip="Help"/>
 
-                    <Button Content="⚙" Width="20" Height="20" Click="SettingsButton_Click" Background="#8B0000" Foreground="White"
-                        FontWeight="Bold"
-                        BorderThickness="0"
-                        Margin="0,0,4,0"
-                        ToolTip="Settings"/>
-
-
-                    <Button Content="✕" Width="20" Height="20" Background="#800000"  Foreground="White" FontWeight="Bold" BorderThickness="0" Margin="0,0,4,0"
+                    <Button Content="✕" Width="20" Height="20" Background="#8B0000"  Foreground="White" FontWeight="Bold" BorderThickness="0" Margin="0,0,4,0"
                          Click="CloseButton_Click" ToolTip="Close"/>
                 </StackPanel>
             </Grid>
-
-
-            <!--<StackPanel>
-                <TextBlock x:Name="OcrText" Text="Your Item Details go Here" Foreground="White" TextWrapping="Wrap" Margin="10"/>
-                <TextBlock x:Name="PriceText" Text="Price: 0" Foreground="LightGreen" FontSize="16" FontWeight="Bold" Margin="10"/>       
-            </StackPanel>-->
 
         </Border>
 

@@ -174,10 +174,7 @@ namespace D2RPriceChecker.Views
                 _overlay.ShowOverlay();
                 _overlay.UpdateValues(itemText);
 
-                //TODO - not a fan of traderie window being called to do compute stuff
-                var completedOffers = await _traderieService.GetPriceDataAsync(itemMetadata, itemText);
-
-                var trades = OffersParser.ParseOffers(completedOffers);
+                var trades = await _traderieService.GetTradesDataAsync(itemMetadata, itemText);
 
                 _overlay.UpdateValues(trades);
             }
@@ -225,7 +222,7 @@ namespace D2RPriceChecker.Views
             // Start measuring time
             stopwatch.Start();
 
-            var screenshot = _screenshots.CapturePrimaryScreen();
+            var screenshot = _screenshots.CaptureGameWindow("D2R");
             var detectionResult = new TooltipDetectionPipeline().Run(screenshot);
 
             if(!detectionResult.IsTooltipFound())

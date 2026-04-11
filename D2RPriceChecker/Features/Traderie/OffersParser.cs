@@ -5,16 +5,6 @@ using System.Text.Json;
 
 namespace D2RPriceChecker.Features.Traderie
 {
-    public class Price
-    {
-        public int Quantity { get; set; }
-        public string Name { get; set; } = "";
-    }
-
-    public class Trade
-    {
-        public List<Price> Prices { get; set; } = new();
-    }
 
     public class OffersParser
     {
