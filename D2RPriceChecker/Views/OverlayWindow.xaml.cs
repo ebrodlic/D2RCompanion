@@ -1,4 +1,6 @@
-﻿using D2RPriceChecker.Features.Traderie;
+﻿using D2RPriceChecker.Domain;
+using D2RPriceChecker.Features.Traderie.DTO;
+using D2RPriceChecker.Features.Traderie.Model;
 using D2RPriceChecker.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -117,6 +119,12 @@ namespace D2RPriceChecker.Views
             ViewModel.Trades.Clear();
             foreach (var trade in trades)
                 ViewModel.Trades.Add(trade);
+        }
+
+        public void UpdateValues(TradeStatistics stats)
+        {
+            //ViewModel.Statistics.Clear();
+            ViewModel.Statistics = stats;
         }
 
 

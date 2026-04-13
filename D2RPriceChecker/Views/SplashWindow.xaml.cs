@@ -175,6 +175,9 @@ namespace D2RPriceChecker.Views
                 _overlay.ShowOverlay();
                 _overlay.UpdateValues(itemText);
 
+                var stats = await _traderieService.GetPriceStatisticsAsync(itemMetadata, itemName);
+                _overlay.UpdateValues(stats);
+
                 var trades = await _traderieService.GetTradesDataAsync(itemMetadata, itemName);
 
                 _overlay.UpdateValues(trades);
