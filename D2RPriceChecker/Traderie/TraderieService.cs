@@ -1,7 +1,7 @@
-﻿using D2RPriceChecker.Domain;
-using D2RPriceChecker.Features.Traderie.DTO;
-using D2RPriceChecker.Features.Traderie.Mapper;
-using D2RPriceChecker.Features.Traderie.Model;
+﻿using D2RPriceChecker.Core.Traderie;
+using D2RPriceChecker.Core.Traderie.DTO;
+using D2RPriceChecker.Core.Traderie.Mapping;
+using D2RPriceChecker.Core.Traderie.Domain;
 using D2RPriceChecker.Pipelines;
 using D2RPriceChecker.Views;
 using System;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 
-namespace D2RPriceChecker.Features.Traderie
+namespace D2RPriceChecker.UI.Traderie
 {
     internal class TraderieService
     {
@@ -36,7 +36,7 @@ namespace D2RPriceChecker.Features.Traderie
         public async Task<List<Trade>> GetTradesDataAsync(ItemMetadata metadata, string name)
         {
             var offersJson = await GetOffersDataAsync(metadata, name);
-            var offers = OffersParser.ParseOffers(offersJson);
+            var offers = OffersMapper.ParseOffers(offersJson);
 
             // Define Price Groups
             OffersPostProcessor.Process(offers);

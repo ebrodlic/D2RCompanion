@@ -1,0 +1,115 @@
+{
+  "totalTrades": 100,
+  "valuedTrades": 29,
+  "excludedTrades": 71,
+  "average": 0.9586206896551724,
+  "percentiles": {
+    "floor": 0.08333333333333333,
+    "typical": 0.4,
+    "good": 1,
+    "high": 2.5
+  },
+  "distribution": [
+    {
+      "name": "Perfect Amethyst",
+      "count": 6,
+      "istValue": 0.08333333333333333,
+      "percentage": 21
+    },
+    {
+      "name": "Ist Rune",
+      "count": 4,
+      "istValue": 1,
+      "percentage": 14
+    },
+    {
+      "name": "3x Perfect Amethyst",
+      "count": 4,
+      "istValue": 0.25,
+      "percentage": 14
+    },
+    {
+      "name": "Vex Rune",
+      "count": 4,
+      "istValue": 2.5,
+      "percentage": 14
+    },
+    {
+      "name": "Um Rune",
+      "count": 2,
+      "istValue": 0.4,
+      "percentage": 7
+    },
+    {
+      "name": "Lem Rune",
+      "count": 2,
+      "istValue": 0.125,
+      "percentage": 7
+    },
+    {
+      "name": "Mal Rune",
+      "count": 2,
+      "istValue": 0.5,
+      "percentage": 7
+    },
+    {
+      "name": "Pul Rune",
+      "count": 1,
+      "istValue": 0.25,
+      "percentage": 3
+    },
+    {
+      "name": "4x Perfect Amethyst",
+      "count": 1,
+      "istValue": 0.3333333333333333,
+      "percentage": 3
+    },
+    {
+      "name": "Gul Rune",
+      "count": 1,
+      "istValue": 1.25,
+      "percentage": 3
+    },
+    {
+      "name": "Lo Rune",
+      "count": 1,
+      "istValue": 8,
+      "percentage": 3
+    },
+    {
+      "name": "5x Perfect Amethyst",
+      "count": 1,
+      "istValue": 0.41666666666666663,
+      "percentage": 3
+    }
+  ],
+  "runeValues": {
+    "Jah Rune": 40,
+    "Ber Rune": 24,
+    "Zod Rune": 16,
+    "Sur Rune": 12,
+    "Cham Rune": 8,
+    "Lo Rune": 8,
+    "Ohm Rune": 4.5,
+    "Vex Rune": 2.5,
+    "Gul Rune": 1.25,
+    "Ist Rune": 1,
+    "Mal Rune": 0.5,
+    "Um Rune": 0.4,
+    "Pul Rune": 0.25,
+    "Lem Rune": 0.125,
+    "Perfect Amethyst": 0.08333333333333333,
+    "Perfect Topaz": 0.08333333333333333,
+    "Perfect Sapphire": 0.08333333333333333,
+    "Perfect Ruby": 0.08333333333333333,
+    "Perfect Emerald": 0.08333333333333333,
+    "Perfect Diamond": 0.08333333333333333,
+    "Perfect Skull": 0.08333333333333333,
+    "Ral Rune": 0.05
+  },
+  "dateRange": {
+    "oldest": "2026-04-09T20:17:38.436Z",
+    "newest": "2026-04-11T19:39:22.632Z"
+  },
+  "version": "1.3.0"
+}

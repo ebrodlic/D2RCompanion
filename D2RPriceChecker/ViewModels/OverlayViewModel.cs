@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using D2RPriceChecker.Domain;
-using D2RPriceChecker.Features.Traderie.DTO;
-using D2RPriceChecker.Features.Traderie.Model;
+using D2RPriceChecker.Core.Traderie.DTO;
+using D2RPriceChecker.Core.Traderie.Domain;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

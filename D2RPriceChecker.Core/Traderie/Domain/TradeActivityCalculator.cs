@@ -1,9 +1,8 @@
-﻿using D2RPriceChecker.Features.Traderie.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace D2RPriceChecker.Domain
+namespace D2RPriceChecker.Core.Traderie.Domain
 {
     public class TradeActivityCalculator
     {
@@ -36,13 +35,10 @@ namespace D2RPriceChecker.Domain
 
             result.FinalScore = result.Score * result.RecencyBoost;
 
-            // 🔥 NEW: normalize
             var normalized = result.FinalScore / 20.0;
             normalized = Math.Clamp(normalized, 0.0, 1.0);
 
             result.NormalizedScore = normalized;
-
-            // 🔥 NEW: assign level
             result.Level = GetLevel(normalized);
 
             return result;

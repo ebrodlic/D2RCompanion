@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows.Controls;
 
-namespace D2RPriceChecker.Features.Traderie.DTO
+namespace D2RPriceChecker.Core.Traderie.DTO
 {
     public class TradeStatisticsDto
     {

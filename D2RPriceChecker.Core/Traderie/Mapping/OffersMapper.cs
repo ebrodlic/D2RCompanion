@@ -1,12 +1,12 @@
-﻿using D2RPriceChecker.Features.Traderie.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
+using D2RPriceChecker.Core.Traderie.Domain;
 
-namespace D2RPriceChecker.Features.Traderie
+namespace D2RPriceChecker.Core.Traderie.Mapping
 {
-    public class OffersParser
+    public class OffersMapper
     {
         public static List<Trade> ParseOffers(string json)
         {

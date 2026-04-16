@@ -1,10 +1,10 @@
-﻿using D2RPriceChecker.Domain;
-using D2RPriceChecker.Features.Traderie.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using D2RPriceChecker.Core.Traderie.DTO;
+using D2RPriceChecker.Core.Traderie.Domain;
 
-namespace D2RPriceChecker.Features.Traderie.Mapper
+namespace D2RPriceChecker.Core.Traderie.Mapping
 {
     public static class TradeStatisticsMapper
     {

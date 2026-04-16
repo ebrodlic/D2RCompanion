@@ -1,0 +1,41 @@
+{
+  "items": [
+    {
+      "id": "3797106309",
+      "type": "uniques",
+      "buy_price": 0,
+      "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png",
+      "description": "Req level:  67  \nQuality level: 80  \n+2 To All Skills    \nAll Resistances +20-30    \n+5 To All Attributes",
+      "active": true,
+      "mode": null,
+      "unlocked_at": null,
+      "created_at": "2021-09-17T18:07:04.574Z",
+      "slug": "maras-kaleidoscope",
+      "name": "Mara's Kaleidoscope",
+      "variants": null,
+      "tags": [
+        {
+          "tag_id": 210,
+          "tag": "Amulet",
+          "category": "Item Type",
+          "format": null
+        },
+        {
+          "tag_id": 268,
+          "tag": "Neck",
+          "category": "Body Location",
+          "format": null
+        },
+        {
+          "tag_id": 289,
+          "tag": "Unique",
+          "category": "Item Type",
+          "format": null
+        }
+      ],
+      "sim": 0.25,
+      "catalog": null
+    }
+  ],
+  "version": "1.3.0"
+}

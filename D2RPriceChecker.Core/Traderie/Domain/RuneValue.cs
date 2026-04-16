@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace D2RPriceChecker.Domain
+namespace D2RPriceChecker.Core.Traderie.Domain
 {
     public class RuneValue
     {

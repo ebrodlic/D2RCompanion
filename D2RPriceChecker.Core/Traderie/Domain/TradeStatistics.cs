@@ -1,9 +1,9 @@
-﻿using D2RPriceChecker.Features.Traderie.DTO;
+﻿using D2RPriceChecker.Core.Traderie.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace D2RPriceChecker.Domain
+namespace D2RPriceChecker.Core.Traderie.Domain
 {
     public class TradeStatistics
     {

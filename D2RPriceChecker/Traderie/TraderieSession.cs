@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace D2RPriceChecker.Features.Traderie
+namespace D2RPriceChecker.UI.Traderie
 {
     public class TraderieSession
     {

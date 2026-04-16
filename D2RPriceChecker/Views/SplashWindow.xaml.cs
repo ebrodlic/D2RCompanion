@@ -9,8 +9,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
-
-using D2RPriceChecker.Features.Traderie;
+using D2RPriceChecker.UI.Traderie;
 
 
 namespace D2RPriceChecker.Views

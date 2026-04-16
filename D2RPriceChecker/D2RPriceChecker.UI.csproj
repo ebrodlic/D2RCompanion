@@ -52,6 +52,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\D2RPriceChecker.Core\D2RPriceChecker.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\spinner.gif">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

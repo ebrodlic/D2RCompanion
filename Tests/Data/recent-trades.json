@@ -1,0 +1,5185 @@
+{
+  "offers": [
+    {
+      "id": 49185293,
+      "user_id": "3181448159",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T17:35:20.862Z",
+      "updated_at": "2026-04-16T17:37:59.528Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": [
+        {
+          "item_id": 2290642411,
+          "quantity": 1,
+          "group": 0,
+          "add": false,
+          "name": "Ist Rune",
+          "type": "runes",
+          "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+          "variant_name": null,
+          "variant_img": null,
+          "properties": null
+        }
+      ],
+      "listing": {
+        "id": 1002277115603,
+        "prices": null,
+        "seller": {
+          "id": 2018121679,
+          "username": "EzioAuditore",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": null,
+          "banned": false,
+          "rating": 5,
+          "reviews": 8,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": true,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002277115607,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 28,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002277115608,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002277115609,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002277115610,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002277115611,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49184573,
+      "user_id": "4159069832",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T17:14:16.875Z",
+      "updated_at": "2026-04-16T17:16:28.682Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": [
+        {
+          "item_id": 3382986705,
+          "quantity": 1,
+          "group": 0,
+          "add": false,
+          "name": "Sur Rune",
+          "type": "runes",
+          "img": "https://cdn.nookazon.com/diablo2resurrected/rune/sur_rune.png",
+          "variant_name": null,
+          "variant_img": null,
+          "properties": null
+        }
+      ],
+      "listing": {
+        "id": 1002275589276,
+        "prices": [
+          {
+            "id": 3382986705,
+            "item_id": 3382986705,
+            "listing_id": 1002275589276,
+            "quantity": 1,
+            "name": "Sur Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/sur_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          },
+          {
+            "id": 3632079454,
+            "item_id": 3632079454,
+            "listing_id": 1002275589276,
+            "quantity": 1,
+            "name": "Lo Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/lo_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 1,
+            "properties": null
+          },
+          {
+            "id": 3896329590,
+            "item_id": 3896329590,
+            "listing_id": 1002275589276,
+            "quantity": 1,
+            "name": "Ohm Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ohm_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 1,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 1002186695073,
+          "username": "ds0425",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "ko"
+          ],
+          "banned": false,
+          "rating": 5,
+          "reviews": 111,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002275589279,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 30,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002275589280,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002275589281,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002275589282,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002275589283,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "default": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "Dot",
+            "options": [
+              "Dot",
+              "Sun",
+              "Penta"
+            ],
+            "property": "Amulet Variant"
+          },
+          {
+            "id": 1002275589284,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49184559,
+      "user_id": "3271386366",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T17:13:45.546Z",
+      "updated_at": "2026-04-16T17:17:42.170Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002277034798,
+        "prices": [
+          {
+            "id": 2290642411,
+            "item_id": 2290642411,
+            "listing_id": 1002277034798,
+            "quantity": 1,
+            "name": "Ist Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          },
+          {
+            "id": 2401638276,
+            "item_id": 2401638276,
+            "listing_id": 1002277034798,
+            "quantity": 1,
+            "name": "Mal Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/mal_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 1,
+            "properties": null
+          },
+          {
+            "id": 2654038235,
+            "item_id": 2654038235,
+            "listing_id": 1002277034798,
+            "quantity": 1,
+            "name": "Um Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/um_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 1,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 1002149825588,
+          "username": "MinoQ1461",
+          "bnet": "MinoQ#1461",
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": {
+            "favorite_games": [
+              "diablo2resurrected"
+            ]
+          },
+          "discord": "minoq",
+          "discord_id": "155523616732086272",
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": null,
+          "banned": false,
+          "rating": 5,
+          "reviews": 148,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002277034799,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 22,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002277034800,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002277034801,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002277034802,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002277034803,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49183948,
+      "user_id": "1002210100777",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T16:57:53.197Z",
+      "updated_at": "2026-04-16T17:10:34.649Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002277066652,
+        "prices": [
+          {
+            "id": 2290642411,
+            "item_id": 2290642411,
+            "listing_id": 1002277066652,
+            "quantity": 1,
+            "name": "Ist Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 604661316,
+          "username": "ffk9821",
+          "bnet": "",
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "en-US"
+          ],
+          "banned": false,
+          "rating": 4.9656653,
+          "reviews": 233,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002277066654,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 23,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002277066655,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002277066656,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002277066657,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002277066658,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49182761,
+      "user_id": "255488284",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T16:20:38.503Z",
+      "updated_at": "2026-04-16T16:23:49.545Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002277018992,
+        "prices": [
+          {
+            "id": 2290642411,
+            "item_id": 2290642411,
+            "listing_id": 1002277018992,
+            "quantity": 1,
+            "name": "Ist Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 1969971128,
+          "username": "wolf0624",
+          "bnet": "khaz#3930",
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "ko",
+            "en-US"
+          ],
+          "banned": false,
+          "rating": 5,
+          "reviews": 185,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002277018993,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 23,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002277018994,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002277018995,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002277018996,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002277018997,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49182017,
+      "user_id": "2072336216",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T16:02:19.624Z",
+      "updated_at": "2026-04-16T16:04:13.127Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002276999136,
+        "prices": [
+          {
+            "id": 2401638276,
+            "item_id": 2401638276,
+            "listing_id": 1002276999136,
+            "quantity": 1,
+            "name": "Mal Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/mal_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 1002230984796,
+          "username": "Lockdown11111",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": null,
+          "banned": false,
+          "rating": 5,
+          "reviews": 52,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002276999137,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 20,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002276999138,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002276999139,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002276999140,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002276999141,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "default": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "Sun",
+            "options": [
+              "Dot",
+              "Sun",
+              "Penta"
+            ],
+            "property": "Amulet Variant"
+          },
+          {
+            "id": 1002276999142,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49181484,
+      "user_id": "1333755472",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T15:50:03.071Z",
+      "updated_at": "2026-04-16T15:59:29.132Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": [
+        {
+          "item_id": 3632079454,
+          "quantity": 1,
+          "group": 0,
+          "add": false,
+          "name": "Lo Rune",
+          "type": "runes",
+          "img": "https://cdn.nookazon.com/diablo2resurrected/rune/lo_rune.png",
+          "variant_name": null,
+          "variant_img": null,
+          "properties": null
+        }
+      ],
+      "listing": {
+        "id": 1002276975420,
+        "prices": [
+          {
+            "id": 3632079454,
+            "item_id": 3632079454,
+            "listing_id": 1002276975420,
+            "quantity": 1,
+            "name": "Lo Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/lo_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          },
+          {
+            "id": 3806138905,
+            "item_id": 3806138905,
+            "listing_id": 1002276975420,
+            "quantity": 4,
+            "name": "Vex Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/vex_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 1,
+            "properties": null
+          },
+          {
+            "id": 3896329590,
+            "item_id": 3896329590,
+            "listing_id": 1002276975420,
+            "quantity": 2,
+            "name": "Ohm Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ohm_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 2,
+            "properties": null
+          },
+          {
+            "id": 2290642411,
+            "item_id": 2290642411,
+            "listing_id": 1002276975420,
+            "quantity": 8,
+            "name": "Ist Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 3,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 4174198251,
+          "username": "superjay",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": {
+            "frame": "https://cdn.nookazon.com/rewards/frames/dragon.svg",
+            "favorite_games": [
+              "adopt_me"
+            ]
+          },
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [],
+          "banned": false,
+          "rating": 4.991817,
+          "reviews": 6599,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": true,
+        "stock": false,
+        "make_offer": false,
+        "completed": false,
+        "properties": [
+          {
+            "id": 1002276975422,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 30,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002276975424,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002276975425,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002276975426,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002276975427,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49180955,
+      "user_id": "3311292285",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T15:38:46.376Z",
+      "updated_at": "2026-04-16T15:40:23.003Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002276962214,
+        "prices": [
+          {
+            "id": 2290642411,
+            "item_id": 2290642411,
+            "listing_id": 1002276962214,
+            "quantity": 1,
+            "name": "Ist Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 1002203548734,
+          "username": "shaoria",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "offline",
+          "languages": null,
+          "banned": false,
+          "rating": 5,
+          "reviews": 13,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002276962216,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 21,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002276962217,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002276962218,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002276962219,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002276962220,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49180645,
+      "user_id": "1002210486668",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T15:32:19.438Z",
+      "updated_at": "2026-04-16T16:01:40.152Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": [
+        {
+          "item_id": 2290642411,
+          "quantity": 1,
+          "group": 0,
+          "add": false,
+          "name": "Ist Rune",
+          "type": "runes",
+          "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+          "variant_name": null,
+          "variant_img": null,
+          "properties": null
+        }
+      ],
+      "listing": {
+        "id": 1002276731331,
+        "prices": null,
+        "seller": {
+          "id": 3351073849,
+          "username": "Choboman",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": {
+            "favorite_games": [
+              "diablo2resurrected"
+            ]
+          },
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "en-US"
+          ],
+          "banned": false,
+          "rating": 5,
+          "reviews": 378,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": true,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002276731333,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 24,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002276731334,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002276731335,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002276731336,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002276731337,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49180248,
+      "user_id": "3866061047",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T15:23:09.783Z",
+      "updated_at": "2026-04-16T15:25:05.681Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002276905417,
+        "prices": [
+          {
+            "id": 2290642411,
+            "item_id": 2290642411,
+            "listing_id": 1002276905417,
+            "quantity": 1,
+            "name": "Ist Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 2491293460,
+          "username": "士傑富65686",
+          "bnet": "歐爾凱斯#3527",
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": {
+            "frame": ""
+          },
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "zh-Hant",
+            "en-GB"
+          ],
+          "banned": false,
+          "rating": 5,
+          "reviews": 229,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002276905418,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 23,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002276905419,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002276905420,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002276905421,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002276905422,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49179527,
+      "user_id": "1002276745469",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T15:03:48.150Z",
+      "updated_at": "2026-04-16T16:12:21.330Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002276921638,
+        "prices": [
+          {
+            "id": 3632079454,
+            "item_id": 3632079454,
+            "listing_id": 1002276921638,
+            "quantity": 1,
+            "name": "Lo Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/lo_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 4174198251,
+          "username": "superjay",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": {
+            "frame": "https://cdn.nookazon.com/rewards/frames/dragon.svg",
+            "favorite_games": [
+              "adopt_me"
+            ]
+          },
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [],
+          "banned": false,
+          "rating": 4.991817,
+          "reviews": 6599,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": true,
+        "stock": false,
+        "make_offer": false,
+        "completed": false,
+        "properties": [
+          {
+            "id": 1002276921639,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 30,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002276921640,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002276921641,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002276921642,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002276921643,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49179066,
+      "user_id": "1002170019091",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T14:54:57.030Z",
+      "updated_at": "2026-04-16T15:00:07.086Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002274260303,
+        "prices": [
+          {
+            "id": 2290642411,
+            "item_id": 2290642411,
+            "listing_id": 1002274260303,
+            "quantity": 1,
+            "name": "Ist Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          },
+          {
+            "id": 2401638276,
+            "item_id": 2401638276,
+            "listing_id": 1002274260303,
+            "quantity": 1,
+            "name": "Mal Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/mal_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 1976718059,
+          "username": "MrakobesBack2745",
+          "bnet": "MrakobesBack#2745",
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "en-US",
+            "ru"
+          ],
+          "banned": false,
+          "rating": 5,
+          "reviews": 65,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002274260304,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 25,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002274260305,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002274260306,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002274260307,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002274260308,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49178481,
+      "user_id": "2252306632",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T14:45:00.696Z",
+      "updated_at": "2026-04-16T14:47:43.815Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": [
+        {
+          "item_id": 3632079454,
+          "quantity": 1,
+          "group": 0,
+          "add": false,
+          "name": "Lo Rune",
+          "type": "runes",
+          "img": "https://cdn.nookazon.com/diablo2resurrected/rune/lo_rune.png",
+          "variant_name": null,
+          "variant_img": null,
+          "properties": null
+        }
+      ],
+      "listing": {
+        "id": 1002276873347,
+        "prices": [
+          {
+            "id": 3632079454,
+            "item_id": 3632079454,
+            "listing_id": 1002276873347,
+            "quantity": 1,
+            "name": "Lo Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/lo_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          },
+          {
+            "id": 3806138905,
+            "item_id": 3806138905,
+            "listing_id": 1002276873347,
+            "quantity": 4,
+            "name": "Vex Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/vex_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 1,
+            "properties": null
+          },
+          {
+            "id": 399128412,
+            "item_id": 399128412,
+            "listing_id": 1002276873347,
+            "quantity": 8,
+            "name": "Northern Worldstone Shard",
+            "type": "misc",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/shard/mote_of_destruction.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 2,
+            "properties": null
+          },
+          {
+            "id": 3896329590,
+            "item_id": 3896329590,
+            "listing_id": 1002276873347,
+            "quantity": 2,
+            "name": "Ohm Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ohm_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 3,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 4174198251,
+          "username": "superjay",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": {
+            "frame": "https://cdn.nookazon.com/rewards/frames/dragon.svg",
+            "favorite_games": [
+              "adopt_me"
+            ]
+          },
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [],
+          "banned": false,
+          "rating": 4.991817,
+          "reviews": 6599,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002276873348,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 30,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002276873349,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002276873350,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002276873351,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002276873352,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49177313,
+      "user_id": "1002254385549",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T14:23:44.216Z",
+      "updated_at": "2026-04-16T14:25:21.876Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002275357577,
+        "prices": [
+          {
+            "id": 2290642411,
+            "item_id": 2290642411,
+            "listing_id": 1002275357577,
+            "quantity": 1,
+            "name": "Ist Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 436613538,
+          "username": "scissorsna77602",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "offline",
+          "languages": [
+            "ko"
+          ],
+          "banned": false,
+          "rating": 4.98827,
+          "reviews": 341,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002275357581,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 23,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002275357582,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002275357583,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002275357584,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002275357585,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49177219,
+      "user_id": "1002246986815",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T14:21:01.741Z",
+      "updated_at": "2026-04-16T14:22:56.338Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": [
+        {
+          "item_id": 2290642411,
+          "quantity": 4,
+          "group": 0,
+          "add": false,
+          "name": "Ist Rune",
+          "type": "runes",
+          "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+          "variant_name": null,
+          "variant_img": null,
+          "properties": null
+        }
+      ],
+      "listing": {
+        "id": 1002268858229,
+        "prices": [
+          {
+            "id": 3896329590,
+            "item_id": 3896329590,
+            "listing_id": 1002268858229,
+            "quantity": 1,
+            "name": "Ohm Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ohm_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 2249420202,
+          "username": "떼띠또뚜땃19784",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "offline",
+          "languages": [
+            "ko"
+          ],
+          "banned": false,
+          "rating": 4.993323,
+          "reviews": 1947,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002268858230,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 28,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002268858231,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002268858232,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002268858233,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002268858234,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "default": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "Sun",
+            "options": [
+              "Dot",
+              "Sun",
+              "Penta"
+            ],
+            "property": "Amulet Variant"
+          },
+          {
+            "id": 1002268858235,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49177103,
+      "user_id": "1048018244",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T14:17:05.102Z",
+      "updated_at": "2026-04-16T14:18:40.030Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002271975233,
+        "prices": [
+          {
+            "id": 4149485449,
+            "item_id": 4149485449,
+            "listing_id": 1002271975233,
+            "quantity": 1,
+            "name": "Ber Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ber_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          },
+          {
+            "id": 3382986705,
+            "item_id": 3382986705,
+            "listing_id": 1002271975233,
+            "quantity": 1,
+            "name": "Sur Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/sur_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 1,
+            "properties": null
+          },
+          {
+            "id": 3632079454,
+            "item_id": 3632079454,
+            "listing_id": 1002271975233,
+            "quantity": 2,
+            "name": "Lo Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/lo_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 2,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 1044608173,
+          "username": "SilenceWolf31771",
+          "bnet": "SilenceWolf#31771",
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "zh"
+          ],
+          "banned": false,
+          "rating": 4.9958115,
+          "reviews": 3820,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": true,
+        "stock": false,
+        "make_offer": false,
+        "completed": false,
+        "properties": [
+          {
+            "id": 1002271975234,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 30,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002271975235,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002271975236,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002271975237,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002271975238,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49176864,
+      "user_id": "1048018244",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T14:11:00.284Z",
+      "updated_at": "2026-04-16T14:13:57.435Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002271975233,
+        "prices": [
+          {
+            "id": 4149485449,
+            "item_id": 4149485449,
+            "listing_id": 1002271975233,
+            "quantity": 1,
+            "name": "Ber Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ber_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          },
+          {
+            "id": 3382986705,
+            "item_id": 3382986705,
+            "listing_id": 1002271975233,
+            "quantity": 1,
+            "name": "Sur Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/sur_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 1,
+            "properties": null
+          },
+          {
+            "id": 3632079454,
+            "item_id": 3632079454,
+            "listing_id": 1002271975233,
+            "quantity": 2,
+            "name": "Lo Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/lo_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 2,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 1044608173,
+          "username": "SilenceWolf31771",
+          "bnet": "SilenceWolf#31771",
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "zh"
+          ],
+          "banned": false,
+          "rating": 4.9958115,
+          "reviews": 3820,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": true,
+        "stock": false,
+        "make_offer": false,
+        "completed": false,
+        "properties": [
+          {
+            "id": 1002271975234,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 30,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002271975235,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002271975236,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002271975237,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002271975238,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49176734,
+      "user_id": "2390980928",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T14:07:39.422Z",
+      "updated_at": "2026-04-16T14:14:21.474Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002270420899,
+        "prices": [
+          {
+            "id": 3896329590,
+            "item_id": 3896329590,
+            "listing_id": 1002270420899,
+            "quantity": 1,
+            "name": "Ohm Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ohm_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          },
+          {
+            "id": 2290642411,
+            "item_id": 2290642411,
+            "listing_id": 1002270420899,
+            "quantity": 1,
+            "name": "Ist Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/ist_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 1970621030,
+          "username": "JiroJif",
+          "bnet": "SigDish#2129",
+          "friend_code": null,
+          "psn": null,
+          "xbox": "",
+          "customization": {
+            "favorite_games": [
+              "diablo2resurrected"
+            ]
+          },
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "en-US"
+          ],
+          "banned": false,
+          "rating": 4.943478,
+          "reviews": 230,
+          "roles": null
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": false,
+        "stock": false,
+        "make_offer": false,
+        "completed": true,
+        "properties": [
+          {
+            "id": 1002270420900,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 29,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002270420901,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002270420902,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "hardcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002270420903,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002270420904,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49176239,
+      "user_id": "1002155228550",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T13:56:41.290Z",
+      "updated_at": "2026-04-16T13:58:05.060Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002248499601,
+        "prices": [
+          {
+            "id": 3382986705,
+            "item_id": 3382986705,
+            "listing_id": 1002248499601,
+            "quantity": 1,
+            "name": "Sur Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/sur_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 3821427951,
+          "username": "D2BuyandSell",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": {
+            "frame": "https://cdn.nookazon.com/rewards/frames/cow_frame.svg",
+            "username_color": "#FF0000"
+          },
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "zh",
+            "en-US",
+            "zh-Hant"
+          ],
+          "banned": false,
+          "rating": 4.986109,
+          "reviews": 5471,
+          "roles": [
+            {
+              "img": "https://cdn.nookazon.com/badges/epic.png",
+              "title": "epic",
+              "role_id": 131
+            }
+          ]
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": true,
+        "stock": false,
+        "make_offer": false,
+        "completed": false,
+        "properties": [
+          {
+            "id": 1002248499602,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 30,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002248499603,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002248499604,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002248499605,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002248499606,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    },
+    {
+      "id": 49174914,
+      "user_id": "1002153317830",
+      "accepted": true,
+      "completed": true,
+      "verified": false,
+      "created_at": "2026-04-16T13:24:35.111Z",
+      "updated_at": "2026-04-16T13:27:12.035Z",
+      "on_the_way": false,
+      "parent_offer": null,
+      "parent_user": null,
+      "offer_listing_id": null,
+      "cancellation_reason": null,
+      "denial": false,
+      "amount": null,
+      "request_delete": null,
+      "requester_id": {
+        "id": null,
+        "username": null
+      },
+      "prices": null,
+      "listing": {
+        "id": 1002248499601,
+        "prices": [
+          {
+            "id": 3382986705,
+            "item_id": 3382986705,
+            "listing_id": 1002248499601,
+            "quantity": 1,
+            "name": "Sur Rune",
+            "type": "runes",
+            "img": "https://cdn.nookazon.com/diablo2resurrected/rune/sur_rune.png",
+            "variant_name": null,
+            "variant_img": null,
+            "group": 0,
+            "properties": null
+          }
+        ],
+        "seller": {
+          "id": 3821427951,
+          "username": "D2BuyandSell",
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "customization": {
+            "frame": "https://cdn.nookazon.com/rewards/frames/cow_frame.svg",
+            "username_color": "#FF0000"
+          },
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": "online",
+          "languages": [
+            "zh",
+            "en-US",
+            "zh-Hant"
+          ],
+          "banned": false,
+          "rating": 4.986109,
+          "reviews": 5471,
+          "roles": [
+            {
+              "img": "https://cdn.nookazon.com/badges/epic.png",
+              "title": "epic",
+              "role_id": 131
+            }
+          ]
+        },
+        "counter_seller": {
+          "id": null,
+          "username": null,
+          "bnet": null,
+          "friend_code": null,
+          "psn": null,
+          "xbox": null,
+          "discord": null,
+          "discord_id": null,
+          "twitter": null,
+          "roblox_id": null,
+          "roblox_username": null,
+          "other": null,
+          "status": null,
+          "languages": null,
+          "rating": null,
+          "reviews": null,
+          "roles": null
+        },
+        "selling": true,
+        "amount": 1,
+        "standing": true,
+        "stock": false,
+        "make_offer": false,
+        "completed": false,
+        "properties": [
+          {
+            "id": 1002248499602,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "number",
+            "format": {
+              "index": 36,
+              "default": false,
+              "globalDefault": false
+            },
+            "number": 30,
+            "string": null,
+            "options": null,
+            "property": "+{{value}} to All Resistances"
+          },
+          {
+            "id": 1002248499603,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "PC": {
+                  "color": "#bababa"
+                },
+                "xbox": {
+                  "img": "https://cdn.nookazon.com/icons/xbox.svg",
+                  "color": "#117b11"
+                },
+                "switch": {
+                  "img": "https://cdn.nookazon.com/icons/switch.svg",
+                  "color": "#ff000a"
+                },
+                "playstation": {
+                  "img": "https://cdn.nookazon.com/icons/playstation.svg",
+                  "color": "#006cca"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "PC",
+            "options": [
+              "PC",
+              "switch",
+              "playstation",
+              "xbox"
+            ],
+            "property": "Platform"
+          },
+          {
+            "id": 1002248499604,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "hardcore": {
+                  "img": "https://cdn.nookazon.com/diablo2resurrected/properties/hardcore.png",
+                  "color": "#ff7353"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true,
+              "input_position": "right"
+            },
+            "number": null,
+            "string": "softcore",
+            "options": [
+              "softcore",
+              "hardcore"
+            ],
+            "property": "Mode"
+          },
+          {
+            "id": 1002248499605,
+            "img": null,
+            "bool": true,
+            "date": null,
+            "type": "bool",
+            "format": {
+              "values": {
+                "Ladder": {
+                  "color": "red"
+                },
+                "Non Ladder": {
+                  "color": "#398bff"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": null,
+            "options": [
+              "Ladder",
+              "Non Ladder"
+            ],
+            "property": "Ladder"
+          },
+          {
+            "id": 1002248499606,
+            "img": null,
+            "bool": false,
+            "date": null,
+            "type": "string",
+            "format": {
+              "values": {
+                "classic": {
+                  "color": ""
+                },
+                "lord of destruction": {
+                  "color": "#a3491c"
+                },
+                "reign of the warlock": {
+                  "color": "#913945"
+                }
+              },
+              "default": true,
+              "preferred": true,
+              "skipOffer": true,
+              "globalDefault": true
+            },
+            "number": null,
+            "string": "reign of the warlock",
+            "options": [
+              "classic",
+              "lord of destruction",
+              "reign of the warlock"
+            ],
+            "property": "Game version"
+          }
+        ],
+        "item": {
+          "id": 3797106309,
+          "name": "Mara's Kaleidoscope",
+          "type": "uniques",
+          "variant_name": null,
+          "variant_img": null,
+          "img": "https://cdn.nookazon.com/diablo2resurrected/amulet/amulet1.png"
+        }
+      }
+    }
+  ],
+  "cooldown": false,
+  "nextPage": 1,
+  "version": "1.3.0"
+}
