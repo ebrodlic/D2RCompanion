@@ -26,7 +26,7 @@ namespace D2RPriceChecker.UI.Views
 
         //Managers
         private HotkeyManager _hotkeys = null!;
-      
+
         // Services
         private readonly ScreenshotService _screenshots = new();
         private OcrService _ocrService = null!;
@@ -43,7 +43,7 @@ namespace D2RPriceChecker.UI.Views
             SetupWindows();
 
             Loaded += OnWindowLoaded;
-        }   
+        }
 
         private void SetVersion()
         {
@@ -59,7 +59,7 @@ namespace D2RPriceChecker.UI.Views
             _trayIcon.Text = "D2R Price Checker";
 
             var menu = new ContextMenuStrip();
-            menu.Items.Add("Open", null, (s, e) => { 
+            menu.Items.Add("Open", null, (s, e) => {
                 Show();
                 //WindowState = WindowState.Normal;
                 //Topmost = true;
@@ -101,7 +101,7 @@ namespace D2RPriceChecker.UI.Views
 
             _traderieWindow = new TraderieWindow();
             _traderieWindow.Visibility = Visibility.Hidden;
-            _traderieWindow.ShowInTaskbar = false;        
+            _traderieWindow.ShowInTaskbar = false;
 
             _traderieWindow.Show();  // Show the window to initialize WebView2, then hide it immediately
             //_traderie.Owner = this;
@@ -134,7 +134,7 @@ namespace D2RPriceChecker.UI.Views
             SetupHotkeys();
         }
 
-        private async Task InitializeOcrAsync() 
+        private async Task InitializeOcrAsync()
         {
             _ocrService = await Task.Run(() => new OcrService("Models/d2r_tooltip_crnn_best.onnx"));
         }
@@ -149,24 +149,28 @@ namespace D2RPriceChecker.UI.Views
             _hotkeys.Register(Key.O, ModifierKeys.Control, HandleOverlayToggleHotkey);
         }
 
-     
+
 
         private async void HandlePipelineHotkey()
         {
-            var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            StartProcessing();
 
             try
             {
-                StartProcessing();  
+                var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
 
                 var detectionResult = RunDetectionPipeline(timestamp);
 
                 if (!detectionResult.IsTooltipFound())
                     return;
 
-                var segmentationResult = RunSegmentationPipeline(timestamp, detectionResult.Tooltip!);      
+                var segmentationResult = RunSegmentationPipeline(timestamp, detectionResult.Tooltip!);
 
                 var itemMetadata = new ItemDetectionPipeline().Run(segmentationResult.TooltipLines[0]);
+
+                if (!IsSupportedItemType(itemMetadata))
+                    return;
+
                 var itemText = await RunOcrPipelineAsync(segmentationResult);
                 var itemName = itemText[0].Trim();
 
@@ -182,9 +186,20 @@ namespace D2RPriceChecker.UI.Views
                 _overlay.UpdateValues(trades);
             }
             finally
-            { 
+            {
                 StopProcessing();
             }
+        }
+
+        private bool IsSupportedItemType(ItemMetadata itemMetadata)
+        {
+            if (itemMetadata.Rarity == ItemRarity.Unique)
+                return true;
+
+            if (itemMetadata.Rarity == ItemRarity.Set)
+                return true;
+
+            return false;
         }
 
         private void ToggleOverlay()
