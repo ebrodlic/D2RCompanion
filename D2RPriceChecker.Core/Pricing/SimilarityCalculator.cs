@@ -1,7 +1,7 @@
 ﻿using D2RPriceChecker.Core.Traderie.Domain;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace D2RPriceChecker.Core.Pricing
@@ -12,20 +12,20 @@ namespace D2RPriceChecker.Core.Pricing
         {
             var tradeFeatures = ExtractFeatures(trade.Properties);
             var knownFeatures = tradeFeatures.Keys;
-    
+
             var ocrFeatures = ExtractFeatures(itemText, knownFeatures);
 
             return Compare(tradeFeatures, ocrFeatures);
         }
 
+        // Extract features from trade properties (like from a Trade object)
         public Dictionary<string, double> ExtractFeatures(IEnumerable<ListingProperty> props)
         {
             var features = new Dictionary<string, double>();
 
             foreach (var prop in props)
             {
-                if(!IsRelevant(prop)) 
-                    continue;
+                if (!IsRelevant(prop)) continue;
 
                 var key = prop.Property.Trim();
                 var value = prop.Number!.Value;
@@ -36,21 +36,18 @@ namespace D2RPriceChecker.Core.Pricing
             return features;
         }
 
-        public Dictionary<string, double> ExtractFeatures(
-            IEnumerable<string> ocrLines,
-            IEnumerable<string> knownFeatures)
+        // Extract features from OCR text (matching with known features)
+        public Dictionary<string, double> ExtractFeatures(IEnumerable<string> ocrLines, IEnumerable<string> knownFeatures)
         {
             var result = new Dictionary<string, double>();
 
             foreach (var line in ocrLines)
             {
                 var value = ParseNumeric(line);
-                if (value == null)
-                    continue;
+                if (value == null) continue;
 
                 var match = MatchFeature(line, knownFeatures);
-                if (match == null)
-                    continue;         
+                if (match == null) continue;
 
                 result[match] = value.Value;
             }
@@ -58,12 +55,56 @@ namespace D2RPriceChecker.Core.Pricing
             return result;
         }
 
-        private double Compare(
-            Dictionary<string, double> a,
-            Dictionary<string, double> b)
+        // Match OCR lines with known features using a fuzzy approach
+        public List<string> MatchFeaturesWithOcrText(List<string> ocrLines, List<string> featureKeys)
+        {
+            var matchedFeatures = new List<string>();
+
+            foreach (var line in ocrLines)
+            {
+                var matchedKey = MatchFeatureWithThreshold(line, featureKeys);
+                if (matchedKey != null)
+                {
+                    matchedFeatures.Add(matchedKey);
+                }
+            }
+
+            return matchedFeatures;
+        }
+
+        private string? MatchFeatureWithThreshold(string line, List<string> featureKeys)
+        {
+            string normalizedLine = Normalize(line);
+
+            foreach (var key in featureKeys)
+            {
+                string normalizedKey = Normalize(key);
+
+                if (normalizedLine.Contains(normalizedKey))
+                {
+                    return key;
+                }
+            }
+
+            return null;
+        }
+
+        // More aggressive normalization to clean up the text for matching
+        private string Normalize(string text)
+        {
+            return Regex.Replace(text, @"\d+", "")            // Remove digits
+                        .Replace("{value}", "")              // Remove {value} placeholder
+                        .Replace("+", "")                    // Remove plus signs
+                        .Replace("to", "")                   // Remove "to"
+                        .ToLowerInvariant()                  // Convert to lowercase
+                        .Replace("  ", " ")                  // Replace double spaces with single
+                        .Trim();                             // Trim leading/trailing spaces
+        }
+
+        // Compare two sets of features for similarity
+        private double Compare(Dictionary<string, double> a, Dictionary<string, double> b)
         {
             var keys = a.Keys.Union(b.Keys);
-
             double sum = 0;
             int count = 0;
 
@@ -72,7 +113,6 @@ namespace D2RPriceChecker.Core.Pricing
                 var va = a.TryGetValue(key, out var av) ? av : 0;
                 var vb = b.TryGetValue(key, out var bv) ? bv : 0;
 
-                // normalized difference
                 var diff = Math.Abs(va - vb);
                 var norm = Math.Max(Math.Abs(va), Math.Abs(vb));
 
@@ -86,40 +126,15 @@ namespace D2RPriceChecker.Core.Pricing
             return count == 0 ? 0 : 1.0 - (sum / count);
         }
 
-        private (string feature, double value)? ParseOcr(string line)
-        {
-            if (string.IsNullOrWhiteSpace(line))
-                return null;
-
-            var match = Regex.Match(line, @"([+-]?\d+(\.\d+)?)");
-
-            if (!match.Success)
-                return null;
-
-            var value = double.Parse(match.Groups[1].Value);
-
-            // remove number and cleanup
-            var feature = Regex.Replace(line, @"([+-]?\d+(\.\d+)?)", "")
-                                .Replace("+", "")
-                                .Trim()
-                                .ToLowerInvariant();
-
-            return (feature, value);
-        }
-
         private double? ParseNumeric(string line)
         {
-            if (string.IsNullOrWhiteSpace(line))
-                return null;
+            if (string.IsNullOrWhiteSpace(line)) return null;
 
-            // Find first number in the string (handles +28, 28%, etc.)
             var match = Regex.Match(line, @"([+-]?\d+(\.\d+)?)");
 
-            if (!match.Success)
-                return null;
+            if (!match.Success) return null;
 
-            if (!double.TryParse(match.Groups[1].Value, out var value))
-                return null;
+            if (!double.TryParse(match.Groups[1].Value, out var value)) return null;
 
             return value;
         }
@@ -149,9 +164,7 @@ namespace D2RPriceChecker.Core.Pricing
 
         private double FuzzyScore(string a, string b)
         {
-            // directional containment matters more than set overlap
-            if (a.Contains(b) || b.Contains(a))
-                return 0.9;
+            if (a.Contains(b) || b.Contains(a)) return 0.9;
 
             var aTokens = a.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var bTokens = b.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -163,40 +176,6 @@ namespace D2RPriceChecker.Core.Pricing
             var union = setA.Union(setB).Count();
 
             return union == 0 ? 0 : (double)intersection / union;
-        }
-
-        private double StringSimilarity(string a, string b)
-        {
-            var aTokens = a.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var bTokens = b.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-            var setA = aTokens.ToHashSet();
-            var setB = bTokens.ToHashSet();
-
-            var intersection = setA.Intersect(setB).Count();
-            var union = setA.Union(setB).Count();
-
-            return union == 0 ? 0 : (double)intersection / union;
-        }
-
-        private string Normalize(string text)
-        {
-            return Regex.Replace(text, @"\d+", "")
-                        .Replace("{value}", "")
-                        .Replace("+", "")
-                        .Replace("to", "")
-                        .ToLowerInvariant()
-                        .Replace("  ", " ")
-                        .Trim();
-        }
-
-        private string NormalizeTemplate(string text)
-        {
-            return text.Replace("{value}", "")
-                       .Replace("+", "")
-                       .Replace("to", "")
-                       .Trim()
-                       .ToLowerInvariant();
         }
 
         private bool IsRelevant(ListingProperty p)

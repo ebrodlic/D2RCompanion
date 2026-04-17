@@ -64,7 +64,7 @@ namespace D2RPriceChecker.Tests.Pricing
             var service = new PricePredictionService(table);
             var result = service.Predict(lines, offers);
 
-            Assert.NotEqual(0, result);
+            Assert.NotEqual(0, result.Value);
         }
     }
 }

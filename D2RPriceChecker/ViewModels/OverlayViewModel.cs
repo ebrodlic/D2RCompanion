@@ -3,14 +3,19 @@ using CommunityToolkit.Mvvm.Input;
 using D2RPriceChecker.Core.Pricing;
 using D2RPriceChecker.Core.Traderie.Domain;
 using D2RPriceChecker.Core.Traderie.DTO;
+using D2RPriceChecker.UI.ViewModels;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace D2RPriceChecker.ViewModels
@@ -19,9 +24,7 @@ namespace D2RPriceChecker.ViewModels
     {  
 
         // Top section: OCR results
-        public ObservableCollection<string> OcrLines { get; set; } = new();
-
-  
+        public ObservableCollection<OcrLine> OcrLines { get; set; } = new();  
 
         // Bottom section: Trades info
         public ObservableCollection<Trade> Trades { get; set; } = new();
@@ -31,6 +34,8 @@ namespace D2RPriceChecker.ViewModels
         public double PricePrediction { get; set; } = 0;
 
         public string PricePredictionHint { get; set; } = "";
+
+        public double PricePredictionConfidence { get; set; } = 0;
 
 
         public string PriceGroupsDisplay =>
@@ -218,11 +223,19 @@ namespace D2RPriceChecker.ViewModels
             var table = new RuneValueTable(Statistics.RuneValues);
             var prediction = new PricePredictionService(table);
 
-            PricePrediction = prediction.Predict(OcrLines.ToList(), Trades.ToList());
-            PricePredictionHint = "~" + GetRuneHint(PricePrediction) + " ";
+            var lines = OcrLines.Select(ocrLine => ocrLine.Text).ToList();
+
+            var predictionResult = prediction.Predict(lines, Trades.ToList());
+
+            PricePrediction = predictionResult.Value;
+            PricePredictionHint = "~" + GetRuneHint(predictionResult.Value) + " ";
+            PricePredictionConfidence = predictionResult.Confidence;
 
             OnPropertyChanged(nameof(PricePrediction));
             OnPropertyChanged(nameof(PricePredictionHint));
+            OnPropertyChanged(nameof(PricePredictionConfidence));
+
+            
 
         }
 

@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using D2RPriceChecker.UI.ViewModels;
 
 namespace D2RPriceChecker.UI.Views
 {
@@ -99,7 +100,7 @@ namespace D2RPriceChecker.UI.Views
         {
             ViewModel.OcrLines.Clear();
             foreach (var line in ocrLines)
-                ViewModel.OcrLines.Add(line);
+                ViewModel.OcrLines.Add(new OcrLine(line, false));
 
             ViewModel.Trades.Clear();
             foreach (var trade in trades)
@@ -111,7 +112,7 @@ namespace D2RPriceChecker.UI.Views
         {
             ViewModel.OcrLines.Clear();
             foreach (var line in ocrLines)
-                ViewModel.OcrLines.Add(line);
+                ViewModel.OcrLines.Add(new OcrLine(line, false));
         }
 
         public void UpdateValues(List<Trade> trades)
