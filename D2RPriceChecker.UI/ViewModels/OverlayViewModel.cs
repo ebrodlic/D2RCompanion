@@ -239,6 +239,45 @@ namespace D2RPriceChecker.ViewModels
 
         }
 
+        public void Reset()
+        {
+            // 1. Collections
+            OcrLines.Clear();
+            Trades.Clear();
+
+            // 2. Domain objects
+            Statistics = null;
+            Activity = new TradeActivityInfo();
+
+            // 3. Prediction state
+            PricePrediction = 0;
+            PricePredictionHint = "";
+            PricePredictionConfidence = 0;
+
+            // 4. Rune UI state
+            IsRuneInfoVisible = false;
+            IsRuneInfoPinned = false;
+
+            // 5. Brushes (important: reset visuals too)
+            ActivityBorderBrush = null;
+            ActivityTextBrush = null;
+
+            // 6. Force UI refresh for computed bindings
+            OnPropertyChanged(nameof(PricePrediction));
+            OnPropertyChanged(nameof(PricePredictionHint));
+            OnPropertyChanged(nameof(PricePredictionConfidence));
+
+            OnPropertyChanged(nameof(Activity));
+            OnPropertyChanged(nameof(RuneValuesDisplay));
+            OnPropertyChanged(nameof(PriceGroupsDisplay));
+
+            // 7. Derived displays
+            NotifyStatisticsChanged();
+        
+
+          
+        }
+
 
 
 

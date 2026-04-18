@@ -60,7 +60,7 @@ namespace D2RPriceChecker.UI.Views
             if (IsClickInsideContent(e))
                 return;
 
-            ClearFields();
+            ViewModel.Reset();
             HideOverlay();
         }
 
@@ -76,7 +76,7 @@ namespace D2RPriceChecker.UI.Views
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            ClearFields();
+            ViewModel.Reset();
             HideOverlay();
         }
 
@@ -132,13 +132,6 @@ namespace D2RPriceChecker.UI.Views
         {
             //ViewModel.Statistics.Clear();
             ViewModel.Statistics = stats;
-        }
-
-
-        private void ClearFields()
-        {
-            //OcrText.Text = string.Empty;
-            //PriceText.Text = string.Empty;
         }
 
         public void ShowOverlay()

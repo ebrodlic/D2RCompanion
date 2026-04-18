@@ -127,10 +127,7 @@
 
                     <!--  ================= PRICE SUMMARY =================  -->
 
-                    <Border
-                        Grid.Row="1"
-                        Margin="0,10,0,0"
-                        Padding="6">
+                    <Border Grid.Row="1" Margin="0,10,0,0">
 
                         <Grid VerticalAlignment="Center">
 
