@@ -259,8 +259,11 @@ namespace D2RPriceChecker.ViewModels
             IsRuneInfoPinned = false;
 
             // 5. Brushes (important: reset visuals too)
-            ActivityBorderBrush = null;
-            ActivityTextBrush = null;
+            ActivityBorderBrush = new SolidColorBrush(Color.FromRgb(90, 90, 90));
+            ActivityTextBrush = new SolidColorBrush(Lighten(Color.FromRgb(90, 90, 90)));
+
+            OnPropertyChanged(nameof(ActivityBorderBrush));
+            OnPropertyChanged(nameof(ActivityTextBrush));
 
             // 6. Force UI refresh for computed bindings
             OnPropertyChanged(nameof(PricePrediction));
