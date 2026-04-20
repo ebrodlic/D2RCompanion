@@ -4,7 +4,6 @@ using D2RCompanion.Core.Pricing;
 using D2RCompanion.Core.Traderie.Domain;
 using D2RCompanion.Core.Traderie.DTO;
 using D2RCompanion.UI.ViewModels;
-using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +14,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using static System.Net.Mime.MediaTypeNames;
 
 
 namespace D2RCompanion.ViewModels

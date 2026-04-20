@@ -11,7 +11,6 @@ namespace D2RCompanion.ViewModels
     public class SettingsViewModel : INotifyPropertyChanged
     {
         private SettingsService _service;
-
         public bool SaveImagesToDisk
         {
             get => _service.Settings.SaveImagesToDisk;

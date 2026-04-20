@@ -13,11 +13,12 @@ using D2RCompanion.Core.Items;
 using D2RCompanion.Core.Pipelines;
 using D2RCompanion.Pipelines;
 using D2RCompanion.UI.Util;
+using D2RCompanion.UI.ViewModels;
 
 
 namespace D2RCompanion.UI.Views
 {
-    public partial class SplashWindow : Window
+    public partial class MainWindow : Window
     {
         // Icons and Tray
         private NotifyIcon _trayIcon = null!;
@@ -36,33 +37,28 @@ namespace D2RCompanion.UI.Views
         private TraderieService _traderieService = null!;
 
         // Data Loaders
-        private IItemBaseNameProvider _itemBaseNameProvider;
+        private IItemBaseNameProvider _itemBaseNameProvider = null!;
 
         // Flags
         private bool _isProcessing;
 
-        public SplashWindow()
+        public MainWindow()
         {
             InitializeComponent();
-            SetVersion();
             SetupTray();
             SetupWindows();
+
+            DataContext = new MainWindowViewModel();
 
             Loaded += OnWindowLoaded;
         }
 
-        private void SetVersion()
-        {
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
-
-            VersionText.Text = $"v{version}";
-        }
         private void SetupTray()
         {
             _trayIcon = new NotifyIcon();
             _trayIcon.Icon = new Icon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "icon-16x16.ico"));
             _trayIcon.Visible = true;
-            _trayIcon.Text = "D2R Price Checker";
+            _trayIcon.Text = "D2R Companion";
 
             var menu = new ContextMenuStrip();
             menu.Items.Add("Open", null, (s, e) => {
@@ -194,10 +190,13 @@ namespace D2RCompanion.UI.Views
 
             var itemText = await RunOcrPipelineAsync(segmentationResult);
 
+
+            var item = RunItemAnalysisPipeline(itemText, segmentationResult);
+
             _overlay.Show();
             _overlay.UpdateValues(itemText);
 
-            var item = RunItemAnalysisPipeline(itemText, segmentationResult);
+          
 
             //TEMPORARY - HANDLE EQUIPMENT ONLY
             if (item.Type == ItemType.Equipment)

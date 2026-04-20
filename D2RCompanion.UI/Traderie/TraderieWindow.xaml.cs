@@ -28,7 +28,7 @@ namespace D2RCompanion.UI.Traderie
         {
             _userDataFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "D2RPriceChecker",
+                "D2RCompanion", // TODO get application name
                 "Traderie");
 
             if (!Directory.Exists(_userDataFolder))

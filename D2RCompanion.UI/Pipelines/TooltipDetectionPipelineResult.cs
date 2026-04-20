@@ -9,7 +9,10 @@ public class TooltipDetectionPipelineResult
     public Bitmap? Components { get; set; }
     public Bitmap? BorderOverlay { get; set; }
     public Bitmap? Tooltip { get; set; }
-
+    public TooltipDetectionPipelineResult(Bitmap screenshot)
+    {
+        Screenshot = screenshot;
+    }
     public bool IsTooltipFound()
     {
         if (Tooltip is null)
@@ -19,10 +22,5 @@ public class TooltipDetectionPipelineResult
             return false;
 
         return true;
-    }
-
-    public TooltipDetectionPipelineResult(Bitmap screenshot)
-    {
-        Screenshot = screenshot;
     }
 }

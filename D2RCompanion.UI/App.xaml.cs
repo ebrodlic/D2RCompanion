@@ -15,9 +15,12 @@ public partial class App : Application
 {
     public CacheService Cache { get; private set; } = null!;
     public SettingsService Settings { get; private set; } = null!;
+
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+
+        // TODO create appversion provider (with name), and pass to cache service 
 
         // 1. Create root and cache dirs into Cache/
         Cache = new CacheService();
@@ -30,7 +33,7 @@ public partial class App : Application
         Settings.Initialize();
 
         // 4. Show main window (splash)
-        MainWindow = new SplashWindow();
+        MainWindow = new MainWindow();
         MainWindow.Show();
 
         LoggingService.Info("Application started");
@@ -38,8 +41,8 @@ public partial class App : Application
 
     protected override void OnExit(ExitEventArgs e)
     {
-        if(MainWindow is SplashWindow)
-            ((SplashWindow)MainWindow).Cleanup();
+        if(MainWindow is MainWindow)
+            ((MainWindow)MainWindow).Cleanup();
 
         base.OnExit(e);
         //LoggingService.Info("Application exited");
