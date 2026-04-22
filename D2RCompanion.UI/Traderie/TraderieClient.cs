@@ -1,22 +1,23 @@
-﻿using D2RCompanion.Core.Traderie;
-using D2RCompanion.Core.Traderie.DTO;
-using D2RCompanion.Core.Traderie.Mapping;
-using D2RCompanion.Core.Traderie.Domain;
-using D2RCompanion.Core.Items;
-using System;
+﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
+using D2RCompanion.Core.Items;
+using D2RCompanion.Core.Traderie;
+using D2RCompanion.Core.Traderie.Domain;
+using D2RCompanion.Core.Traderie.DTO;
+using D2RCompanion.Core.Traderie.Mapping;
 
 namespace D2RCompanion.UI.Traderie
 {
-    internal class TraderieService
+    internal class TraderieClient
     {
         private readonly TraderieWindow _window;
 
         private readonly JsonSerializerOptions _options;
-        public TraderieService(TraderieWindow window)
+        public TraderieClient(TraderieWindow window)
         {
             _window = window;
 
@@ -25,6 +26,7 @@ namespace D2RCompanion.UI.Traderie
                 PropertyNameCaseInsensitive = true
             };
         }
+
         public async Task<TradeStatistics> GetPriceStatisticsAsync(Item item)
         {
             (string itemId, _) = await ResolveItemAsync(item);
@@ -110,10 +112,10 @@ namespace D2RCompanion.UI.Traderie
                 props["prop_Rarity"] = item.Rarity.ToString().ToLower();
             }
 
-            if(item.Rarity is ItemRarity.Unique or ItemRarity.Set)
+            if (item.Rarity is ItemRarity.Unique or ItemRarity.Set)
             {
                 //if identified, or unidentified - set flag
-            }        
+            }
 
             return props;
         }

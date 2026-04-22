@@ -1,11 +1,11 @@
-﻿using D2RCompanion.Core.Pricing;
-using D2RCompanion.Core.Traderie.DTO;
-using D2RCompanion.Core.Traderie.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
+using D2RCompanion.Core.Pricing;
+using D2RCompanion.Core.Traderie.DTO;
+using D2RCompanion.Core.Traderie.Mapping;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace D2RCompanion.Tests.Pricing

@@ -1,16 +1,15 @@
-﻿using D2RCompanion.Pipelines;
-using D2RCompanion.Core.Pipelines;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 using System.IO;
-using System.Text;
+using D2RCompanion.Core.Pipelines;
+using D2RCompanion.Pipelines;
 
 namespace D2RCompanion.Services
 {
     public class CacheService
     {
-        public string RootDir { get;  }
+        private const string Appname = "D2RCompanion";
+        public string RootDir { get; }
+        public string LogsDir { get; }
         public string CacheDir { get; }
 
         private readonly string _screenshotsDir;
@@ -26,7 +25,8 @@ namespace D2RCompanion.Services
 
         public CacheService()
         {
-            RootDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "D2RCompanion");
+            RootDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Appname);
+            LogsDir = Path.Combine(RootDir, "Logs");
             CacheDir = Path.Combine(RootDir, "Cache");
 
             _screenshotsDir = Path.Combine(CacheDir, "Screenshots");
@@ -39,13 +39,21 @@ namespace D2RCompanion.Services
 
         private void CreateDirectories()
         {
-            Directory.CreateDirectory(RootDir);
-            Directory.CreateDirectory(CacheDir);
+            var dirs = new[]
+            {
+                RootDir,
+                LogsDir,
+                CacheDir,
+                _screenshotsDir,
+                _masksDir,
+                _tooltipDir,
+                _linesDir
+            };
 
-            Directory.CreateDirectory(_screenshotsDir);
-            Directory.CreateDirectory(_masksDir);
-            Directory.CreateDirectory(_tooltipDir);
-            Directory.CreateDirectory(_linesDir);
+            foreach (var dir in dirs)
+            {
+                Directory.CreateDirectory(dir);
+            }
         }
 
         public void Save(string id, TooltipDetectionPipelineResult result)
@@ -57,7 +65,7 @@ namespace D2RCompanion.Services
             if (_saveScreenshots)
                 result.Screenshot.Save(screenshotPath, ImageFormat.Png);
 
-            if(_saveMasks)
+            if (_saveMasks)
                 result.BorderMask?.Save(maskPath, ImageFormat.Png);
 
             if (_saveTooltips)

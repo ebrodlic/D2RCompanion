@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.Json;
-using System.IO;
+using D2RCompanion.UI.AppCore;
 
-namespace D2RCompanion.Services
+namespace D2RCompanion.UI.Services
 {
     public class SettingsService
     {
@@ -12,9 +13,9 @@ namespace D2RCompanion.Services
 
         public AppSettings Settings { get; private set; }
 
-        public SettingsService(string rootDir)
+        public SettingsService(AppPaths paths)
         {
-            _filePath = Path.Combine(rootDir, "settings.json");
+            _filePath = Path.Combine(paths.Root, "settings.json");
 
             Settings = new AppSettings();
         }

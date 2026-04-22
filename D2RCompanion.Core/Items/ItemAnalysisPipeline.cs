@@ -27,7 +27,7 @@ namespace D2RCompanion.Core.Items
             bool hasInferior = itemText.Any(x => x.Contains("Low Quality"));
             bool hasEthereal = itemText.Any(x => x.Contains("Ethereal"));
             bool hasSocketed = itemText.Any(x => x.Contains("Socketed"));
-            
+
             bool isEquipment = itemText.Any(x => x.Contains("Required"));
 
             var firstImage = segmentationResult.TooltipLines[0];
@@ -51,7 +51,7 @@ namespace D2RCompanion.Core.Items
 
                 _ => ItemRarity.None
             };
-      
+
             if (isEquipment)
             {
                 item.Type = ItemType.Equipment;
@@ -69,7 +69,7 @@ namespace D2RCompanion.Core.Items
                 item.BaseName = matcher.Find(item.Name);
             }
 
-            if(rarity == ItemRarity.Rare)
+            if (rarity == ItemRarity.Rare)
             {
                 item.BaseName = itemText[1];
             }
@@ -84,7 +84,7 @@ namespace D2RCompanion.Core.Items
             item.IsEthereal = hasEthereal;
             item.Rarity = rarity;
 
-            return item;           
+            return item;
         }
 
         public static string NormalizeItemName(string name)

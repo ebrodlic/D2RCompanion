@@ -1,31 +1,82 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using D2RCompanion.UI.AppCore;
+using D2RCompanion.UI.Messages;
+using D2RCompanion.UI.Services;
+using Microsoft.Extensions.Logging;
 
 namespace D2RCompanion.UI.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
-        //TODO move this as provider into App class, to be used further on in services
-        public string AppName { get; } = "D2RCompanion"; 
+        private ILogger _logger;
+        public string AppDisplayName { get; }
+        public string AppDisplayVersion { get; }
 
-        public string AppDisplayName { get; } = "D2R Companion";
+        [ObservableProperty]
+        private bool isReady;
 
-        public string AppVersion { get; } = "";
+        [ObservableProperty]
+        private bool isBusy;
 
-        public string AppDisplayVersion { get; } = "";
+        [ObservableProperty]
+        private string statusMessage = "Starting...";
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(AppInfo appInfo, ILogger<MainWindowViewModel> logger)
         {
-            AppVersion = GetVersion();
-            AppDisplayVersion = $"v{AppVersion}";
+            AppDisplayName = appInfo.Name;
+            AppDisplayVersion = $"v{appInfo.Version}";
+
+            _logger = logger;
+
+            WeakReferenceMessenger.Default.Register<AppReadyMessage>(this, (recipient, message) =>
+            {
+                // This will be called when the message is sent
+                _logger.LogInformation("AppReadyMessage received!");
+
+                SetAppReady();
+            });
         }
 
-        public string GetVersion()
+        private void SetAppReady()
         {
-            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            IsReady = true;
+            StatusMessage = "Ready";
+        }
+
+        [RelayCommand]
+        public async Task RunPipelineAsync()
+        {
+            if (!IsReady) return;
+            if (isBusy) return;
+
+            isBusy = true;
+
+            //    try
+            //    {
+            //        await Task.Delay(2000);
+
+
+            //        //var result = await _pipeline.RunAsync();
+
+            //        //PipelineCompleted?.Invoke(result);
+
+            //        //store result if needed
+            //    }
+            //    catch (Exception ex)
+            //    {
+
+            //    }
+            //    finally
+            //    {
+            //        IsRunning = false;
+            //    }
         }
     }
 }

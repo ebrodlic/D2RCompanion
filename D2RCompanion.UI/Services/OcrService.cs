@@ -1,29 +1,27 @@
-﻿using Microsoft.ML.OnnxRuntime;
-using Microsoft.ML.OnnxRuntime.Tensors;
+﻿using System;
 using System;
 using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 namespace D2RCompanion.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Linq;
-    using Microsoft.ML.OnnxRuntime;
-    using Microsoft.ML.OnnxRuntime.Tensors;
-
     public class OcrService
     {
-        private readonly InferenceSession _session;
+        private InferenceSession? _session;
+        private readonly string _modelPath;
+
         private readonly Dictionary<int, char> _idxToChar;
         private readonly int _targetHeight = 28;
         private readonly int _channels = 3;
 
         public OcrService(string onnxPath)
         {
-            _session = new InferenceSession(onnxPath);
+            _modelPath = onnxPath;
 
             // Sorted char list like Python
             var charList = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:'-+/()% ".ToCharArray();
@@ -33,6 +31,13 @@ namespace D2RCompanion.Services
                 _idxToChar[i + 1] = charList[i]; // +1 because 0 is CTC blank
         }
 
+        public Task InitializeAsync()
+        {
+            return Task.Run(() =>
+            {
+                _session = new InferenceSession(_modelPath);
+            });
+        }
         /// <summary>
         /// Predicts the OCR text from a single bitmap image.
         /// </summary>

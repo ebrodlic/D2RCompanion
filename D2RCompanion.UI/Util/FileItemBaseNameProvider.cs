@@ -1,8 +1,8 @@
-﻿using D2RCompanion.Core.Items;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using D2RCompanion.Core.Items;
 
 namespace D2RCompanion.UI.Util
 {

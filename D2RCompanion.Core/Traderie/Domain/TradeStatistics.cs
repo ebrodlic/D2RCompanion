@@ -1,7 +1,7 @@
-﻿using D2RCompanion.Core.Traderie.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using D2RCompanion.Core.Traderie.DTO;
 
 namespace D2RCompanion.Core.Traderie.Domain
 {
@@ -9,6 +9,6 @@ namespace D2RCompanion.Core.Traderie.Domain
     {
         public List<RuneValue> RuneValues { get; set; } = new();
         public Percentiles Percentiles { get; set; } = new();
-        public double Average {  get; set; }
+        public double Average { get; set; }
     }
 }

@@ -1,7 +1,7 @@
-﻿using D2RCompanion.Core.Traderie.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using D2RCompanion.Core.Traderie.Domain;
 
 namespace D2RCompanion.Core.Pricing
 {
@@ -9,7 +9,7 @@ namespace D2RCompanion.Core.Pricing
     {
         private readonly Dictionary<string, RuneValue> _values;
 
-        public  RuneValueTable(IEnumerable<RuneValue> values)
+        public RuneValueTable(IEnumerable<RuneValue> values)
         {
             _values = values.ToDictionary(v => v.Name, v => v);
         }

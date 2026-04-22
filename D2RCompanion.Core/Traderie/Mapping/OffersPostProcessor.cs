@@ -1,7 +1,7 @@
-﻿using D2RCompanion.Core.Traderie.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using D2RCompanion.Core.Traderie.Domain;
 
 namespace D2RCompanion.Core.Traderie.Mapping
 {

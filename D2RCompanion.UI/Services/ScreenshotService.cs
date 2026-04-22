@@ -1,7 +1,7 @@
-using D2RCompanion.Util;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using D2RCompanion.Util;
 
 namespace D2RCompanion.Services;
 

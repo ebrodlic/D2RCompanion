@@ -13,7 +13,7 @@ namespace D2RCompanion.Core.Traderie.Domain
         public double Score { get; set; }
         public double RecencyBoost { get; set; }
         public double FinalScore { get; set; }
-        public double NormalizedScore { get; set;  }
+        public double NormalizedScore { get; set; }
         public ActivityLevel Level { get; set; }
         public string Display => $"{ActivityPercent} ({LevelDisplay})";
         public string Breakdown => $"{Last24h} (24h), {Last3d} (3d), {Last7d} (7d), {Older} (older)";

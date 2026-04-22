@@ -5,7 +5,7 @@ using System.Text;
 namespace D2RCompanion.Core.Items
 {
     public enum ItemRarity
-    {       
+    {
         Normal,              // White
         Superior,            // White
         Inferior,            // Gray

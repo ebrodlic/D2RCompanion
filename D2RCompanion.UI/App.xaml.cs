@@ -1,51 +1,168 @@
-﻿using D2RCompanion.Services;
-using D2RCompanion.UI.Views;
-using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
+using D2RCompanion.Services;
+using D2RCompanion.UI.AppCore;
+using D2RCompanion.UI.Messages;
+using D2RCompanion.UI.Services;
+using D2RCompanion.UI.Traderie;
+using D2RCompanion.UI.ViewModels;
+using D2RCompanion.UI.Views;
+using D2RCompanion.ViewModels;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace D2RCompanion.UI;
 
-/// <summary>
-/// Interaction logic for App.xaml
-/// </summary>
 public partial class App : Application
 {
-    public CacheService Cache { get; private set; } = null!;
-    public SettingsService Settings { get; private set; } = null!;
+    private IConfiguration _config = null!;
+    private IServiceProvider _provider = null!;
 
-    protected override void OnStartup(StartupEventArgs e)
+    private AppInfo _appInfo = null!;
+    private AppPaths _appPaths = null!;
+  
+    protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
-        // TODO create appversion provider (with name), and pass to cache service 
+        SetupConfig();
+        SetupCore();
+        SetupLogging();
+        SetupDI();
 
-        // 1. Create root and cache dirs into Cache/
-        Cache = new CacheService();
+        InitializeView();
 
-        // 2. Initialize logging into Logs/
-        LoggingService.Initialize(Cache.RootDir);
+        var logger = _provider.GetRequiredService<ILogger<App>>();
+        logger.LogInformation("Application Started");
 
-        // 3. Load settings
-        Settings = new SettingsService(Cache.RootDir);
-        Settings.Initialize();
+        _ = InitializeBackgroundAsync();
+    }
 
-        // 4. Show main window (splash)
-        MainWindow = new MainWindow();
+    private void SetupConfig()
+    {
+        _config = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();
+    }
+    private void SetupCore()
+    {
+        _appInfo = new AppInfo();
+        _appPaths = new AppPaths(_appInfo);
+
+        _appPaths.EnsureCreated();
+    }
+    private void SetupLogging()
+    {
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(_config)
+            .WriteTo.File(
+                Path.Combine(_appPaths.Logs, "log-.txt"),
+                rollingInterval: RollingInterval.Day)
+            .CreateLogger();
+    }
+
+    private void SetupDI()
+    {
+        var services = new ServiceCollection();
+
+        // Core
+        services.AddSingleton(_config);
+        services.AddSingleton(_appInfo);
+        services.AddSingleton(_appPaths);
+
+        services.AddOptions();
+
+        // Logging
+        services.AddLogging(builder =>
+        {
+            builder.ClearProviders();
+            builder.AddSerilog(Log.Logger, dispose: true);
+        });
+
+        // Services
+        services.AddSingleton<SettingsService>();        
+        services.AddSingleton<ScreenshotService>();
+        services.AddSingleton<PipelineService>();
+        services.AddSingleton<HotkeyService>();
+        services.AddSingleton<TraderieClient>();
+
+        //extra
+        services.AddSingleton(new OcrService("Models/d2r_tooltip_yolo_best.onnx"));
+        //pipeline svc
+
+        // UI
+        services.AddSingleton<MainWindow>();
+        services.AddSingleton<OverlayWindow>();
+        services.AddSingleton<SettingsWindow>();
+        services.AddSingleton<TraderieWindow>();
+
+        services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<OverlayViewModel>();
+        services.AddTransient<SettingsViewModel>();
+
+        _provider = services.BuildServiceProvider();
+    }
+
+    private void InitializeView()
+    {
+        var mainWindow = _provider.GetRequiredService<MainWindow>();
+
+        MainWindow = mainWindow;
         MainWindow.Show();
+    }
 
-        LoggingService.Info("Application started");
+    private async Task InitializeBackgroundAsync()
+    {
+        try
+        {
+            var settingsTask = Task.Run(() => _provider.GetRequiredService<SettingsService>().Initialize());
+            var ocrTask = Task.Run(() => _provider.GetRequiredService<OcrService>().InitializeAsync());
+
+            await Task.WhenAll(settingsTask, ocrTask);
+
+            var traderieWindow = _provider.GetRequiredService<TraderieWindow>();
+
+            await traderieWindow.Preload();
+            await traderieWindow.InitializeAsync();
+
+            await Task.Delay(300);
+
+            // Try to obtain session info for future use
+            await traderieWindow.TryLoadSessionAsync();
+
+            //while (!traderieWindow.IsLoggedIn)
+            //{
+            //    traderieWindow.Show();
+            //    await Task.Delay(5000);
+            //}
+
+            // If no session info, show the traderie window so user can log in for session data
+            if (!traderieWindow.IsLoggedIn)
+                traderieWindow.Show();
+
+            WeakReferenceMessenger.Default.Send(new AppReadyMessage());
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     protected override void OnExit(ExitEventArgs e)
     {
-        if(MainWindow is MainWindow)
-            ((MainWindow)MainWindow).Cleanup();
+        var logger = _provider.GetRequiredService<ILogger<App>>();
+        logger.LogInformation("Application Exit");
+
+        Log.CloseAndFlush();
+
+        if (MainWindow is MainWindow main)
+            main.Cleanup();
 
         base.OnExit(e);
-        //LoggingService.Info("Application exited");
     }
 }
 

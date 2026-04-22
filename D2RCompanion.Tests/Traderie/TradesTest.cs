@@ -1,9 +1,9 @@
-﻿using D2RCompanion.Core.Traderie.Domain;
-using D2RCompanion.Core.Traderie.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
+using D2RCompanion.Core.Traderie.Domain;
+using D2RCompanion.Core.Traderie.Mapping;
 
 namespace D2RCompanion.Tests.Traderie
 {
@@ -13,7 +13,7 @@ namespace D2RCompanion.Tests.Traderie
         public void TestBasicParsing()
         {
             var offersJson = File.ReadAllText("Data/recent-trades.json");
-            var offers = OffersMapper.ParseOffers(offersJson);  
+            var offers = OffersMapper.ParseOffers(offersJson);
 
             Assert.NotEmpty(offers);
             Assert.Equal(20, offers.Count);

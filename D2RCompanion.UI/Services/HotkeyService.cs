@@ -4,16 +4,16 @@ using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace D2RCompanion.Services
+namespace D2RCompanion.UI.Services
 {
-    public class HotkeyManager : IDisposable
+    public class HotkeyService : IDisposable
     {
-        private readonly IntPtr _handle;
-        private readonly HwndSource _source;
+        private IntPtr _handle;
+        private HwndSource _source;
         private readonly Dictionary<int, Action> _actions = new();
         private int _currentId = 0;
 
-        public HotkeyManager(IntPtr handle)
+        public void Initialize(IntPtr handle)
         {
             _handle = handle;
             _source = HwndSource.FromHwnd(handle);

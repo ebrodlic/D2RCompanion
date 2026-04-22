@@ -1,9 +1,9 @@
-﻿using Microsoft.ML.OnnxRuntime;
-using Microsoft.ML.OnnxRuntime.Tensors;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 namespace D2RCompanion.Pipelines
 {
@@ -53,7 +53,7 @@ namespace D2RCompanion.Pipelines
             if (boxOriginal != null)
             {
                 Bitmap crop = Crop(screenshot, boxOriginal);
-                return crop;         
+                return crop;
             }
             else
             {

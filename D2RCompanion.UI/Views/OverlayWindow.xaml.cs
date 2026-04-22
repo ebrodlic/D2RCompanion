@@ -1,7 +1,4 @@
-﻿using D2RCompanion.Core.Traderie.DTO;
-using D2RCompanion.Core.Traderie.Domain;
-using D2RCompanion.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -13,7 +10,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using D2RCompanion.Core.Traderie.Domain;
+using D2RCompanion.Core.Traderie.DTO;
 using D2RCompanion.UI.ViewModels;
+using D2RCompanion.ViewModels;
 
 namespace D2RCompanion.UI.Views
 {
@@ -66,7 +66,7 @@ namespace D2RCompanion.UI.Views
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
@@ -105,7 +105,7 @@ namespace D2RCompanion.UI.Views
             ViewModel.Trades.Clear();
             foreach (var trade in trades)
                 ViewModel.Trades.Add(trade);
-          
+
         }
 
         public void UpdateValues(List<string> ocrLines)
@@ -120,7 +120,7 @@ namespace D2RCompanion.UI.Views
             ViewModel.Trades.Clear();
             foreach (var trade in trades)
                 ViewModel.Trades.Add(trade);
-            
+
 
 
             ViewModel.RecalculateActivity();
@@ -183,7 +183,7 @@ namespace D2RCompanion.UI.Views
         public void DisplayPrices(List<Trade> trades)
         {
             //PriceText.Text = string.Join("\n", prices);
-        
+
             //Visibility = Visibility.Visible;
             //Activate(); // bring on top of game
         }
@@ -197,6 +197,15 @@ namespace D2RCompanion.UI.Views
         private void ContentPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            // Cancel the close event
+            e.Cancel = true;
+
+            // Hide the window instead of closing it
+            this.Hide();
         }
 
     }

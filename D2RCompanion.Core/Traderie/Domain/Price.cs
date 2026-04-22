@@ -9,6 +9,6 @@ namespace D2RCompanion.Core.Traderie.Domain
         public int Quantity { get; set; }
         public string Name { get; set; } = "";
         public string Type { get; set; } = "";
-        public int Group {  get; set; }
+        public int Group { get; set; }
     }
 }

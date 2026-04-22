@@ -1,10 +1,15 @@
-﻿using D2RCompanion.Pipelines;
-using D2RCompanion.UI.Traderie;
-using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.Wpf;
-using System.IO;
+﻿using System.IO;
 using System.Text.Json;
 using System.Windows;
+using D2RCompanion.Core.Traderie.Domain;
+using D2RCompanion.Pipelines;
+using D2RCompanion.UI.AppCore;
+using D2RCompanion.UI.Options;
+using D2RCompanion.UI.Traderie;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.Wpf;
 
 namespace D2RCompanion.UI.Traderie
 {
@@ -13,54 +18,68 @@ namespace D2RCompanion.UI.Traderie
     /// </summary>
     public partial class TraderieWindow : Window
     {
-        private readonly string _homeUrl = "https://traderie.com/diablo2resurrected";
-        private string _userDataFolder = null!;
+        private readonly string _homeUrl;
+        private readonly string _userDataFolder;
         public TraderieSession Session { get; private set; } = new();
         public bool IsLoggedIn => !string.IsNullOrEmpty(Session.Jwt) && !string.IsNullOrEmpty(Session.Jwt);
 
         private readonly Dictionary<string, TaskCompletionSource<string>> _pendingFetches = new();
-        public TraderieWindow()
+        public TraderieWindow(IConfiguration config, AppInfo appInfo)
         {
-            InitializeComponent();
-            InitializeUserDir();
-        }
-        private void InitializeUserDir()
-        {
+            _homeUrl = config.GetSection("Traderie").GetSection("HomeUrl").Value;
+
             _userDataFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "D2RCompanion", // TODO get application name
+                appInfo.Id,
                 "Traderie");
 
-            if (!Directory.Exists(_userDataFolder))
-                Directory.CreateDirectory(_userDataFolder);
-        }    
+            InitializeComponent();
+        }
+        public async Task Preload()
+        {
+            // Ensure this code is executed on the UI thread (non-blocking)
+            await TraderieWebView.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                Visibility = Visibility.Hidden;
+                ShowInTaskbar = false;
+
+                Show();  // Show the window to initialize WebView2, then hide it immediately
+                Hide();
+            }));
+        }
 
         public async Task InitializeAsync()
         {
-            var env = await CoreWebView2Environment.CreateAsync(
-                 null,                // browser executable folder (null = default)
-                 _userDataFolder,     // persistent storage path
-                 null);               // additional options
+            if (!Directory.Exists(_userDataFolder))
+                Directory.CreateDirectory(_userDataFolder);
 
-            // Make sure CoreWebView2 is initialized
-            await TraderieWebView.EnsureCoreWebView2Async(env);
+            await TraderieWebView.Dispatcher.InvokeAsync(async () =>
+            {
+                var env = await CoreWebView2Environment.CreateAsync(
+                     null,                // browser executable folder (null = default)
+                     _userDataFolder,     // persistent storage path
+                     null);               // additional options
 
-            await EnsureLoadedAsync(TraderieWebView);
+                // Make sure CoreWebView2 is initialized
+                await TraderieWebView.EnsureCoreWebView2Async(env);
 
-            await TraderieWebView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(@"
-                (function() {
-                    const oldLog = console.log;
-                    console.log = function(...args) {
-                        window.chrome.webview.postMessage({ type: 'console', data: args });
-                        oldLog.apply(console, args);
-                    };
-                })();
-                ");
+                await EnsureLoadedAsync(TraderieWebView);
 
-            TraderieWebView.WebMessageReceived += OnWebMessageReceived;
+                await TraderieWebView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(@"
+                    (function() {
+                        const oldLog = console.log;
+                        console.log = function(...args) {
+                            window.chrome.webview.postMessage({ type: 'console', data: args });
+                            oldLog.apply(console, args);
+                        };
+                    })();
+                    ");
 
-            // Navigate to Traderie login page
-            TraderieWebView.CoreWebView2.Navigate(_homeUrl);
+                TraderieWebView.WebMessageReceived += OnWebMessageReceived;
+
+                // Navigate to Traderie login page
+                TraderieWebView.CoreWebView2.Navigate(_homeUrl);
+            });
         }
 
         private static Task EnsureLoadedAsync(FrameworkElement element)
@@ -106,7 +125,7 @@ namespace D2RCompanion.UI.Traderie
             {
                 Console.WriteLine($"WebMessage error: {ex.Message}");
             }
-        }       
+        }
 
 
         public Task<string> RunFetchAsync(string url, bool requireToken)
@@ -151,7 +170,7 @@ namespace D2RCompanion.UI.Traderie
 
             _pendingFetches.Remove(id);
         }
-        
+
         public async Task TryLoadSessionAsync()
         {
             try
@@ -181,6 +200,7 @@ namespace D2RCompanion.UI.Traderie
                 Session.Jwt = root.GetProperty("jwt").GetString() ?? "";
 
                 var userJson = root.GetProperty("user").GetString();
+
                 if (!string.IsNullOrWhiteSpace(userJson))
                 {
                     using var userDoc = JsonDocument.Parse(userJson);

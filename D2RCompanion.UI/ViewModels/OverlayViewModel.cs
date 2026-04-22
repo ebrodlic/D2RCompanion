@@ -1,10 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using D2RCompanion.Core.Pricing;
-using D2RCompanion.Core.Traderie.Domain;
-using D2RCompanion.Core.Traderie.DTO;
-using D2RCompanion.UI.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,15 +8,21 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using D2RCompanion.Core.Pricing;
+using D2RCompanion.Core.Traderie.Domain;
+using D2RCompanion.Core.Traderie.DTO;
+using D2RCompanion.UI.ViewModels;
 
 
 namespace D2RCompanion.ViewModels
 {
     public partial class OverlayViewModel : ObservableObject
-    {  
+    {
 
         // Top section: OCR results
-        public ObservableCollection<OcrLine> OcrLines { get; set; } = new();  
+        public ObservableCollection<OcrLine> OcrLines { get; set; } = new();
 
         // Bottom section: Trades info
         public ObservableCollection<Trade> Trades { get; set; } = new();
@@ -103,8 +103,8 @@ namespace D2RCompanion.ViewModels
                 _statistics = value;
                 OnPropertyChanged();
                 NotifyStatisticsChanged();
-             
-               
+
+
             }
         }
 
@@ -113,7 +113,7 @@ namespace D2RCompanion.ViewModels
             OnPropertyChanged(nameof(PriceGroupsDisplay));
         }
 
-       
+
         public void RecalculateActivity()
         {
             var calc = new TradeActivityCalculator();
@@ -171,7 +171,7 @@ namespace D2RCompanion.ViewModels
         public string GoodDisplay =>
             Statistics == null
                 ? "-"
-                : $"{Statistics.Percentiles.Good:0.##} Ist";      
+                : $"{Statistics.Percentiles.Good:0.##} Ist";
 
         public string HighDisplay =>
             Statistics == null
@@ -180,7 +180,7 @@ namespace D2RCompanion.ViewModels
         public string FloorEstimateDisplay =>
           Statistics == null
               ? "-"
-              : $"~{ GetRuneHint(Statistics.Percentiles.Floor)}";
+              : $"~{GetRuneHint(Statistics.Percentiles.Floor)}";
 
         public string TypicalEstimateDisplay =>
          Statistics == null
@@ -196,7 +196,7 @@ namespace D2RCompanion.ViewModels
         public string HighEstimateDisplay =>
            Statistics == null
                ? "-"
-               : $"~{GetRuneHint(Statistics.Percentiles.High)}";  
+               : $"~{GetRuneHint(Statistics.Percentiles.High)}";
 
 
         public bool HasStatistics => Statistics != null;
@@ -233,7 +233,7 @@ namespace D2RCompanion.ViewModels
             OnPropertyChanged(nameof(PricePredictionHint));
             OnPropertyChanged(nameof(PricePredictionConfidence));
 
-            
+
 
         }
 
@@ -274,9 +274,9 @@ namespace D2RCompanion.ViewModels
 
             // 7. Derived displays
             NotifyStatisticsChanged();
-        
 
-          
+
+
         }
 
 

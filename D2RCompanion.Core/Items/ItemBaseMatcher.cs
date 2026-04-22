@@ -1,7 +1,7 @@
-﻿using D2RCompanion.UI.Util;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using D2RCompanion.UI.Util;
 
 namespace D2RCompanion.Core.Items
 {
@@ -38,5 +38,5 @@ namespace D2RCompanion.Core.Items
             return best?.Original;
         }
     }
-    
+
 }

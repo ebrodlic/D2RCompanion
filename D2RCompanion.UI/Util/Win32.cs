@@ -1,8 +1,8 @@
-﻿using D2RCompanion.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using D2RCompanion.Services;
 
 namespace D2RCompanion.Util
 {

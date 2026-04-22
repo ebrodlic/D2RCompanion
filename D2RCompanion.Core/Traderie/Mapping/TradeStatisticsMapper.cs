@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using D2RCompanion.Core.Traderie.DTO;
 using D2RCompanion.Core.Traderie.Domain;
+using D2RCompanion.Core.Traderie.DTO;
 
 namespace D2RCompanion.Core.Traderie.Mapping
 {

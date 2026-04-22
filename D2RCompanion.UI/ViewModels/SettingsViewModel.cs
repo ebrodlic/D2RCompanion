@@ -1,28 +1,22 @@
-﻿using D2RCompanion.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Text;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using D2RCompanion.Services;
+using D2RCompanion.UI.Services;
 
 namespace D2RCompanion.ViewModels
 {
-    public class SettingsViewModel : INotifyPropertyChanged
+    public class SettingsViewModel : ObservableObject
     {
-        private SettingsService _service;
-        public bool SaveImagesToDisk
+        private readonly SettingsService _service;
+        public SettingsViewModel(SettingsService service)
         {
-            get => _service.Settings.SaveImagesToDisk;
-            set
-            {
-                if (_service.Settings.SaveImagesToDisk != value)
-                {
-                    _service.Settings.SaveImagesToDisk = value;    // Single source of truth
-                    _service.Save();                               // Persist immediately
-                    OnPropertyChanged();                           // Notify UI of change
-                }
-            }
+            _service = service;
         }
 
         public bool AutoCheckForUpdates
@@ -30,22 +24,33 @@ namespace D2RCompanion.ViewModels
             get => _service.Settings.AutoCheckForUpdates;
             set
             {
-                if (_service.Settings.AutoCheckForUpdates != value)
+                if (_service.Settings.AutoCheckForUpdates != value) // Compare the new value with the current value
                 {
-                    _service.Settings.AutoCheckForUpdates = value;    // Single source of truth
-                    _service.Save();                                   // Persist immediately
-                    OnPropertyChanged();                               // Notify UI of change
+                    _service.Settings.AutoCheckForUpdates = value; // Update the setting
+                    SaveSettings(); // Save the settings immediately
+                    OnPropertyChanged(); // Notify the UI of the change
+                }
+            } 
+        }
+
+        public bool SaveImagesToDisk
+        {
+            get => _service.Settings.SaveImagesToDisk;
+            set
+            {
+                if (_service.Settings.SaveImagesToDisk != value) // Compare the new value with the current value
+                {
+                    _service.Settings.SaveImagesToDisk = value; // Update the setting
+                    SaveSettings(); // Save the settings immediately
+                    OnPropertyChanged(); // Notify the UI of the change
                 }
             }
         }
+        public IRelayCommand SaveCommand => new RelayCommand(SaveSettings);
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string? name = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
-        public SettingsViewModel(SettingsService service) 
+        private void SaveSettings()
         {
-            _service = service;
+            _service.Save();
         }
     }
 }

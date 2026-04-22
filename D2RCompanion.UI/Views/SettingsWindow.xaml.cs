@@ -1,5 +1,4 @@
-﻿using D2RCompanion.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -10,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using D2RCompanion.ViewModels;
 
 namespace D2RCompanion.UI.Views
 {
@@ -22,6 +22,14 @@ namespace D2RCompanion.UI.Views
         {
             InitializeComponent();
             DataContext = vm;
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            // Cancel the close event
+            e.Cancel = true;
+
+            // Hide the window instead of closing it
+            this.Hide();
         }
     }
 }
