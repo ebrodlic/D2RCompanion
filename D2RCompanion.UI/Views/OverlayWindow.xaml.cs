@@ -22,14 +22,15 @@ namespace D2RCompanion.UI.Views
     /// </summary>
     public partial class OverlayWindow : Window
     {
-        public OverlayViewModel ViewModel { get; set; } = new();
+        public OverlayViewModel ViewModel { get; set; }
 
-        public OverlayWindow()
+        public OverlayWindow(OverlayViewModel vm)
         {
+            DataContext = vm;
+
+
             InitializeComponent();
             SetHandlers();
-
-            DataContext = ViewModel;
         }
 
         private void SetHandlers()

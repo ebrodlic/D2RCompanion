@@ -10,16 +10,38 @@ using System.Windows.Input;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using D2RCompanion.Core.Pricing;
 using D2RCompanion.Core.Traderie.Domain;
 using D2RCompanion.Core.Traderie.DTO;
+using D2RCompanion.UI.Messages;
 using D2RCompanion.UI.ViewModels;
+using Microsoft.Extensions.Logging;
 
 
 namespace D2RCompanion.ViewModels
 {
     public partial class OverlayViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private bool isActive;
+
+        private readonly ILogger _logger;
+
+        public OverlayViewModel(ILogger<OverlayViewModel> logger)
+        {
+            _logger = logger;
+
+
+            WeakReferenceMessenger.Default.Register<PipelineResultReadyMessage>(this, (recipient, message) =>
+            {
+                // This will be called when the message is sent
+                _logger.LogInformation("PipelineResultReadyMessage received!");
+
+                //isActive = true;
+
+            });
+        }
 
         // Top section: OCR results
         public ObservableCollection<OcrLine> OcrLines { get; set; } = new();
@@ -34,6 +56,7 @@ namespace D2RCompanion.ViewModels
         public string PricePredictionHint { get; set; } = "";
 
         public double PricePredictionConfidence { get; set; } = 0;
+
 
 
         public string PriceGroupsDisplay =>

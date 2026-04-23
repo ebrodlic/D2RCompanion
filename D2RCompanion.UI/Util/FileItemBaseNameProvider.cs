@@ -10,8 +10,11 @@ namespace D2RCompanion.UI.Util
     {
         private readonly List<BaseNameEntry> _entries;
 
-        public FileItemBaseNameProvider(string filePath)
+        public FileItemBaseNameProvider()
         {
+            var basePath  = AppContext.BaseDirectory;
+            var filePath = Path.Combine(basePath, "Data", "bases.txt");
+
             _entries = File.ReadAllLines(filePath)
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .Select(x =>

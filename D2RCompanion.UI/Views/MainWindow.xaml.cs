@@ -21,7 +21,7 @@ namespace D2RCompanion.UI.Views
 {
     public partial class MainWindow : Window
     {
-        private readonly MainWindowViewModel _viewModel;
+        private readonly MainViewModel _viewModel;
         private readonly ILogger<MainWindow> _logger;
 
         private readonly OverlayWindow _overlayWindow;
@@ -37,7 +37,7 @@ namespace D2RCompanion.UI.Views
 
         // We run these here so we have the STA thread to init Traderie, as well as never closing windows for tray behaviour
         public MainWindow(
-            MainWindowViewModel vm,
+            MainViewModel vm,
             OverlayWindow overlayWindow,
             SettingsWindow settingsWindow,
             TraderieWindow traderieWindow,
@@ -72,6 +72,7 @@ namespace D2RCompanion.UI.Views
 
             var menu = new ContextMenuStrip();
             menu.Items.Add("Open", null, (s, e) => { Show(); });
+            menu.Items.Add("Show Overlay", null, (s, e) => { ShowOverlayWindow(); });
             menu.Items.Add("Show Browser", null, (s, e) => { ShowTraderieWindow(); });
             menu.Items.Add("Settings", null, (s, e) => { ShowSettingsWindow(); });
             menu.Items.Add("Exit", null, (s, e) => { System.Windows.Application.Current.Shutdown(); });
@@ -100,6 +101,11 @@ namespace D2RCompanion.UI.Views
 
         private async void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
+            // TODO get rid: hack for now
+            _overlayWindow.Show();
+            _overlayWindow.Hide();
+
+
             SetupHotkeys();
         }
 

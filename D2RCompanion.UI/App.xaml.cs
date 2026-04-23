@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
+using D2RCompanion.Core.Items;
 using D2RCompanion.Services;
 using D2RCompanion.UI.AppCore;
 using D2RCompanion.UI.Messages;
 using D2RCompanion.UI.Services;
 using D2RCompanion.UI.Traderie;
+using D2RCompanion.UI.Util;
 using D2RCompanion.UI.ViewModels;
 using D2RCompanion.UI.Views;
 using D2RCompanion.ViewModels;
@@ -83,6 +85,9 @@ public partial class App : Application
             builder.AddSerilog(Log.Logger, dispose: true);
         });
 
+        services.AddSingleton<IItemBaseNameProvider, FileItemBaseNameProvider>();
+
+
         // Services
         services.AddSingleton<SettingsService>();        
         services.AddSingleton<ScreenshotService>();
@@ -90,19 +95,24 @@ public partial class App : Application
         services.AddSingleton<HotkeyService>();
         services.AddSingleton<TraderieClient>();
 
+        // TODO: temporarily to debug saved images:
+        services.AddSingleton<CacheService>();
+
         //extra
-        services.AddSingleton(new OcrService("Models/d2r_tooltip_yolo_best.onnx"));
-        //pipeline svc
+        services.AddSingleton(new OcrService("Models/d2r_tooltip_crnn_best.onnx"));
+     
 
         // UI
         services.AddSingleton<MainWindow>();
-        services.AddSingleton<OverlayWindow>();
-        services.AddSingleton<SettingsWindow>();
-        services.AddSingleton<TraderieWindow>();
+        services.AddTransient<MainViewModel>();
 
-        services.AddTransient<MainWindowViewModel>();
+        services.AddSingleton<OverlayWindow>();
         services.AddTransient<OverlayViewModel>();
+
+        services.AddSingleton<SettingsWindow>();
         services.AddTransient<SettingsViewModel>();
+
+        services.AddSingleton<TraderieWindow>();
 
         _provider = services.BuildServiceProvider();
     }

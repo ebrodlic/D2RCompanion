@@ -18,7 +18,7 @@ namespace D2RCompanion.Services
         private readonly string _linesDir;
 
         private readonly bool _saveScreenshots = true;
-        private readonly bool _saveMasks = false;
+        private readonly bool _saveMasks = true;
         private readonly bool _saveTooltips = true;
         private readonly bool _saveLines = true;
 
@@ -34,7 +34,7 @@ namespace D2RCompanion.Services
             _tooltipDir = Path.Combine(CacheDir, "Tooltips");
             _linesDir = Path.Combine(CacheDir, "Lines");
 
-            CreateDirectories();
+            //CreateDirectories();
         }
 
         private void CreateDirectories()
