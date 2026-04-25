@@ -7,8 +7,16 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Styles.xaml" />
+                <!--  Core styles  -->
+                <ResourceDictionary Source="/Styles/Styles.xaml" />
+
+                <!--  Templates (THIS is your navigation engine)  -->
+                <ResourceDictionary Source="/Resources/Templates/ViewTemplates.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
+
+            <!--  Only truly global singletons  -->
+            <conv:IstPriceConverter x:Key="IstPriceConverter" />
             <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>

@@ -1,325 +1,95 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Runtime;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using D2RCompanion.Core.Pricing;
 using D2RCompanion.Core.Traderie.Domain;
-using D2RCompanion.Core.Traderie.DTO;
 using D2RCompanion.UI.Messages;
-using D2RCompanion.UI.ViewModels;
+using D2RCompanion.ViewModels;
 using Microsoft.Extensions.Logging;
 
-
-namespace D2RCompanion.ViewModels
+namespace D2RCompanion.UI.ViewModels
 {
-    public partial class OverlayViewModel : ObservableObject
+    public partial class OverlayViewModel :
+        ObservableObject
     {
-        [ObservableProperty]
-        private bool isActive;
+        private readonly HomeViewModel _homeViewModel;
+        private readonly SettingsViewModel _settingsViewModel;
+        private readonly PriceCheckViewModel _priceCheckViewModel;
 
         private readonly ILogger _logger;
 
-        public OverlayViewModel(ILogger<OverlayViewModel> logger)
+        [ObservableProperty]
+        public object currentViewModel;
+
+        public OverlayViewModel(
+            HomeViewModel home,
+            SettingsViewModel settings,
+            PriceCheckViewModel priceCheck,
+            ILogger<OverlayViewModel> logger
+            )
         {
+            _homeViewModel = home;
+            _settingsViewModel = settings;
+            _priceCheckViewModel = priceCheck;
+
             _logger = logger;
 
+            SetMessageHandler();
+            ResetView(); // Default = Home
+        }
 
-            WeakReferenceMessenger.Default.Register<PipelineResultReadyMessage>(this, (recipient, message) =>
+        private void SetMessageHandler()
+        {
+            WeakReferenceMessenger.Default.Register<NavigationRequestMessage>(this, (r, m) =>
             {
-                // This will be called when the message is sent
-                _logger.LogInformation("PipelineResultReadyMessage received!");
-
-                //isActive = true;
-
+                SetView(m.ToView);
             });
         }
 
-        // Top section: OCR results
-        public ObservableCollection<OcrLine> OcrLines { get; set; } = new();
-
-        // Bottom section: Trades info
-        public ObservableCollection<Trade> Trades { get; set; } = new();
-
-        public TradeActivityInfo Activity { get; set; } = new();
-
-        public double PricePrediction { get; set; } = 0;
-
-        public string PricePredictionHint { get; set; } = "";
-
-        public double PricePredictionConfidence { get; set; } = 0;
-
-
-
-        public string PriceGroupsDisplay =>
-            Trades.FirstOrDefault()?.PriceGroups == null
-                ? "-"
-                : string.Join(" OR ",
-                    Trades.First().PriceGroups.Select(g =>
-                        string.Join(" + ",
-                            g.Prices.Select(p => $"{p.Quantity}x {p.Name}")
-                        )
-                    ));
-
-        [ObservableProperty]
-        private bool isRuneInfoVisible;
-
-        [ObservableProperty]
-        private bool isRuneInfoPinned;
-
-
-        [RelayCommand]
-        private void ToggleRuneInfo()
+        public void ResetView()
         {
-            IsRuneInfoVisible = !IsRuneInfoVisible;
+            CurrentViewModel = _homeViewModel;
         }
 
-        [RelayCommand]
-        private void ToggleRuneInfoPinned()
+        private void SetView(OverlayContentView view = OverlayContentView.Home)
         {
-            IsRuneInfoPinned = !IsRuneInfoPinned;
-
-            // If pinned ON → force visible
-            // If pinned OFF → revert to hover-only behavior
-            IsRuneInfoVisible = IsRuneInfoPinned;
-        }
-
-        public void RuneInfoHoverEnter()
-        {
-            if (!IsRuneInfoPinned)
-                IsRuneInfoVisible = true;
-        }
-
-        public void RuneInfoHoverLeave()
-        {
-            if (!IsRuneInfoPinned)
-                IsRuneInfoVisible = false;
-        }
-
-        public ObservableCollection<RuneValue> RuneValuesDisplay
-        {
-            get
+            CurrentViewModel = view switch
             {
-                return Statistics?.RuneValues != null
-                    ? new ObservableCollection<RuneValue>(Statistics.RuneValues)
-                    : new ObservableCollection<RuneValue>();
-            }
-        }
-
-
-        // Mid section: Trade/prices statistics
-        private TradeStatistics _statistics { get; set; }
-
-        public TradeStatistics? Statistics
-        {
-            get => _statistics;
-            set
-            {
-                _statistics = value;
-                OnPropertyChanged();
-                NotifyStatisticsChanged();
-
-
-            }
-        }
-
-        public void RefreshPriceGroupsDisplay()
-        {
-            OnPropertyChanged(nameof(PriceGroupsDisplay));
-        }
-
-
-        public void RecalculateActivity()
-        {
-            var calc = new TradeActivityCalculator();
-
-            Activity = calc.Calculate(Trades.ToList());
-
-            NotifyActivityChanged();
-
-            OnPropertyChanged(nameof(Activity));
-            OnPropertyChanged(nameof(ActivityBorderBrush));
-            OnPropertyChanged(nameof(ActivityTextBrush));
-        }
-
-        private void NotifyActivityChanged()
-        {
-            if (Activity == null)
-                return;
-
-            Color baseColor = Activity.Level switch
-            {
-                ActivityLevel.Dead => Color.FromRgb(90, 90, 90),     // gray
-                ActivityLevel.Low => Color.FromRgb(176, 0, 32),     // red
-                ActivityLevel.Medium => Color.FromRgb(230, 126, 34),   // orange
-                ActivityLevel.High => Color.FromRgb(241, 196, 15),   // yellow
-                ActivityLevel.VeryHigh => Color.FromRgb(46, 204, 113),   // green
-                _ => Color.FromRgb(90, 90, 90)
+                OverlayContentView.Home => _homeViewModel,
+                OverlayContentView.Settings => _settingsViewModel,
+                OverlayContentView.PriceCheck => _priceCheckViewModel,
+                _ => _homeViewModel
             };
 
-            ActivityBorderBrush = new SolidColorBrush(baseColor);
-            ActivityTextBrush = new SolidColorBrush(Lighten(baseColor, 0.5));
+            _logger.LogDebug("Switched to view: {View}", view);
         }
 
-        private Color Lighten(Color color, double factor = 0.5)
-        {
-            return Color.FromRgb(
-                (byte)(color.R + (255 - color.R) * factor),
-                (byte)(color.G + (255 - color.G) * factor),
-                (byte)(color.B + (255 - color.B) * factor)
-            );
-        }
+        //public void Receive(NavigationRequestMessage message)
+        //{
+        //    _logger.LogDebug("Navigation message received: " + message.ToView);
 
-        public Brush ActivityBorderBrush { get; set; }
-        public Brush ActivityTextBrush { get; set; }
-
-        public string FloorDisplay =>
-            Statistics == null
-                ? "-"
-                : $"{Statistics.Percentiles.Floor:0.##} Ist";
-
-        public string TypicalDisplay =>
-            Statistics == null
-                ? "-"
-                : $"{Statistics.Percentiles.Typical:0.##} Ist";
-
-        public string GoodDisplay =>
-            Statistics == null
-                ? "-"
-                : $"{Statistics.Percentiles.Good:0.##} Ist";
-
-        public string HighDisplay =>
-            Statistics == null
-                ? "-"
-                : $"{Statistics.Percentiles.High:0.##} Ist";
-        public string FloorEstimateDisplay =>
-          Statistics == null
-              ? "-"
-              : $"~{GetRuneHint(Statistics.Percentiles.Floor)}";
-
-        public string TypicalEstimateDisplay =>
-         Statistics == null
-             ? "-"
-             : $"~{GetRuneHint(Statistics.Percentiles.Typical)}";
-
-        public string GoodEstimateDisplay =>
-      Statistics == null
-          ? "-"
-          : $"~{GetRuneHint(Statistics.Percentiles.Good)}";
-
-
-        public string HighEstimateDisplay =>
-           Statistics == null
-               ? "-"
-               : $"~{GetRuneHint(Statistics.Percentiles.High)}";
-
-
-        public bool HasStatistics => Statistics != null;
-
-
-        private void NotifyStatisticsChanged()
-        {
-            OnPropertyChanged(nameof(HasStatistics));
-            OnPropertyChanged(nameof(FloorDisplay));
-            OnPropertyChanged(nameof(TypicalDisplay));
-            OnPropertyChanged(nameof(GoodDisplay));
-            OnPropertyChanged(nameof(HighDisplay));
-            OnPropertyChanged(nameof(FloorEstimateDisplay));
-            OnPropertyChanged(nameof(TypicalEstimateDisplay));
-            OnPropertyChanged(nameof(GoodEstimateDisplay));
-            OnPropertyChanged(nameof(HighEstimateDisplay));
-            OnPropertyChanged(nameof(RuneValuesDisplay));
-        }
-
-        public void RefreshPricePrediction()
-        {
-            var table = new RuneValueTable(Statistics.RuneValues);
-            var prediction = new PricePredictionService(table);
-
-            var lines = OcrLines.Select(ocrLine => ocrLine.Text).ToList();
-
-            var predictionResult = prediction.Predict(lines, Trades.ToList());
-
-            PricePrediction = predictionResult.Value;
-            PricePredictionHint = "~" + GetRuneHint(predictionResult.Value) + " ";
-            PricePredictionConfidence = predictionResult.Confidence;
-
-            OnPropertyChanged(nameof(PricePrediction));
-            OnPropertyChanged(nameof(PricePredictionHint));
-            OnPropertyChanged(nameof(PricePredictionConfidence));
-
-
-
-        }
-
-        public void Reset()
-        {
-            // 1. Collections
-            OcrLines.Clear();
-            Trades.Clear();
-
-            // 2. Domain objects
-            Statistics = null;
-            Activity = new TradeActivityInfo();
-
-            // 3. Prediction state
-            PricePrediction = 0;
-            PricePredictionHint = "";
-            PricePredictionConfidence = 0;
-
-            // 4. Rune UI state
-            IsRuneInfoVisible = false;
-            IsRuneInfoPinned = false;
-
-            // 5. Brushes (important: reset visuals too)
-            ActivityBorderBrush = new SolidColorBrush(Color.FromRgb(90, 90, 90));
-            ActivityTextBrush = new SolidColorBrush(Lighten(Color.FromRgb(90, 90, 90)));
-
-            OnPropertyChanged(nameof(ActivityBorderBrush));
-            OnPropertyChanged(nameof(ActivityTextBrush));
-
-            // 6. Force UI refresh for computed bindings
-            OnPropertyChanged(nameof(PricePrediction));
-            OnPropertyChanged(nameof(PricePredictionHint));
-            OnPropertyChanged(nameof(PricePredictionConfidence));
-
-            OnPropertyChanged(nameof(Activity));
-            OnPropertyChanged(nameof(RuneValuesDisplay));
-            OnPropertyChanged(nameof(PriceGroupsDisplay));
-
-            // 7. Derived displays
-            NotifyStatisticsChanged();
-
-
-
-        }
-
-
-
-
-        private string GetRuneHint(double value)
-        {
-            if (Statistics?.RuneValues == null) return "";
-
-            var closest = Statistics.RuneValues
-                .OrderBy(r => Math.Abs(r.IstValue - value))
-                .First();
-
-            return closest.ShortName;
-        }
+        //    switch (message.ToView)
+        //    {
+        //        case OverlayContentView.Settings:
+        //            CurrentViewModel = _settingsViewModel;
+        //            break;
+        //        case OverlayContentView.PriceCheck:
+        //            CurrentViewModel = _priceCheckViewModel;
+        //            break;
+        //    }
+        //}
     }
 
-    public class PriceGroupDisplay
+    public enum OverlayContentView
     {
-        public string Text { get; set; } = "";
-        public bool IsOr { get; set; }
+        Home,
+        Settings,
+        PriceCheck
     }
 }

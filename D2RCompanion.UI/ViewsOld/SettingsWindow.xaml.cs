@@ -9,7 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using D2RCompanion.ViewModels;
+using D2RCompanion.UI.ViewModels;
 
 namespace D2RCompanion.UI.Views
 {

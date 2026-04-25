@@ -1,6 +1,7 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Windows;
-using CommunityToolkit.Mvvm.Messaging;
+using System.Windows.Forms;
 using D2RCompanion.Core.Items;
 using D2RCompanion.Services;
 using D2RCompanion.UI.AppCore;
@@ -10,22 +11,26 @@ using D2RCompanion.UI.Traderie;
 using D2RCompanion.UI.Util;
 using D2RCompanion.UI.ViewModels;
 using D2RCompanion.UI.Views;
+using D2RCompanion.UI.Windows;
 using D2RCompanion.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Mvvm.Messaging;
 using Serilog;
 
 namespace D2RCompanion.UI;
 
-public partial class App : Application
+public partial class App : System.Windows.Application
 {
     private IConfiguration _config = null!;
     private IServiceProvider _provider = null!;
 
     private AppInfo _appInfo = null!;
     private AppPaths _appPaths = null!;
-  
+
+    private NotifyIcon _trayIcon = null!;
+
     protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
@@ -35,12 +40,13 @@ public partial class App : Application
         SetupLogging();
         SetupDI();
 
+        InitializeTray();
         InitializeView();
 
         var logger = _provider.GetRequiredService<ILogger<App>>();
         logger.LogInformation("Application Started");
 
-        _ = InitializeBackgroundAsync();
+        //_ = InitializeBackgroundAsync();
     }
 
     private void SetupConfig()
@@ -76,8 +82,6 @@ public partial class App : Application
         services.AddSingleton(_appInfo);
         services.AddSingleton(_appPaths);
 
-        services.AddOptions();
-
         // Logging
         services.AddLogging(builder =>
         {
@@ -87,42 +91,65 @@ public partial class App : Application
 
         services.AddSingleton<IItemBaseNameProvider, FileItemBaseNameProvider>();
 
-
         // Services
-        services.AddSingleton<SettingsService>();        
-        services.AddSingleton<ScreenshotService>();
-        services.AddSingleton<PipelineService>();
+        //services.AddSingleton<SettingsService>(); 
+        //services.AddSingleton<ScreenshotService>();
+        //services.AddSingleton<PipelineService>();
         services.AddSingleton<HotkeyService>();
-        services.AddSingleton<TraderieClient>();
+        //services.AddSingleton<TraderieClient>();
 
         // TODO: temporarily to debug saved images:
-        services.AddSingleton<CacheService>();
+        //services.AddSingleton<CacheService>();
 
         //extra
-        services.AddSingleton(new OcrService("Models/d2r_tooltip_crnn_best.onnx"));
+        //services.AddSingleton(new OcrService("Models/d2r_tooltip_crnn_best.onnx"));
      
 
-        // UI
-        services.AddSingleton<MainWindow>();
-        services.AddTransient<MainViewModel>();
-
+        //UI
         services.AddSingleton<OverlayWindow>();
-        services.AddTransient<OverlayViewModel>();
+        services.AddSingleton<OverlayViewModel>();
 
-        services.AddSingleton<SettingsWindow>();
-        services.AddTransient<SettingsViewModel>();
+        services.AddSingleton<HomeView>();
+        services.AddSingleton<HomeViewModel>();
 
-        services.AddSingleton<TraderieWindow>();
+        services.AddSingleton<SettingsView>();
+        services.AddSingleton<SettingsViewModel>();
+
+        services.AddSingleton<PriceCheckView>();
+        services.AddSingleton<PriceCheckViewModel>();
+
+        //services.AddTransient<OverlayContentViewModel>();
+
+
+        services.AddSingleton<TraderieWebViewControl>();
 
         _provider = services.BuildServiceProvider();
     }
 
+    private void InitializeTray()
+    {
+        _trayIcon = new NotifyIcon()
+        {
+            Icon = new Icon(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "icon-16x16.ico")),
+            Visible = true,
+            Text = _appInfo.Name
+        };
+
+        var menu = new ContextMenuStrip();
+        menu.Items.Add("Open", null, (s, e) => { MainWindow.Show(); });
+        menu.Items.Add("Exit", null, (s, e) => { System.Windows.Application.Current.Shutdown(); });
+
+        _trayIcon.ContextMenuStrip = menu;
+    }
+
     private void InitializeView()
     {
-        var mainWindow = _provider.GetRequiredService<MainWindow>();
+        var overlay = _provider.GetRequiredService<OverlayWindow>();
 
-        MainWindow = mainWindow;
+        MainWindow = overlay;
+
         MainWindow.Show();
+        MainWindow.Hide();
     }
 
     private async Task InitializeBackgroundAsync()
@@ -169,8 +196,8 @@ public partial class App : Application
 
         Log.CloseAndFlush();
 
-        if (MainWindow is MainWindow main)
-            main.Cleanup();
+        //if (MainWindow is MainWindow main)
+        //    main.Cleanup();
 
         base.OnExit(e);
     }

@@ -12,6 +12,7 @@ using D2RCompanion.UI.AppCore;
 using D2RCompanion.UI.Services;
 using D2RCompanion.UI.Traderie;
 using D2RCompanion.UI.Util;
+using D2RCompanion.UI.Windows;
 using D2RCompanion.UI.ViewModels;
 using D2RCompanion.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -19,10 +20,10 @@ using Microsoft.Extensions.Logging;
 
 namespace D2RCompanion.UI.Views
 {
-    public partial class MainWindow : Window
+    public partial class MainWindowOld : Window
     {
         private readonly MainViewModel _viewModel;
-        private readonly ILogger<MainWindow> _logger;
+        private readonly ILogger<MainWindowOld> _logger;
 
         private readonly OverlayWindow _overlayWindow;
         private readonly SettingsWindow _settingsWindow;
@@ -36,13 +37,13 @@ namespace D2RCompanion.UI.Views
 
 
         // We run these here so we have the STA thread to init Traderie, as well as never closing windows for tray behaviour
-        public MainWindow(
+        public MainWindowOld(
             MainViewModel vm,
             OverlayWindow overlayWindow,
             SettingsWindow settingsWindow,
             TraderieWindow traderieWindow,
             HotkeyService hotkeys,
-            ILogger<MainWindow> logger)
+            ILogger<MainWindowOld> logger)
         {
             InitializeComponent();
 
@@ -115,7 +116,7 @@ namespace D2RCompanion.UI.Views
 
             _hotkeys.Initialize(hwnd);
 
-            _hotkeys.Register(Key.D, ModifierKeys.Control,
+            _hotkeys.Register(Key.Space, ModifierKeys.Shift,
                 () => _viewModel.RunPipelineCommand.Execute(null));
         }
 

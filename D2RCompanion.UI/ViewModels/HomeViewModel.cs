@@ -11,29 +11,32 @@ using D2RCompanion.UI.Messages;
 
 namespace D2RCompanion.UI.ViewModels
 {
-    public partial class SettingsViewModel : ObservableObject
+    public partial class HomeViewModel : ObservableObject
     {
-
         [RelayCommand]
-        public void CloseSettings()
+        public void ShowHome()
+        {
+
+        }
+        [RelayCommand]
+        public void ShowSettings() 
         {
             WeakReferenceMessenger.Default.Send(
-                new NavigationRequestMessage(OverlayContentView.Home));
-
-            //close overlay
-            WeakReferenceMessenger.Default.Send(
-                new OverlayVisibilityRequestMessage(false)
+                new NavigationRequestMessage(OverlayContentView.Settings)
             );
+        }
 
-           
-            //WeakReferenceMessenger.Default.Send(
-            //    new NavigationRequestMessage
-            //    {
-            //        FromView = OverlayContentView.Settings,
-            //        ToView = OverlayContentView.Home,
-            //    }
-            //);
+        [RelayCommand]
+        public void ShowPriceCheck()
+        {
+            WeakReferenceMessenger.Default.Send(
+                new NavigationRequestMessage(OverlayContentView.PriceCheck)
+            );
+        }
 
+        [RelayCommand]
+        public void ShowTraderie()
+        {
 
         }
     }

@@ -1,53 +1,61 @@
-﻿using System.IO;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Windows;
-using D2RCompanion.Core.Traderie.Domain;
-using D2RCompanion.Pipelines;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using D2RCompanion.UI.AppCore;
-using D2RCompanion.UI.Options;
 using D2RCompanion.UI.Traderie;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.Wpf;
 
-namespace D2RCompanion.UI.Traderie
+namespace D2RCompanion.UI.Views
 {
     /// <summary>
-    /// Interaction logic for TraderieWindow.xaml
+    /// Interaction logic for TraderieWebViewControl.xaml
     /// </summary>
-    public partial class TraderieWindow : Window
+    public partial class TraderieWebViewControl : UserControl
     {
         private readonly string _homeUrl;
         private readonly string _userDataFolder;
+        private readonly Dictionary<string, TaskCompletionSource<string>> _pendingFetches = new();
+        private readonly ILogger _logger;
         public TraderieSession Session { get; private set; } = new();
         public bool IsLoggedIn => !string.IsNullOrEmpty(Session.Jwt) && !string.IsNullOrEmpty(Session.Jwt);
 
-        private readonly Dictionary<string, TaskCompletionSource<string>> _pendingFetches = new();
-        public TraderieWindow(IConfiguration config, AppInfo appInfo)
+        public TraderieWebViewControl(
+            IConfiguration config,
+            ILogger<TraderieWebViewControl> logger,
+            AppInfo appInfo)
         {
-            _homeUrl = config.GetSection("Traderie").GetSection("HomeUrl").Value;
+            _homeUrl = config.GetValue<string>("Traderie:HomeUrl");
 
-            _userDataFolder = Path.Combine(
+            _userDataFolder = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 appInfo.Id,
                 "Traderie");
 
-          
+            _logger = logger;
+
+            Loaded += TraderieWebViewControlLoaded;
             InitializeComponent();
-
         }
-        public async Task Preload()
+        private async void TraderieWebViewControlLoaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            // Ensure this code is executed on the UI thread (non-blocking)
-            await TraderieWebView.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                Visibility = Visibility.Hidden;
-                ShowInTaskbar = false;
-
-                Show();  // Show the window to initialize WebView2, then hide it immediately
-                Hide();
-            }));
+            // Ensure WebView2 is initialized when the UserControl is loaded
+            //await InitializeAsync();
         }
 
         public async Task InitializeAsync()
@@ -126,6 +134,8 @@ namespace D2RCompanion.UI.Traderie
             catch (Exception ex)
             {
                 Console.WriteLine($"WebMessage error: {ex.Message}");
+
+                _logger.LogError(ex.Message);
             }
         }
 
@@ -279,14 +289,21 @@ namespace D2RCompanion.UI.Traderie
                 }})();
                 ";
         }
+        //private void BackButton_Click(object sender, RoutedEventArgs e)
+        //{ 
+        //    TraderieWebView.Visibility = Visibility.Collapsed;
+        //}
 
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        protected override void OnKeyDown(KeyEventArgs e)
         {
-            // Prevent actual closing
-            e.Cancel = true;
-
-            // Just hide instead
-            this.Hide();
+            if (e.Key == Key.Escape)
+            {
+                if(Visibility == Visibility.Visible)
+                {
+                    Visibility = Visibility.Collapsed;
+                    e.Handled = true;
+                }
+            }
         }
     }
 }
