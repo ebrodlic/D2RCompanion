@@ -53,7 +53,7 @@ namespace D2RCompanion.UI.Services
 
             var detection = new TooltipDetectionPipeline().Run(screenshot);
            
-            _cache.Save(timestamp, detection);
+            //_cache.Save(timestamp, detection);
 
             if (!detection.IsTooltipFound())
             {
@@ -68,7 +68,7 @@ namespace D2RCompanion.UI.Services
                 new TooltipLineSegmentationPipeline()
                 .Run(detection.Tooltip, new TooltipLineSegmentationPipelineSettings());
 
-            _cache.Save(timestamp, segmentation);
+            //_cache.Save(timestamp, segmentation);
 
             var text = await Task.Run(() =>
                 _ocr.PredictTextBatch(segmentation.TooltipLines));

@@ -21,7 +21,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Web.WebView2.Core;
 
-namespace D2RCompanion.UI.Views
+namespace D2RCompanion.UI.Controls
 {
     /// <summary>
     /// Interaction logic for TraderieWebViewControl.xaml

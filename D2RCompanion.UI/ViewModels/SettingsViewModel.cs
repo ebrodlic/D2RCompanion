@@ -20,21 +20,9 @@ namespace D2RCompanion.UI.ViewModels
             WeakReferenceMessenger.Default.Send(
                 new NavigationRequestMessage(OverlayContentView.Home));
 
-            //close overlay
             WeakReferenceMessenger.Default.Send(
                 new OverlayVisibilityRequestMessage(false)
             );
-
-           
-            //WeakReferenceMessenger.Default.Send(
-            //    new NavigationRequestMessage
-            //    {
-            //        FromView = OverlayContentView.Settings,
-            //        ToView = OverlayContentView.Home,
-            //    }
-            //);
-
-
         }
     }
 }

@@ -12,12 +12,11 @@ using D2RCompanion.UI.Util;
 using D2RCompanion.UI.ViewModels;
 using D2RCompanion.UI.Views;
 using D2RCompanion.UI.Windows;
-using D2RCompanion.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using CommunityToolkit.Mvvm.Messaging;
 using Serilog;
+using D2RCompanion.UI.Controls;
 
 namespace D2RCompanion.UI;
 
@@ -46,7 +45,7 @@ public partial class App : System.Windows.Application
         var logger = _provider.GetRequiredService<ILogger<App>>();
         logger.LogInformation("Application Started");
 
-        //_ = InitializeBackgroundAsync();
+        _ = InitializeBackgroundAsync();
     }
 
     private void SetupConfig()
@@ -92,18 +91,16 @@ public partial class App : System.Windows.Application
         services.AddSingleton<IItemBaseNameProvider, FileItemBaseNameProvider>();
 
         // Services
-        //services.AddSingleton<SettingsService>(); 
-        //services.AddSingleton<ScreenshotService>();
-        //services.AddSingleton<PipelineService>();
+        services.AddSingleton<SettingsService>(); 
+        services.AddSingleton<ScreenshotService>();
+        services.AddSingleton<PipelineService>();
         services.AddSingleton<HotkeyService>();
-        //services.AddSingleton<TraderieClient>();
 
         // TODO: temporarily to debug saved images:
-        //services.AddSingleton<CacheService>();
+        services.AddSingleton<CacheService>();
 
         //extra
-        //services.AddSingleton(new OcrService("Models/d2r_tooltip_crnn_best.onnx"));
-     
+        services.AddSingleton(new OcrService("Models/d2r_tooltip_crnn_best.onnx"));     
 
         //UI
         services.AddSingleton<OverlayWindow>();
@@ -118,10 +115,8 @@ public partial class App : System.Windows.Application
         services.AddSingleton<PriceCheckView>();
         services.AddSingleton<PriceCheckViewModel>();
 
-        //services.AddTransient<OverlayContentViewModel>();
-
-
         services.AddSingleton<TraderieWebViewControl>();
+        services.AddSingleton<TraderieClient>();
 
         _provider = services.BuildServiceProvider();
     }
@@ -161,15 +156,15 @@ public partial class App : System.Windows.Application
 
             await Task.WhenAll(settingsTask, ocrTask);
 
-            var traderieWindow = _provider.GetRequiredService<TraderieWindow>();
+            //var traderieWindow = _provider.GetRequiredService<TraderieWindow>();
 
-            await traderieWindow.Preload();
-            await traderieWindow.InitializeAsync();
+            //await traderieWindow.Preload();
+            //await traderieWindow.InitializeAsync();
 
-            await Task.Delay(300);
+            //await Task.Delay(300);
 
-            // Try to obtain session info for future use
-            await traderieWindow.TryLoadSessionAsync();
+            //// Try to obtain session info for future use
+            //await traderieWindow.TryLoadSessionAsync();
 
             //while (!traderieWindow.IsLoggedIn)
             //{
@@ -178,10 +173,10 @@ public partial class App : System.Windows.Application
             //}
 
             // If no session info, show the traderie window so user can log in for session data
-            if (!traderieWindow.IsLoggedIn)
-                traderieWindow.Show();
+            //if (!traderieWindow.IsLoggedIn)
+            //    traderieWindow.Show();
 
-            WeakReferenceMessenger.Default.Send(new AppReadyMessage());
+            //WeakReferenceMessenger.Default.Send(new AppReadyMessage());
         }
         catch (Exception ex)
         {

@@ -9,17 +9,18 @@ using D2RCompanion.Core.Traderie;
 using D2RCompanion.Core.Traderie.Domain;
 using D2RCompanion.Core.Traderie.DTO;
 using D2RCompanion.Core.Traderie.Mapping;
+using D2RCompanion.UI.Controls;
 
 namespace D2RCompanion.UI.Traderie
 {
-    internal class TraderieClient
+    public class TraderieClient
     {
-        private readonly TraderieWindow _window;
+        private readonly TraderieWebViewControl _traderieWebView;
 
         private readonly JsonSerializerOptions _options;
-        public TraderieClient(TraderieWindow window)
+        public TraderieClient(TraderieWebViewControl traderieWebView)
         {
-            _window = window;
+            _traderieWebView = traderieWebView;
 
             _options = new JsonSerializerOptions()
             {
@@ -33,7 +34,7 @@ namespace D2RCompanion.UI.Traderie
 
             var url = BuildPricesUrl(itemId, item);
 
-            var json = await _window.RunFetchAsync(url, true);
+            var json = await _traderieWebView.RunFetchAsync(url, true);
 
             var dto = JsonSerializer.Deserialize<TradeStatisticsDto>(json, _options)!;
 
@@ -44,9 +45,9 @@ namespace D2RCompanion.UI.Traderie
         {
             var (itemId, _) = await ResolveItemAsync(item);
 
-            var url = BuildOffersUrl(itemId, _window.Session.UserId, item);
+            var url = BuildOffersUrl(itemId, _traderieWebView.Session.UserId, item);
 
-            var json = await _window.RunFetchAsync(url, true);
+            var json = await _traderieWebView.RunFetchAsync(url, true);
             var offers = OffersMapper.ParseOffers(json);
 
             // Define Price Groups
@@ -59,7 +60,7 @@ namespace D2RCompanion.UI.Traderie
         {
             var searchUrl = BuildSearchUrl(item);
 
-            var searchJson = await _window.RunFetchAsync(searchUrl, true);
+            var searchJson = await _traderieWebView.RunFetchAsync(searchUrl, true);
 
             using var doc = JsonDocument.Parse(searchJson);
 

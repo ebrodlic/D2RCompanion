@@ -8,77 +8,695 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
 
-        <!--  Main panel  -->
-        <Border
-            Width="640"
-            Height="480"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Background="#2B2B2B"
-            BorderBrush="#111"
-            BorderThickness="1"
-            CornerRadius="6">
+    <Border
+        x:Name="ContentPanel"
+        Width="500"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Stretch"
+        Background="#131415"
+        CornerRadius="8"
+        MouseDown="ContentPanel_MouseDown">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-            <Grid>
+            <!--  Title and close  -->
+            <Grid Grid.Row="0">
+                <TextBlock
+                    Grid.Column="0"
+                    Padding="4"
+                    Background="#0E0F0F"
+                    FontSize="14"
+                    Foreground="White"
+                    Text="Price Check"
+                    TextAlignment="Center" />
+                <TextBlock
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Background="#8B0000"
+                    Cursor="Hand"
+                    MouseLeftButtonUp="CloseButton_Click"
+                    Text="x" />
+            </Grid>
 
-                <!--  Layout  -->
+            <!--  Main Content: OCR, prices, price prediction, trades  -->
+            <Grid Grid.Row="1" Margin="4">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
-                    <!--  TOP BAR  -->
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
-                    <!--  CONTENT  -->
                 </Grid.RowDefinitions>
 
-                <!--  ================= TOP BAR =================  -->
-                <Grid Grid.Row="0" Background="#1F1F1F">
+                <!--  ================= ITEM DESCRIPTION =================  -->
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
+                    <!--  TITLE  -->
                     <TextBlock
-                        Margin="12,0,0,0"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="White"
-                        Text="Price Check" />
+                        Grid.Row="0"
+                        Margin="0,0,0,6"
+                        FontSize="12"
+                        Foreground="#888888"
+                        Text="ITEM DESCRIPTION" />
 
-                    <Button
-                        Width="32"
-                        Height="26"
-                        Margin="0,0,8,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Background="#333"
-                        BorderThickness="0"
-                        Click="Close_Click"
-                        Content="✕"
-                        Cursor="Hand"
-                        Foreground="White" />
+                    <!--  CONTENT  -->
+                    <ScrollViewer
+                        Grid.Row="1"
+                        MaxHeight="250"
+                        VerticalScrollBarVisibility="Hidden">
+                        <ItemsControl ItemsSource="{Binding OcrText}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Margin="0,0,0,2"
+                                        FontSize="12"
+                                        Foreground="White"
+                                        Text="{Binding}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <!--  SEPARATOR  -->
+                    <Border
+                        Grid.Row="2"
+                        Height="1"
+                        Margin="0,10,0,0"
+                        Background="#2A2A2A"
+                        Opacity="0.6" />
+
                 </Grid>
 
-                <!--  ================= CONTENT =================  -->
-                <Grid Grid.Row="1">
+                <!--  ================= PRICE SUMMARY =================  -->
 
-                    <Border
-                        Margin="16"
-                        Padding="16"
-                        Background="#3A3A3A"
-                        CornerRadius="4">
+                <Border Grid.Row="1" Margin="0,10,0,0">
+
+                    <Grid VerticalAlignment="Center">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+
+                        <StackPanel
+                            Grid.Row="0"
+                            Margin="0,0,0,6"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Foreground="#888888"
+                                Text="PRICE SUMMARY (IN IST)" />
+
+                            <Button
+                                Width="18"
+                                Height="18"
+                                Margin="8,0,0,0"
+                                Background="#222"
+                                BorderBrush="#666"
+                                BorderThickness="1"
+                                Command="{Binding ToggleRuneInfoPinnedCommand}"
+                                Content="i"
+                                Cursor="Hand"
+                                FontWeight="Bold"
+                                Foreground="#888"
+                                MouseEnter="RuneHoverEnter"
+                                MouseLeave="RuneHoverLeave" />
+
+                        </StackPanel>
+
+
+
+                        <Grid Grid.Row="1" HorizontalAlignment="Stretch">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--  ================= FLOOR =================  -->
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="Gray"
+                                Text="Floor" />
+
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="White"
+                                Text="{Binding FloorDisplay}"
+                                TextAlignment="Right" />
+
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Margin="20,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="LightGray"
+                                Text="{Binding FloorEstimateDisplay}" />
+
+
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="3"
+                                Margin="6,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Foreground="#555555"
+                                Text="bottom 15%"
+                                TextAlignment="Right" />
+
+
+                            <!--  ================= TYPICAL =================  -->
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="Gray"
+                                Text="Typical" />
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="White"
+                                Text="{Binding TypicalDisplay}"
+                                TextAlignment="Right" />
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                Margin="20,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="LightGray"
+                                Text="{Binding TypicalEstimateDisplay}" />
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="3"
+                                VerticalAlignment="Center"
+                                FontSize="11"
+                                Foreground="#555555"
+                                Text="median"
+                                TextAlignment="Right" />
+
+
+                            <!--  ================= GOOD =================  -->
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="Gray"
+                                Text="Good" />
+
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="White"
+                                Text="{Binding GoodDisplay}"
+                                TextAlignment="Right" />
+
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="2"
+                                Margin="20,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="LightGray"
+                                Text="{Binding GoodEstimateDisplay}" />
+
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="3"
+                                VerticalAlignment="Center"
+                                FontSize="11"
+                                Foreground="#555555"
+                                Text="top 25%"
+                                TextAlignment="Right" />
+
+
+                            <!--  ================= HIGH =================  -->
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="Gray"
+                                Text="High" />
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="White"
+                                Text="{Binding HighDisplay}"
+                                TextAlignment="Right" />
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="2"
+                                Margin="20,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="LightGray"
+                                Text="{Binding HighEstimateDisplay}" />
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="3"
+                                VerticalAlignment="Center"
+                                FontSize="11"
+                                Foreground="#555555"
+                                Text="top 5%"
+                                TextAlignment="Right" />
+
+                        </Grid>
+
+                        <!--  SEPARATOR  -->
+                        <Border
+                            Grid.Row="2"
+                            Height="1"
+                            Margin="0,10,0,0"
+                            Background="#2A2A2A"
+                            Opacity="0.6" />
+
+                    </Grid>
+                </Border>
+
+                <!--  ================= PRICE PREDICTION =================  -->
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  TITLE  -->
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="0,0,0,4"
+                        FontSize="12"
+                        Foreground="#888888"
+                        Text="PRICE PREDICTION" />
+
+                    <StackPanel
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
 
                         <TextBlock
-                            HorizontalAlignment="Center"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,4,0"
                             VerticalAlignment="Center"
-                            FontSize="16"
-                            FontWeight="Bold"
+                            FontSize="18"
                             Foreground="White"
-                            Text="Price Check View" />
+                            Text="{Binding PricePrediction, Converter={StaticResource IstPriceConverter}}"
+                            TextAlignment="Center" />
 
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="18"
+                            Foreground="LightGray"
+                            Text="{Binding PricePredictionHint}"
+                            TextAlignment="Center" />
+
+                    </StackPanel>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Margin="2"
+                        FontSize="14"
+                        Foreground="White"
+                        Text="{Binding PricePredictionConfidence, StringFormat='Confidence: {0:P0}'}"
+                        TextAlignment="Center" />
+
+
+                    <!--  SEPARATOR  -->
+                    <Border
+                        Grid.Row="3"
+                        Height="1"
+                        Margin="0,10,0,0"
+                        Background="#2A2A2A"
+                        Opacity="0.6" />
+                </Grid>
+
+
+
+
+                <!--  ================= RECENT TRADES =================  -->
+                <Grid Grid.Row="3" Margin="0,10,0,0">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  TITLE  -->
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="0,0,0,6"
+                        FontSize="12"
+                        Foreground="#888888"
+                        Text="RECENT TRADES" />
+
+                    <Border
+                        Grid.Row="1"
+                        Margin="0,4,0,6"
+                        Padding="6,4"
+                        Background="#1C1C1C"
+                        BorderBrush="{Binding ActivityBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--  ACTIVITY row  -->
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    FontSize="10"
+                                    Foreground="#777"
+                                    Text="ACTIVITY" />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    FontSize="10"
+                                    FontWeight="SemiBold"
+                                    Foreground="{Binding ActivityTextBrush}"
+                                    Text="{Binding Activity.Display}" />
+                            </Grid>
+
+                            <!--  DISTRIBUTION row  -->
+                            <Grid Grid.Row="1" Margin="0,2,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    FontSize="10"
+                                    Foreground="#666"
+                                    Text="DISTRIBUTION" />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    FontSize="10"
+                                    FontWeight="SemiBold"
+                                    Foreground="#888"
+                                    Text="{Binding Activity.Breakdown}" />
+                            </Grid>
+
+                        </Grid>
                     </Border>
 
+
+
+                    <!--  SCROLL CONTENT  -->
+                    <ScrollViewer
+                        x:Name="TradesScrollViewer"
+                        Grid.Row="2"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Hidden">
+
+                        <ItemsControl ItemsSource="{Binding Trades}">
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+
+                                    <Border
+                                        Margin="0,2"
+                                        Padding="4"
+                                        Background="#202224"
+                                        BorderBrush="Gray"
+                                        BorderThickness="1">
+
+                                        <Grid>
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <!--  ================= HEADER =================  -->
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+
+                                                    <TextBlock
+                                                        FontWeight="Bold"
+                                                        Foreground="White"
+                                                        Text="{Binding Amount}" />
+
+                                                    <TextBlock Foreground="White" Text=" x " />
+
+                                                    <TextBlock
+                                                        FontWeight="Bold"
+                                                        Foreground="White"
+                                                        Text="{Binding ItemName}" />
+                                                </StackPanel>
+
+                                                <ItemsControl
+                                                    Grid.Column="1"
+                                                    Margin="4,0"
+                                                    ItemsSource="{Binding Labels}">
+
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Border
+                                                                Margin="1,0"
+                                                                Padding="2"
+                                                                Background="#333"
+                                                                CornerRadius="3">
+
+                                                                <TextBlock
+                                                                    FontSize="10"
+                                                                    Foreground="LightGray"
+                                                                    Text="{Binding}" />
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+
+                                                </ItemsControl>
+
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    FontSize="10"
+                                                    Foreground="Gray"
+                                                    Opacity="0.7"
+                                                    Text="{Binding TimeAgo}" />
+                                            </Grid>
+
+                                            <!--  ================= ATTRIBUTES =================  -->
+                                            <ItemsControl
+                                                Grid.Row="1"
+                                                Margin="4,2,0,0"
+                                                ItemsSource="{Binding Attributes}">
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock
+                                                            Margin="0,0,0,1"
+                                                            FontSize="11"
+                                                            Foreground="White"
+                                                            Text="{Binding}" />
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+
+                                            </ItemsControl>
+
+                                            <!--  ================= PRICE GROUPS =================  -->
+                                            <TextBlock
+                                                Grid.Row="2"
+                                                Margin="0,2,0,0"
+                                                FontSize="14"
+                                                Foreground="White"
+                                                Text="{Binding Display}"
+                                                TextWrapping="Wrap" />
+
+
+
+                                        </Grid>
+                                    </Border>
+
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
+
+                    </ScrollViewer>
                 </Grid>
 
             </Grid>
-        </Border>
 
-    </Grid>
+            <!--  ================= Tooltip Overlay =================  -->
+            <Grid
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                IsHitTestVisible="False">
+                <Border
+                    Margin="200,120,0,0"
+                    Padding="10"
+                    Panel.ZIndex="9999"
+                    Background="#FF1A1A1A"
+                    BorderBrush="#444"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    IsHitTestVisible="False"
+                    Visibility="{Binding IsRuneInfoVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+
+                    <StackPanel>
+
+                        <!--  Title  -->
+                        <TextBlock
+                            Margin="0,0,0,6"
+                            FontSize="12"
+                            Foreground="#AAAAAA"
+                            Text="RUNE VALUES (IN IST)" />
+
+                        <!--  Dynamic list  -->
+                        <ItemsControl ItemsSource="{Binding Statistics.RuneValues}">
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+
+                                    <!--  Row  -->
+                                    <Grid Margin="0,1">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="50" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--  Short name  -->
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            FontSize="13"
+                                            Foreground="White"
+                                            Text="{Binding ShortName}" />
+
+                                        <!--  Value  -->
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            FontSize="13"
+                                            Foreground="#BBBBBB"
+                                            Text="{Binding IstValue, StringFormat={}{0:0.##}}"
+                                            TextAlignment="Right" />
+
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
+
+                    </StackPanel>
+
+
+                </Border>
+            </Grid>
+
+            <!--  Buttons Overlay  -->
+            <!--
+            <StackPanel
+                Margin="0,4,4,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
+                <Button
+                    Width="20"
+                    Height="20"
+                    Margin="0,0,4,0"
+                    Background="#8B0000"
+                    BorderThickness="0"
+                    Click="HelpButton_Click"
+                    Content="?"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    ToolTip="Help" />
+
+                <Button
+                    Width="20"
+                    Height="20"
+                    Margin="0,0,4,0"
+                    Background="#8B0000"
+                    BorderThickness="0"
+                    Click="CloseButton_Click"
+                    Content="✕"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    ToolTip="Close" />
+            </StackPanel>-->
+        </Grid>
+
+    </Border>
+
 </UserControl>

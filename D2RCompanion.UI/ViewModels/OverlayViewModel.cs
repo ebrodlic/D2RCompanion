@@ -8,9 +8,8 @@ using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using D2RCompanion.Core.Traderie.Domain;
 using D2RCompanion.UI.Messages;
-using D2RCompanion.ViewModels;
+using D2RCompanion.UI.Services;
 using Microsoft.Extensions.Logging;
 
 namespace D2RCompanion.UI.ViewModels
@@ -22,15 +21,18 @@ namespace D2RCompanion.UI.ViewModels
         private readonly SettingsViewModel _settingsViewModel;
         private readonly PriceCheckViewModel _priceCheckViewModel;
 
-        private readonly ILogger _logger;
-
         [ObservableProperty]
         public object currentViewModel;
+
+        private readonly PipelineService _pipelineService;
+        private readonly ILogger _logger;
+
 
         public OverlayViewModel(
             HomeViewModel home,
             SettingsViewModel settings,
             PriceCheckViewModel priceCheck,
+            PipelineService pipelineService,
             ILogger<OverlayViewModel> logger
             )
         {
@@ -38,13 +40,14 @@ namespace D2RCompanion.UI.ViewModels
             _settingsViewModel = settings;
             _priceCheckViewModel = priceCheck;
 
+            _pipelineService = pipelineService;
             _logger = logger;
 
-            SetMessageHandler();
+            RegisterMessageHandlers();
             ResetView(); // Default = Home
         }
 
-        private void SetMessageHandler()
+        private void RegisterMessageHandlers()
         {
             WeakReferenceMessenger.Default.Register<NavigationRequestMessage>(this, (r, m) =>
             {
@@ -70,20 +73,27 @@ namespace D2RCompanion.UI.ViewModels
             _logger.LogDebug("Switched to view: {View}", view);
         }
 
-        //public void Receive(NavigationRequestMessage message)
-        //{
-        //    _logger.LogDebug("Navigation message received: " + message.ToView);
+        [RelayCommand]
+        public async Task InitiatePriceCheck()
+        {
+            _logger.LogInformation("Initiate price check!");
 
-        //    switch (message.ToView)
-        //    {
-        //        case OverlayContentView.Settings:
-        //            CurrentViewModel = _settingsViewModel;
-        //            break;
-        //        case OverlayContentView.PriceCheck:
-        //            CurrentViewModel = _priceCheckViewModel;
-        //            break;
-        //    }
-        //}
+            SetView(OverlayContentView.PriceCheck);
+
+            try
+            {
+                var result = await Task.Run(() => _pipelineService.RunAsync());
+
+                WeakReferenceMessenger.Default.Send(new PipelineCompletedMessage(result));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                // TODO busy false.
+            }
+        }
     }
 
     public enum OverlayContentView

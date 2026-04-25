@@ -8,11 +8,11 @@ using D2RCompanion.UI.Services;
 
 namespace D2RCompanion.UI.Messages
 {
-    public class PipelineResultReadyMessage
+    public class PipelineCompletedMessage
     {
         public PipelineResult Result { get; set; }
 
-        public PipelineResultReadyMessage(PipelineResult result)
+        public PipelineCompletedMessage(PipelineResult result)
         {
             Result = result;
         }

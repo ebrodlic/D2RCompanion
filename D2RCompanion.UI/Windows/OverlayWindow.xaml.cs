@@ -14,11 +14,12 @@ using System.Windows.Shapes;
 using CommunityToolkit.Mvvm.Messaging;
 using D2RCompanion.Core.Traderie.Domain;
 using D2RCompanion.Core.Traderie.DTO;
+using D2RCompanion.UI.Controls;
 using D2RCompanion.UI.Messages;
 using D2RCompanion.UI.Services;
 using D2RCompanion.UI.ViewModels;
 using D2RCompanion.UI.Views;
-using D2RCompanion.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace D2RCompanion.UI.Windows
 {
@@ -30,14 +31,18 @@ namespace D2RCompanion.UI.Windows
         private readonly HotkeyService _hotkeys;
         private readonly TraderieWebViewControl _traderieWebView;
 
+        private readonly ILogger _logger;
+
         public OverlayWindow(
             OverlayViewModel vm,
             HotkeyService hotkeys,
-            TraderieWebViewControl traderieWebView
+            TraderieWebViewControl traderieWebView,
+            ILogger<OverlayWindow> logger
             )
         {
             _hotkeys = hotkeys;
             _traderieWebView = traderieWebView;
+            _logger = logger;
 
             Loaded += OnWindowLoaded;
             InitializeComponent();
@@ -113,7 +118,9 @@ namespace D2RCompanion.UI.Windows
 
             _hotkeys.Register(Key.D, ModifierKeys.Control, () =>
             {
+                _logger.LogDebug("Ctrl+D pressed");
 
+                _ = ((OverlayViewModel)DataContext).InitiatePriceCheck();
             });
         }
 
@@ -121,6 +128,11 @@ namespace D2RCompanion.UI.Windows
         {
             //TraderieStatus.Text = _traderieWebView.IsLoggedIn ? "Logged In" : "NOT Logged In";
           
+        }
+
+        private void OnCheckStatusClick(object sender, RoutedEventArgs e)
+        {
+            CheckTraderieStatus();
         }
 
         private async void ToggleVisibility()
@@ -133,13 +145,6 @@ namespace D2RCompanion.UI.Windows
             }
                
         }
-
-        private void OnCheckStatusClick(object sender, RoutedEventArgs e)
-        {
-            CheckTraderieStatus();
-        }
-
-     
 
         private void OnBackgroundClicked(object sender, MouseButtonEventArgs e)
         {

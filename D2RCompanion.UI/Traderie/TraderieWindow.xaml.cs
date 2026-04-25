@@ -4,7 +4,6 @@ using System.Windows;
 using D2RCompanion.Core.Traderie.Domain;
 using D2RCompanion.Pipelines;
 using D2RCompanion.UI.AppCore;
-using D2RCompanion.UI.Options;
 using D2RCompanion.UI.Traderie;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;

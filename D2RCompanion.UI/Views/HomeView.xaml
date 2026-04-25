@@ -18,9 +18,7 @@
 
         <!--  ================= NAV =================  -->
         <StackPanel Grid.Column="0">
-            <Button Command="{Binding ShowHomeCommand}" Content="Home" />
             <Button Command="{Binding ShowSettingsCommand}" Content="Settings" />
-            <Button Command="{Binding ShowPriceCheckCommand}" Content="Price Check" />
             <Button Command="{Binding ShowTraderieCommand}" Content="Traderie" />
         </StackPanel>
 
