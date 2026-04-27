@@ -18,7 +18,10 @@
 
         <!--  ================= NAV =================  -->
         <StackPanel Grid.Column="0">
-            <Button Command="{Binding ShowSettingsCommand}" Content="Settings" />
+            <Button
+                Command="{Binding ShowSettingsCommand}"
+                Content="&#xE713;"
+                FontFamily="Segoe MDL2 Assets" />
             <Button Command="{Binding ShowTraderieCommand}" Content="Traderie" />
         </StackPanel>
 

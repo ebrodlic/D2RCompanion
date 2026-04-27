@@ -34,13 +34,13 @@ namespace D2RCompanion.UI.ViewModels
         [ObservableProperty]
         public TradeActivityInfo activity = new TradeActivityInfo();
 
+        [ObservableProperty]
+        public TradeStatistics statistics;
+
         public ObservableCollection<RuneValue> RuneValuesDisplay =>
             Statistics?.RuneValues != null
                 ? new ObservableCollection<RuneValue>(Statistics.RuneValues)
                 : new ObservableCollection<RuneValue>();
-
-        [ObservableProperty]
-        public TradeStatistics statistics;
 
         [ObservableProperty]
         public double pricePrediction  = 0;
@@ -93,17 +93,20 @@ namespace D2RCompanion.UI.ViewModels
                 // Fetch price/trade data from Traderie
                 _ = FetchPriceData();
                 _ = FetchStatistics();
-
-
             });
         }
 
         public void LoadPipelineData(PipelineResult result)
         {
             //TODO filter here, get rid of requirements lines, show only attributes
-            foreach (var item in result.ItemText)
+            foreach (var line in result.ItemText)
             {
-                OcrText.Add(item);
+                if (line.Contains("Required"))
+                    continue;
+                if (line.Contains("Durability:"))
+                    continue;
+
+                OcrText.Add(line);
             }
 
             ItemMetadata = result.ItemData;
@@ -126,8 +129,6 @@ namespace D2RCompanion.UI.ViewModels
 
             //TODO get rid of this
             NotifyActivityChanged();
-
-          
         }
         private async Task FetchStatistics()
         {
@@ -153,11 +154,11 @@ namespace D2RCompanion.UI.ViewModels
         public void ClearData()
         {
             // 1. Collections
-            ocrText.Clear();
+            OcrText.Clear();
             Trades.Clear();
 
             // 2. Domain objects
-            Statistics = null;
+            Statistics = new TradeStatistics();
             Activity = new TradeActivityInfo();
 
             // 3. Prediction state
