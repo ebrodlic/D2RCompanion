@@ -72,6 +72,18 @@ namespace D2RCompanion.UI.Windows
                     Hide();
                 }
             });
+
+            WeakReferenceMessenger.Default.Register<TraderieVisibilityRequestMessage>(this, (r, m) =>
+            {
+                if (m.Toggle)
+                { 
+                    _traderieWebView.Visibility = _traderieWebView.IsVisible ? Visibility.Hidden : Visibility.Visible;
+                }
+                else
+                {
+                    _traderieWebView.Visibility = m.Visibility ? Visibility.Visible : Visibility.Hidden;
+                }
+            });
         }
 
         private async Task CreateTraderieWebViewControl()
@@ -89,10 +101,10 @@ namespace D2RCompanion.UI.Windows
 
             _traderieWebView.Visibility = Visibility.Collapsed;
 
-            //if (!_traderieWebView.IsLoggedIn)
-            //{
-            //    _traderieWebView.Visibility = Visibility.Visible;
-            //}
+            if (!_traderieWebView.IsLoggedIn)
+            {
+                _traderieWebView.Visibility = Visibility.Visible;
+            }
         }
 
         private void SetFullscreen()

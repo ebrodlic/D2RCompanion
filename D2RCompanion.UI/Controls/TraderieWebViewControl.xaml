@@ -13,8 +13,6 @@
         <!--  WebView2 control for displaying Traderie content  -->
         <wv2:WebView2
             Name="TraderieWebView"
-            Width="800"
-            Height="600"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch" />
 

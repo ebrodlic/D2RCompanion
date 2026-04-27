@@ -37,7 +37,9 @@ namespace D2RCompanion.UI.ViewModels
         [RelayCommand]
         public void ShowTraderie()
         {
-
+            WeakReferenceMessenger.Default.Send(
+                new TraderieVisibilityRequestMessage() { Toggle = true }
+            );
         }
     }
 }

@@ -300,7 +300,7 @@ namespace D2RCompanion.UI.Controls
             {
                 if(Visibility == Visibility.Visible)
                 {
-                    Visibility = Visibility.Collapsed;
+                    Visibility = Visibility.Hidden;
                     e.Handled = true;
                 }
             }
