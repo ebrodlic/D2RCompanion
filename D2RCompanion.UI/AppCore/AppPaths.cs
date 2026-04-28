@@ -17,7 +17,7 @@ public class AppPaths
     public AppPaths(AppInfo appInfo)
     {
         Root = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             appInfo.Id);
 
         Logs = Path.Combine(Root, "Logs");
