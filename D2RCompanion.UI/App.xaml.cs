@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using D2RCompanion.UI.Controls;
+using Velopack;
 
 namespace D2RCompanion.UI;
 
@@ -24,14 +25,17 @@ public partial class App : System.Windows.Application
 {
     private IConfiguration _config = null!;
     private IServiceProvider _provider = null!;
+    private ILogger<App> _logger = null!;
 
     private AppInfo _appInfo = null!;
     private AppPaths _appPaths = null!;
+    private AppEnvironment _appEnvironment = null!;
 
     private NotifyIcon _trayIcon = null!;
 
-    protected override async void OnStartup(StartupEventArgs e)
+    protected override void OnStartup(StartupEventArgs e)
     {
+        VelopackApp.Build().Run();
         base.OnStartup(e);
 
         SetupConfig();
@@ -42,10 +46,9 @@ public partial class App : System.Windows.Application
         InitializeTray();
         InitializeView();
 
-        var logger = _provider.GetRequiredService<ILogger<App>>();
-        logger.LogInformation("Application Started");
+        _logger.LogInformation("Application Started");
 
-        _ = InitializeBackgroundAsync();
+        _ = Task.Run(InitializeBackgroundAsync);
     }
 
     private void SetupConfig()
@@ -59,6 +62,7 @@ public partial class App : System.Windows.Application
     {
         _appInfo = new AppInfo();
         _appPaths = new AppPaths(_appInfo);
+        _appEnvironment = new AppEnvironment();
 
         _appPaths.EnsureCreated();
     }
@@ -117,8 +121,11 @@ public partial class App : System.Windows.Application
 
         services.AddSingleton<TraderieWebViewControl>();
         services.AddSingleton<TraderieClient>();
-
+       
         _provider = services.BuildServiceProvider();
+
+        // Needed for tray, consider moving to separate method
+        _logger = _provider.GetRequiredService<ILogger<App>>();
     }
 
     private void InitializeTray()
@@ -132,9 +139,47 @@ public partial class App : System.Windows.Application
 
         var menu = new ContextMenuStrip();
         menu.Items.Add("Open", null, (s, e) => { MainWindow.Show(); });
+        menu.Items.Add("Check for Updates", null, (s, e) => { CheckForUpdates(); }); 
         menu.Items.Add("Exit", null, (s, e) => { System.Windows.Application.Current.Shutdown(); });
 
         _trayIcon.ContextMenuStrip = menu;
+    }
+
+    private async Task CheckForUpdates()
+    {
+        _logger.LogDebug("Checking for updates");
+
+        // If local development project/machine
+        if (_appEnvironment.IsDevelopment)
+            return;
+
+        try
+        {
+            var mgr = new UpdateManager("https://github.com/ebrodlic/D2RCompanion");
+            var update = await mgr.CheckForUpdatesAsync();
+
+            if (update == null)
+                return;
+
+            _logger.LogInformation("Update found, downloading!");
+
+            await mgr.DownloadUpdatesAsync(update);
+
+            var result = System.Windows.MessageBox.Show(
+                "Update Ready, the app will restart",
+                "Update Ready",
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Information);
+
+            if(result == MessageBoxResult.OK)
+            {
+                mgr.ApplyUpdatesAndRestart(update);
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     private void InitializeView()
