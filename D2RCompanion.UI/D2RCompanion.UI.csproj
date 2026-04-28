@@ -11,7 +11,7 @@
   <PropertyGroup>
     <!-- Optional: for NuGet or MSBuild metadata -->
     <AssemblyTitle>D2R Companion</AssemblyTitle>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <!-- Velopack / auto-update uses this numeric version, auto-generated it if missing -->
