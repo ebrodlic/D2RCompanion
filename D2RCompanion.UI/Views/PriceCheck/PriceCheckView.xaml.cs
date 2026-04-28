@@ -48,5 +48,15 @@ namespace D2RCompanion.UI.Views
         {
             ((PriceCheckViewModel)DataContext).Close();
         }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close_Click(null, e);
+
+                e.Handled = true;
+            }
+        }
     }
 }

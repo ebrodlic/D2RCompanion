@@ -155,7 +155,6 @@ namespace D2RCompanion.UI.Windows
             {
                 Show();
             }
-               
         }
 
         private void OnBackgroundClicked(object sender, MouseButtonEventArgs e)
