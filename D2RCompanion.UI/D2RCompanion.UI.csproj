@@ -16,7 +16,7 @@
     <!-- Optional: for NuGet or MSBuild metadata -->
     <AssemblyName>D2RCompanion</AssemblyName>
     <AssemblyTitle>D2R Companion</AssemblyTitle>
-    <Version>0.2.2</Version>
+    <Version>0.2.3</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
