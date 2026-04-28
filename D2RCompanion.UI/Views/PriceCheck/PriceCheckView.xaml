@@ -99,7 +99,7 @@
                         Grid.Row="7"
                         FontSize="13"
                         Foreground="#BBBBBB"
-                        Text="Donate to Patreon"
+                        Text="Placeholder"
                         TextAlignment="Right" />
                 </Grid>
             </Grid>

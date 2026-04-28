@@ -98,12 +98,11 @@ namespace D2RCompanion.UI.Windows
             await _traderieWebView.InitializeAsync();
             await Task.Delay(300);
             await _traderieWebView.TryLoadSessionAsync();
+            await Task.Delay(300);
 
-            _traderieWebView.Visibility = Visibility.Collapsed;
-
-            if (!_traderieWebView.IsLoggedIn)
+            if (_traderieWebView.IsLoggedIn)
             {
-                _traderieWebView.Visibility = Visibility.Visible;
+                _traderieWebView.Visibility = Visibility.Hidden;
             }
         }
 
