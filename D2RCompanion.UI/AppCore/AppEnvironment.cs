@@ -10,7 +10,15 @@ namespace D2RCompanion.UI.AppCore
 {
     public class AppEnvironment
     {
-        public bool IsDevelopment =>
-            Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") == "Development" || Debugger.IsAttached;
+        public bool IsDevelopment { get; }
+
+        public AppEnvironment()
+        {
+            var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+
+            IsDevelopment =
+                env == "Development" ||
+                Debugger.IsAttached;
+        }
     }
 }
