@@ -139,13 +139,15 @@ public partial class App : System.Windows.Application
 
         var menu = new ContextMenuStrip();
         menu.Items.Add("Open", null, (s, e) => { MainWindow.Show(); });
-        menu.Items.Add("Check for Updates", null, (s, e) => { CheckForUpdates(); }); 
+        menu.Items.Add("Check for Updates", null, async (s, e) => {
+            await CheckForUpdatesAsync();
+        }); 
         menu.Items.Add("Exit", null, (s, e) => { System.Windows.Application.Current.Shutdown(); });
 
         _trayIcon.ContextMenuStrip = menu;
     }
 
-    private async Task CheckForUpdates()
+    private async Task CheckForUpdatesAsync()
     {
         _logger.LogDebug("Checking for updates");
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace D2RCompanion.UI.AppCore
@@ -10,6 +11,6 @@ namespace D2RCompanion.UI.AppCore
     public class AppEnvironment
     {
         public bool IsDevelopment =>
-            Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") == "Development";
+            Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") == "Development" || Debugger.IsAttached;
     }
 }
