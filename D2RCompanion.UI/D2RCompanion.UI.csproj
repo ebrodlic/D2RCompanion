@@ -9,13 +9,15 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- Optional: for NuGet or MSBuild metadata -->
-    <AssemblyTitle>D2R Companion</AssemblyTitle>
-    <Version>0.2.0</Version>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <StartupObject>D2RCompanion.UI.Program</StartupObject>
+  </PropertyGroup>
 
-    <!-- Velopack / auto-update uses this numeric version, auto-generated it if missing -->
-    <!--<AssemblyVersion>0.1.0.0</AssemblyVersion>--> 
+  <PropertyGroup>
+    <!-- Optional: for NuGet or MSBuild metadata -->
+    <AssemblyName>D2RCompanion</AssemblyName>
+    <AssemblyTitle>D2R Companion</AssemblyTitle>
+    <Version>0.2.2</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,6 +54,7 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.6" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.6" />
     <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.24.4" />

@@ -35,7 +35,6 @@ public partial class App : System.Windows.Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        VelopackApp.Build().Run();
         base.OnStartup(e);
 
         SetupConfig();
@@ -130,11 +129,14 @@ public partial class App : System.Windows.Application
 
     private void InitializeTray()
     {
+        var iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "icon-16x16.ico");
+        var versionText = _appEnvironment.IsDevelopment ? _appInfo.Version : VelopackRuntimeInfo.VelopackNugetVersion?.ToString();
+
         _trayIcon = new NotifyIcon()
         {
-            Icon = new Icon(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "icon-16x16.ico")),
+            Icon = new Icon(iconPath),
             Visible = true,
-            Text = _appInfo.Name
+            Text = $"{_appInfo.Name} - {versionText}"
         };
 
         var menu = new ContextMenuStrip();

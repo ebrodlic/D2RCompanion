@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Velopack;
 
 namespace D2RCompanion.UI.AppCore
 {
