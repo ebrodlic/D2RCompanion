@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using D2RCompanion.Core.Items;
 using D2RCompanion.Services;
 using D2RCompanion.UI.AppCore;
-using D2RCompanion.UI.Messages;
+using D2RCompanion.UI.Controls;
 using D2RCompanion.UI.Services;
 using D2RCompanion.UI.Traderie;
 using D2RCompanion.UI.Util;
@@ -16,8 +16,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using D2RCompanion.UI.Controls;
 using Velopack;
+using Velopack.Locators;
 
 namespace D2RCompanion.UI;
 
@@ -130,7 +130,7 @@ public partial class App : System.Windows.Application
     private void InitializeTray()
     {
         var iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "icon-16x16.ico");
-        var versionText = _appEnvironment.IsDevelopment ? _appInfo.Version : VelopackRuntimeInfo.VelopackNugetVersion?.ToString();
+        var versionText = _appEnvironment.IsDevelopment ? _appInfo.Version : VelopackLocator.Current.CurrentlyInstalledVersion?.ToString();
 
         _trayIcon = new NotifyIcon()
         {
