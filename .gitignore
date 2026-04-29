@@ -12,6 +12,8 @@
 *.user
 *.suo
 
+.env
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
